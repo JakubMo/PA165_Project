@@ -1,0 +1,29 @@
+Entity:
+-auto
+-zamestnanec
+-jazda=objednavka auta
+-kontrola
+-trieda
+
+Poziadavky:
+Zamestnanec:
+-poziadat o jazdu
+-zrusit jazdu
+-zaevidovat kontrolu
+-poziadat a zaradenie do tried
+-zrusit svoju triedu
+-registrovat sa/zrusit si ucet
+-vypisat statistiky o svojich jazdach
+
+Administrator:
+-managment vozidiel (nove vozidlo, odhlasenie vozidla, definovanie servisnych intervalov)
+-akceptovanie poziadavok zamestnancov
+-vytvaranie tried
+-zaradenie vozidiel do tried
+-statistiky o vsetkom (auta, zamestnanci)
+-naplanovat kontrolu - vtedy je auto nedostupne
++Zamestnanec
+
+
+
+
