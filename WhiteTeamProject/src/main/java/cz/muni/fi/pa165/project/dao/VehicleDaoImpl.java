@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class VehicleDaoImpl implements VehicleDao {
 
-	public List<Vehicle> getAllVehicles() {
+	public List<Vehicle> findAll() {
 		List<Vehicle> vehicles = new ArrayList<Vehicle>();
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.getTransaction().begin();
@@ -24,7 +24,7 @@ public class VehicleDaoImpl implements VehicleDao {
 		return vehicles;
 	}
 
-	public Vehicle getVehicle(String vin) {
+	public Vehicle findById(String vin) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.getTransaction().begin();
 
@@ -35,7 +35,7 @@ public class VehicleDaoImpl implements VehicleDao {
 		return vehicle;
 	}
 
-	public void updateVehicle(Vehicle vehicle) {
+	public void update(Vehicle vehicle) {
 		if(vehicle == null){
 			throw new IllegalArgumentException("Vehicle is null!");
 		}
@@ -48,7 +48,7 @@ public class VehicleDaoImpl implements VehicleDao {
 		session.getTransaction().commit();
 	}
 
-	public void deleteVehicle(Vehicle vehicle) {
+	public void delete(Vehicle vehicle) {
 		if(vehicle == null){
 			throw new IllegalArgumentException("Vehicle is null!");
 		}
@@ -61,7 +61,7 @@ public class VehicleDaoImpl implements VehicleDao {
 		session.getTransaction().commit();
 	}
 
-	public void insertVehicle(Vehicle vehicle) {
+	public void insert(Vehicle vehicle) {
 		if(vehicle == null){
 			throw new IllegalArgumentException("Vehicle is null!");
 		}

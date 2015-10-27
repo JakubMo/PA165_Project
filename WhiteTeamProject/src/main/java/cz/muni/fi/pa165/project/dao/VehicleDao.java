@@ -13,7 +13,7 @@ public interface VehicleDao {
 	 * List all vehicles
 	 * @return list with vehicles
 	 */
-	List<Vehicle> getAllVehicles();
+	List<Vehicle> findAll();
 
 	/**
 	 * Get vehicle by id
@@ -21,23 +21,23 @@ public interface VehicleDao {
 	 * @param vin vehicle's vin
 	 * @return vehicle
 	 */
-	Vehicle getVehicle(String vin);
+	Vehicle findById(String vin);
 
 	/**
 	 * Update vehicle
 	 * @param vehicle updated vehicle
 	 */
-	void updateVehicle(Vehicle vehicle);
+	void update(Vehicle vehicle);
 
 	/**
 	 * Remove vehicle from DB
 	 * @param vehicle vehicle to remove
 	 */
-	void deleteVehicle(Vehicle vehicle);
+	void delete(Vehicle vehicle);
 
 	/**
 	 * Insert new vehicle
 	 * @param vehicle vehicle to insert
 	 */
-	void insertVehicle(Vehicle vehicle);
+	void insert(Vehicle vehicle);
 }
