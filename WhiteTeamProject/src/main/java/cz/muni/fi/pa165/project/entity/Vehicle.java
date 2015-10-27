@@ -12,6 +12,7 @@ import java.util.List;
 @Table(name = "vehicle")
 public class Vehicle {
 
+	@Id
 	@Column(name = "vin")
 	@NotNull
 	private String vin;
@@ -40,9 +41,14 @@ public class Vehicle {
 	@NotNull
 	private Long mileage;
 
-	@Column(name = "service_interval")
+//	@Column(name = "service_interval")
+//	@NotNull
+//	@Temporal(TemporalType.TIMESTAMP)
+//	private Date serviceInterval;
+
+	@Column(name = "service_check_mileage_interval")
 	@NotNull
-	private Date serviceInterval;
+	private long serviceCheckMileageInterval;
 
 	@Column(name = "max_mileage")
 	@NotNull
@@ -50,7 +56,6 @@ public class Vehicle {
 
 	@ManyToOne
 	private List<Drive> drives;
-
 
 	public String getVin() {
 		return vin;
@@ -100,12 +105,21 @@ public class Vehicle {
 		this.mileage = mileage;
 	}
 
-	public Date getServiceInterval() {
-		return serviceInterval;
+//	public Date getServiceInterval() {
+//		return serviceInterval;
+//	}
+//
+//	public void setServiceInterval(Date serviceInterval) {
+//		this.serviceInterval = serviceInterval;
+//	}
+
+
+	public long getServiceCheckMileageInterval() {
+		return serviceCheckMileageInterval;
 	}
 
-	public void setServiceInterval(Date serviceInterval) {
-		this.serviceInterval = serviceInterval;
+	public void setServiceCheckMileageInterval(long serviceCheckMileageInterval) {
+		this.serviceCheckMileageInterval = serviceCheckMileageInterval;
 	}
 
 	public String getModel() {
@@ -142,25 +156,35 @@ public class Vehicle {
 				", yearOfProduction=" + yearOfProduction +
 				", engineType='" + engineType + '\'' +
 				", mileage=" + mileage +
-				", serviceInterval=" + serviceInterval +
+//				", serviceInterval=" + serviceInterval +
+				", serviceCheckMileageInterval=" + serviceCheckMileageInterval +
 				'}';
 	}
 
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if(o == null) return false;
 
-		Vehicle vehicle = (Vehicle) o;
+		if(!(o instanceof Vehicle)) return false;
 
-		return !(vin != null ? !vin.equals(vehicle.vin) : vehicle.vin != null);
+		Vehicle vehicle = (Vehicle)o;
+		if(this.vin == null){
+			if(vehicle.vin != null){
+				return false;
+			}
+		} else if (!this.vin.equals(vehicle.vin)){
+			return false;
+		}
 
+		return true;
 	}
 
 	@Override
 	public int hashCode() {
 		int prime = 31;
-		int result = prime * this.vin.hashCode();
+		int result = 1;
+		result = prime * result + (this.vin != null ? this.vin.hashCode() : 0);
 
 		return result;
 	}
