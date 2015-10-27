@@ -17,14 +17,14 @@ public interface ServiceCheckDao {
     public void insertServiceCheck(ServiceCheck serviceCheck);
     
     /**
-     * Updates existing service check.
+     * Updates service check.
      * 
-     * @param serviceCheck updated service check.
+     * @param serviceCheck updated service check
      */
     public void updateServiceCheck(ServiceCheck serviceCheck);
     
     /**
-     * Deletes existing service check.
+     * Deletes service check.
      * 
      * @param serviceCheck service check to be deleted
      */
@@ -39,7 +39,7 @@ public interface ServiceCheckDao {
     public ServiceCheck findServiceCheck(Long id);
     
     /**
-     * Creates collection of all existing service checks.
+     * Creates collection of all service checks.
      * 
      * @return list of all service checks
      */

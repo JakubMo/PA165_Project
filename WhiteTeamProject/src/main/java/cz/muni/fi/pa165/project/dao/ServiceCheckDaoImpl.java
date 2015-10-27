@@ -1,7 +1,9 @@
 package cz.muni.fi.pa165.project.dao;
 
 import cz.muni.fi.pa165.project.entity.ServiceCheck;
+import cz.muni.fi.pa165.project.util.HibernateUtil;
 import java.util.List;
+import org.hibernate.Session;
 
 /**
  * Provides implementation of {@link ServiceCheckDao} interface.
@@ -9,25 +11,45 @@ import java.util.List;
  * @author Marek
  */
 public class ServiceCheckDaoImpl implements ServiceCheckDao {
-
+    @Override
     public void insertServiceCheck(ServiceCheck serviceCheck) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.getTransaction().begin();
+        session.save(serviceCheck);
+        session.getTransaction().commit();
     }
 
+    @Override
     public void updateServiceCheck(ServiceCheck serviceCheck) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.getTransaction().begin();
+        session.update(serviceCheck);
+        session.getTransaction().commit();
     }
 
+    @Override
     public void deleteServiceCheck(ServiceCheck serviceCheck) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.getTransaction().begin();
+        session.delete(serviceCheck);
+        session.getTransaction().commit();
     }
 
+    @Override
     public ServiceCheck findServiceCheck(Long id) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.getTransaction().begin();
+        ServiceCheck serviceCheck = session.get(ServiceCheck.class, id);
+        session.getTransaction().commit();
+        return serviceCheck;
     }
 
+    @Override
     public List<ServiceCheck> getAllServiceChecks() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-    
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.getTransaction().begin();
+        List<ServiceCheck> serviceChecks = session.createCriteria(ServiceCheck.class).list();
+        session.getTransaction().commit();
+        return serviceChecks;
+    }    
 }
