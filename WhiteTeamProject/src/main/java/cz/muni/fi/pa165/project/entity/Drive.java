@@ -5,7 +5,13 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -13,37 +19,37 @@ import javax.persistence.TemporalType;
  * @author Jakub Mozucha | j.mozucha@gmail.com | created: 10/26/2015
  */
 
-//@Entity
+@Entity
 public class Drive {
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@Column(name = "id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
     
-    //@OneToMany
-    //@NotNull
+    @ManyToOne
+    @NotNull
     private Long vehicleVin;
     
-    //@OneToMany
-    //@NotNull
+    @ManyToOne
+    @NotNull
     private Long employeeId;
     
-    //@Column(name = "start_date")
-    //@NotNull
-    //@Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "start_date")
+    @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
     
-    //@Column(name = "end_date")
-    //@NotNull
-    //@Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "end_date")
+    @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
     
-    //@Column(name = "km")
+    @Column(name = "km")
     private BigDecimal km;
     
-    //@Enumerated
-    //@NotNull
-    //@Column (name = "state")
+    @Enumerated
+    @NotNull
+    @Column (name = "state")
     private DriveStatus state;
 
     public Long getId() {
