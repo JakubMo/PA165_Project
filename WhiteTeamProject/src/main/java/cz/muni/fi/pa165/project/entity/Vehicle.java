@@ -54,6 +54,9 @@ public class Vehicle {
 	@NotNull
 	private Long maxMileage;
 
+	@OneToMany(mappedBy = "vehicle")
+	private List<ServiceCheck> serviceChecks;
+
 	@OneToMany(mappedBy="vehicle")
 	private List<Drive> drives;
 
@@ -144,6 +147,14 @@ public class Vehicle {
 
 	public void setDrives(List<Drive> drives) {
 		this.drives = drives;
+	}
+
+	public List<ServiceCheck> getServiceChecks() {
+		return serviceChecks;
+	}
+
+	public void setServiceChecks(List<ServiceCheck> serviceChecks) {
+		this.serviceChecks = serviceChecks;
 	}
 
 	@Override
