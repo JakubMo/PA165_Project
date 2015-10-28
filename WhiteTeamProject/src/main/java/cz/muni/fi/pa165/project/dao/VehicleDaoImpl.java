@@ -13,7 +13,7 @@ import java.util.List;
 public class VehicleDaoImpl implements VehicleDao {
 
 	public List<Vehicle> findAll() {
-		List<Vehicle> vehicles = new ArrayList<Vehicle>();
+		List<Vehicle> vehicles;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.getTransaction().begin();
 
@@ -24,7 +24,11 @@ public class VehicleDaoImpl implements VehicleDao {
 		return vehicles;
 	}
 
-	public Vehicle findById(String vin) {
+	public Vehicle findByVin(String vin) {
+		if(vin == null){
+			throw new IllegalArgumentException("Vin is null!");
+		}
+
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.getTransaction().begin();
 

@@ -21,23 +21,23 @@ public interface VehicleDao {
 	 * @param vin vehicle's vin
 	 * @return vehicle
 	 */
-	Vehicle findById(String vin);
+	Vehicle findByVin(String vin);
 
 	/**
 	 * Update vehicle
-	 * @param vehicle updated vehicle
+	 * @param vehicle vehicle to be updated
 	 */
 	void update(Vehicle vehicle);
 
 	/**
-	 * Remove vehicle from DB
-	 * @param vehicle vehicle to remove
+	 * Remove vehicle
+	 * @param vehicle vehicle to be removed
 	 */
 	void delete(Vehicle vehicle);
 
 	/**
 	 * Insert new vehicle
-	 * @param vehicle vehicle to insert
+	 * @param vehicle vehicle to be inserted
 	 */
 	void insert(Vehicle vehicle);
 }
