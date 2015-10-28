@@ -8,9 +8,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import static javax.persistence.TemporalType.DATE;
+import javax.validation.constraints.NotNull;
 
 /**
  * Provides entity for service check.
@@ -44,13 +46,16 @@ public class ServiceCheck implements Serializable {
     /**
      * ID of vehicle that goes to service check.
      */
-    @Column(name = "vehicle_id")
-    private Long vehicleId;
+    @Column(name = "vehicle")
+    @ManyToOne
+    @NotNull
+    private Vehicle vehicle;
     
     /**
      * Employee who did the service check.
      */
     @Column(name = "service_employee")
+    @NotNull
     private String serviceEmployee;
     
     /**
@@ -83,12 +88,12 @@ public class ServiceCheck implements Serializable {
         this.serviceCheckDate = serviceCheckDate;
     }
 
-    public Long getVehicleId() {
-        return vehicleId;
+    public Vehicle getVehicle() {
+        return vehicle;
     }
 
-    public void setVehicleId(Long vehicleId) {
-        this.vehicleId = vehicleId;
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
     }
 
     public String getServiceEmployee() {
@@ -113,7 +118,7 @@ public class ServiceCheck implements Serializable {
                 "id=" + id + 
                 ", status=" + status + 
                 ", date=" + serviceCheckDate + 
-                ", vehicleId=" + vehicleId + 
+                ", vehicle=" + vehicle + 
                 ", serviceEmployeeId=" + serviceEmployee + 
                 ", report=" + report + 
                 '}';
@@ -135,7 +140,7 @@ public class ServiceCheck implements Serializable {
         return this.getId().equals(other.getId()) && 
                 (this.getStatus() == other.getStatus()) && 
                 this.getServiceCheckDate().equals(other.getServiceCheckDate()) && 
-                this.getVehicleId().equals(other.getVehicleId()) && 
+                this.getVehicle().equals(other.getVehicle()) && 
                 this.getServiceEmployee().equals(other.getServiceEmployee()) && 
                 this.getReport().equals(other.getReport());
     }
@@ -146,8 +151,8 @@ public class ServiceCheck implements Serializable {
         hash = 97 * hash + (this.id != null ? this.id.hashCode() : 0);
         hash = 97 * hash + this.status.getValue();
         hash = 97 * hash + (this.serviceCheckDate != null ? this.serviceCheckDate.hashCode() : 0);
-        hash = 97 * hash + (this.vehicleId != null ? this.vehicleId.hashCode() : 0);
-        hash = 97 * hash + (this.serviceEmployee != null ? this.serviceEmployee.hashCode() : 0);
+        hash = 97 * hash + this.vehicle.hashCode();
+        hash = 97 * hash + this.serviceEmployee.hashCode();
         hash = 97 * hash + (this.report != null ? this.report.hashCode() : 0);
         return hash;
     }
