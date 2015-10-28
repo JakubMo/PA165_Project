@@ -3,13 +3,12 @@ package cz.muni.fi.pa165.project;
 import cz.muni.fi.pa165.project.dao.EmployeeDao;
 import cz.muni.fi.pa165.project.dao.EmployeeDaoImpl;
 import cz.muni.fi.pa165.project.entity.Employee;
+import cz.muni.fi.pa165.project.enums.Category;
 import cz.muni.fi.pa165.project.util.HibernateUtil;
 
 import java.math.BigDecimal;
 
-/**
- * Hello world!
- */
+
 public class App {
 	public static void main(String[] args) {
 
@@ -22,15 +21,16 @@ public class App {
 		employee.setEmail("fake@email.com");
 		employee.setPhoneNumber("55-448-221");
 		employee.setRole("role");
+		employee.setCategory(Category.BRONZE);
 		employee.setCredit(new BigDecimal(10000));
 
-		employeeDao.insertEmployee(employee);
+		employeeDao.create(employee);
 		employee.setId(1L);
-		employeeDao.insertEmployee(employee);
+		employeeDao.create(employee);
 		employee.setFirstname("Updated");
-		employeeDao.updateEmployee(employee);
+		employeeDao.update(employee);
 
-		System.out.println(employeeDao.getEmployee(0L).toString());
+		System.out.println(employeeDao.findById(0L));
 
 		HibernateUtil.getSessionFactory().close();
 	}
