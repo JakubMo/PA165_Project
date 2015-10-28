@@ -5,19 +5,44 @@ import cz.muni.fi.pa165.project.entity.Employee;
 import java.util.List;
 
 /**
- * @author Tomas Borcin | tborcin@redhat.com | created: 10/25/15.
- */
+* @author Tomas Borcin | tborcin@redhat.com | created: 10/25/15.
+*/
 public interface EmployeeDao {
 
-	//TODO javadoc
 
-	public List<Employee> getAllEmployees();
+	/**
+	 * Create new employee.
+	 *
+	 * @param employee employee to be created
+	 */
+	public void create(Employee employee);
 
-	public Employee getEmployee(Long id);
+	/**
+	 * Get all employees.
+	 *
+	 * @return list of all employees
+	 */
+	public List<Employee> findAll();
 
-	public void updateEmployee(Employee employee);
+	/**
+	 * Get employee with given id.
+	 *
+	 * @param id id of employee to be found
+	 * @return found employee
+	 */
+	public Employee findById(Long id);
 
-	public void deleteEmployee(Employee employee);
+	/**
+	 * Update given employee.
+	 *
+	 * @param employee employee to be updated
+	 */
+	public void update(Employee employee);
 
-	public void insertEmployee(Employee employee);
+	/**
+	 * Delete given employee.
+	 *
+	 * @param employee employee to be deleted
+	 */
+	public void delete(Employee employee);
 }

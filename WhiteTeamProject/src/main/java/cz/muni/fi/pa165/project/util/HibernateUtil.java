@@ -4,8 +4,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 /**
- * @author Tomas Borcin | tborcin@redhat.com | created: 10/25/15.
- */
+* @author Tomas Borcin | tborcin@redhat.com | created: 10/25/15.
+*/
 public class HibernateUtil {
 
 	private static final SessionFactory sessionFactory = buildSessionFactory();
