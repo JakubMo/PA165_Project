@@ -54,7 +54,7 @@ public class Vehicle {
 	@NotNull
 	private Long maxMileage;
 
-	@ManyToOne
+	@OneToMany(mappedBy="vehicle")
 	private List<Drive> drives;
 
 	public String getVin() {

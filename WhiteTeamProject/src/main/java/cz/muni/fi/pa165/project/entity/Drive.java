@@ -28,11 +28,11 @@ public class Drive {
     
     @ManyToOne
     @NotNull
-    private Long vehicleVin;
+    private Vehicle vehicle;
     
     @ManyToOne
     @NotNull
-    private Long employeeId;
+    private Employee employee;
     
     @Column(name = "start_date")
     @NotNull
@@ -60,20 +60,20 @@ public class Drive {
         this.id = id;
     }
 
-    public Long getVehicleVin() {
-        return vehicleVin;
+    public Vehicle getVehicle() {
+        return vehicle;
     }
 
-    public void setVehicleVin(Long vehicleVin) {
-        this.vehicleVin = vehicleVin;
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
     }
 
-    public Long getEmployeeId() {
-        return employeeId;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setEmployeeId(Long employeeId) {
-        this.employeeId = employeeId;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     public Date getStartDate() {
@@ -111,8 +111,8 @@ public class Drive {
     @Override
     public String toString() {
         return "Drive{" + "id=" + id + 
-                ", vehicleVin=" + vehicleVin + 
-                ", employeeId=" + employeeId + 
+                ", vehicle=" + vehicle + 
+                ", employee=" + employee + 
                 ", startDate=" + startDate + 
                 ", endDate=" + endDate + 
                 ", km=" + km + 
@@ -129,8 +129,8 @@ public class Drive {
         result += (state == null) ? 0 : state.ordinal();
         result += (startDate == null) ? 0 : startDate.hashCode();
         result += (endDate == null) ? 0 : endDate.hashCode();
-        result += (employeeId == null) ? 0 : (int) (employeeId ^ (employeeId >>> 32));
-        result += (vehicleVin == null) ? 0 : (int) (vehicleVin ^ (vehicleVin >>> 32));
+        result += (employee == null) ? 0 : employee.hashCode();
+        result += (vehicle == null) ? 0 : vehicle.hashCode();
         result = base * result;
         
         return result;
@@ -147,17 +147,17 @@ public class Drive {
             return false;
         
         Drive other = (Drive) obj;
-        //employeeId
-        if (employeeId == null){
-            if(other.getEmployeeId() != null)
+        //employee
+        if (employee == null){
+            if(other.getEmployee() != null)
                 return false;
-        } else if (!employeeId.equals(other.getEmployeeId()))
+        } else if (!employee.equals(other.getEmployee()))
             return false;
-        //vehicleVin
-        if (vehicleVin == null){
-            if(other.getVehicleVin() != null)
+        //vehicle
+        if (vehicle == null){
+            if(other.getVehicle() != null)
                 return false;
-        } else if (vehicleVin.equals(other.getVehicleVin()))
+        } else if (vehicle.equals(other.getVehicle()))
             return false;
         //startDate
         if (startDate == null){
@@ -166,10 +166,10 @@ public class Drive {
         } else if (!startDate.equals(other.getStartDate()))
             return false;
         //endDate
-        if (employeeId == null){
-            if(other.getEmployeeId() != null)
+        if (endDate == null){
+            if(other.getEndDate()!= null)
                 return false;
-        } else if (!employeeId.equals(other.getEmployeeId()))
+        } else if (!endDate.equals(other.getEndDate()))
             return false;
         //km
         if (km == null){
