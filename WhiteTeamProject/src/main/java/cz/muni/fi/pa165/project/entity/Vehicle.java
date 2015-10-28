@@ -41,14 +41,14 @@ public class Vehicle {
 	@NotNull
 	private Long mileage;
 
-//	@Column(name = "service_interval")
-//	@NotNull
-//	@Temporal(TemporalType.TIMESTAMP)
-//	private Date serviceInterval;
-
-	@Column(name = "service_check_mileage_interval")
+	@Column(name = "service_check_interval")
 	@NotNull
-	private long serviceCheckMileageInterval;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date serviceCheckInterval;
+
+//	@Column(name = "service_check_mileage_interval")
+//	@NotNull
+//	private long serviceCheckMileageInterval;
 
 	@Column(name = "max_mileage")
 	@NotNull
@@ -108,22 +108,22 @@ public class Vehicle {
 		this.mileage = mileage;
 	}
 
-//	public Date getServiceInterval() {
-//		return serviceInterval;
+	public Date getServiceInterval() {
+		return this.serviceCheckInterval;
+	}
+
+	public void setServiceInterval(Date serviceCheckInterval) {
+		this.serviceCheckInterval = serviceCheckInterval;
+	}
+
+
+//	public long getServiceCheckMileageInterval() {
+//		return serviceCheckMileageInterval;
 //	}
 //
-//	public void setServiceInterval(Date serviceInterval) {
-//		this.serviceInterval = serviceInterval;
+//	public void setServiceCheckMileageInterval(long serviceCheckMileageInterval) {
+//		this.serviceCheckMileageInterval = serviceCheckMileageInterval;
 //	}
-
-
-	public long getServiceCheckMileageInterval() {
-		return serviceCheckMileageInterval;
-	}
-
-	public void setServiceCheckMileageInterval(long serviceCheckMileageInterval) {
-		this.serviceCheckMileageInterval = serviceCheckMileageInterval;
-	}
 
 	public String getModel() {
 		return model;
@@ -167,8 +167,8 @@ public class Vehicle {
 				", yearOfProduction=" + yearOfProduction +
 				", engineType='" + engineType + '\'' +
 				", mileage=" + mileage +
-//				", serviceInterval=" + serviceInterval +
-				", serviceCheckMileageInterval=" + serviceCheckMileageInterval +
+				", serviceCheckInterval=" + serviceCheckInterval +
+//				", serviceCheckMileageInterval=" + serviceCheckMileageInterval +
 				'}';
 	}
 
