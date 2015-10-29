@@ -15,6 +15,7 @@ import cz.muni.fi.pa165.project.util.HibernateUtil;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
+import org.hibernate.Session;
 
 /**
  * Hello world!
@@ -58,15 +59,21 @@ public class App {
             vehicle.setModel("Mustang");
             vehicle.setBrand("Ford");
             vehicle.setType("5 door");
-            vehicle.setYearOfProduction(new Date(2009, 0, 0));
+            vehicle.setYearOfProduction(2009);
             vehicle.setEngineType("petrol");
             vehicle.setMaxMileage(200000L);
             vehicle.setMileage(10000L);
-            vehicle.setServiceInterval(new Date(0, 6, 0));
+            vehicle.setServiceInterval(150);
             vehicleDao.insert(vehicle);
             String vehicleVin = vehicle.getVin();
             
-            employee = employeeDao.findById(employeeId);
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.getTransaction().begin();
+            
+            employee = (Employee) session.createQuery("select e from Employee e where e.id=:id")
+                    .setParameter("id", employeeId)
+                    .uniqueResult();
+            session.getTransaction().commit();
             vehicle = vehicleDao.findByVin(vehicleVin);
             
             DriveDao driveDao = new DriveDaoImpl();
@@ -82,6 +89,8 @@ public class App {
             drive = driveDao.getDrive(driveId);
             
             System.out.println(drive.toString());
+            
+            
             
             HibernateUtil.getSessionFactory().close();
 	}

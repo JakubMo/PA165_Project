@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="1" passed="1">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Command line suite" duration-ms="2504" started-at="2015-10-29T22:56:43Z" finished-at="2015-10-29T22:56:46Z">
+    <groups>
+    </groups>
+    <test name="Command line test" duration-ms="2504" started-at="2015-10-29T22:56:43Z" finished-at="2015-10-29T22:56:46Z">
+      <class name="cz.muni.fi.pa165.project.ServiceCheckTest">
+        <test-method status="PASS" signature="initialize()[pri:0, instance:cz.muni.fi.pa165.project.ServiceCheckTest@43a25848]" name="initialize" is-config="true" duration-ms="2107" started-at="2015-10-29T23:56:43Z" finished-at="2015-10-29T23:56:45Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- initialize -->
+        <test-method status="PASS" signature="findVehiclesAndServiceChecks()[pri:0, instance:cz.muni.fi.pa165.project.ServiceCheckTest@43a25848]" name="findVehiclesAndServiceChecks" duration-ms="373" started-at="2015-10-29T23:56:45Z" finished-at="2015-10-29T23:56:46Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- findVehiclesAndServiceChecks -->
+      </class> <!-- cz.muni.fi.pa165.project.ServiceCheckTest -->
+    </test> <!-- Command line test -->
+  </suite> <!-- Command line suite -->
+</testng-results>
