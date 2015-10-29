@@ -16,8 +16,9 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 /**
- *
- * @author jakub
+ * Test suite for ServiceCheck entity
+ * 
+ * @author Jakub Mozucha | j.mozucha@gmail.com | created: 10/29/2015
  */
 
 
@@ -28,8 +29,8 @@ public class ServiceCheckTest {
     /**
      * Initializes records to the database
      */
-    @BeforeClass
-    public void initialize() {
+    @Test(priority=1)
+    public void ServiceCheckInsertTest() {
         VehicleDao vehicleDao = new VehicleDaoImpl();
         Vehicle v1 = new Vehicle();
         v1.setVin(v1Vin);
@@ -95,7 +96,7 @@ public class ServiceCheckTest {
     /**
      * Finds all created vehicles and their service checks and tests equals method
      */
-    @Test
+    @Test(priority=2)
     public void findVehiclesAndServiceChecks(){
         List<Vehicle> vehicles = new VehicleDaoImpl().findAll();
         Assert.assertEquals(vehicles.size(), 2);
@@ -114,6 +115,7 @@ public class ServiceCheckTest {
         List<ServiceCheck> scs2 = session.createQuery("select s from ServiceCheck s where s.vehicle=:v")
                 .setParameter("v", v2)
                 .list();
+        session.getTransaction().commit();
         
         Assert.assertEquals(scs1.size(), 3);
         Assert.assertEquals(scs2.size(), 1);
@@ -126,5 +128,75 @@ public class ServiceCheckTest {
         Assert.assertEquals(sc11, sc11);
         Assert.assertNotEquals(sc12, sc13);
         Assert.assertNotEquals(sc12, sc2);
+    }
+    
+    @Test(priority=3)
+    public void ServiceCheckUpdateTest(){
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.getTransaction().begin();
+        
+        ServiceCheck sc = (ServiceCheck)
+                session.createQuery("select s from ServiceCheck s where s.status=:stat")
+                .setParameter("stat", ServiceCheckStatus.DONE_NOT_OK)
+                .uniqueResult();
+        session.getTransaction().commit();
+        
+        VehicleDao vDao = new VehicleDaoImpl();
+        Vehicle v1 = vDao.findByVin(v1Vin);
+        Vehicle v2 = vDao.findByVin(v2Vin);
+        
+        sc.setVehicle(v2);
+        new ServiceCheckDaoImpl().updateServiceCheck(sc);
+        
+        if(!session.isOpen())
+            session = HibernateUtil.getSessionFactory().openSession();
+        
+            session.getTransaction().begin();
+        
+        List<ServiceCheck> scs1 = session.createQuery("select s from ServiceCheck s where s.vehicle=:v")
+                .setParameter("v", v1)
+                .list();
+        
+        List<ServiceCheck> scs2 = session.createQuery("select s from ServiceCheck s where s.vehicle=:v")
+                .setParameter("v", v2)
+                .list();
+        session.getTransaction().commit();
+        
+        Assert.assertEquals(scs1.size(), scs2.size());
+    }
+    
+    @Test(priority=4)
+    public void ServiceCheckDeleteTest(){
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.getTransaction().begin();
+        
+        ServiceCheck sc = (ServiceCheck)
+                session.createQuery("select s from ServiceCheck s where s.status=:stat")
+                .setParameter("stat", ServiceCheckStatus.DONE_NOT_OK)
+                .uniqueResult();
+        session.getTransaction().commit();
+        
+        VehicleDao vDao = new VehicleDaoImpl();
+        Vehicle v1 = vDao.findByVin(v1Vin);
+        Vehicle v2 = vDao.findByVin(v2Vin);
+        
+        new ServiceCheckDaoImpl().deleteServiceCheck(sc);
+        
+        if(!session.isOpen())
+            session = HibernateUtil.getSessionFactory().openSession();
+        
+            session.getTransaction().begin();
+        
+        List<ServiceCheck> scs1 = session.createQuery("select s from ServiceCheck s where s.vehicle=:v")
+                .setParameter("v", v1)
+                .list();
+        
+        List<ServiceCheck> scs2 = session.createQuery("select s from ServiceCheck s where s.vehicle=:v")
+                .setParameter("v", v2)
+                .list();
+        session.getTransaction().commit();
+        
+        Assert.assertEquals(scs1.size(), 2);
+        Assert.assertEquals(scs2.size(), 1);
     }
 }
