@@ -39,7 +39,7 @@ public class ServiceCheckDaoImpl implements ServiceCheckDao {
     public ServiceCheck findServiceCheck(Long id) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.getTransaction().begin();
-        ServiceCheck serviceCheck = session.get(ServiceCheck.class, id);
+        ServiceCheck serviceCheck = (ServiceCheck) session.get(ServiceCheck.class, id);
         session.getTransaction().commit();
         return serviceCheck;
     }

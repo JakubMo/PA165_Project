@@ -32,7 +32,7 @@ public class VehicleDaoImpl implements VehicleDao {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.getTransaction().begin();
 
-		Vehicle vehicle = session.get(Vehicle.class, vin);
+		Vehicle vehicle = (Vehicle) session.get(Vehicle.class, vin);
 
 		session.getTransaction().commit();
 

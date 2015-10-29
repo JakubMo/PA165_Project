@@ -19,6 +19,10 @@
 		<property name="hbm2ddl.auto">update</property>
 
 		<mapping class="cz.muni.fi.pa165.project.entity.Employee"/>
+                <mapping class="cz.muni.fi.pa165.project.entity.Vehicle"/>
+                <mapping class="cz.muni.fi.pa165.project.entity.Drive"/>
+                <mapping class="cz.muni.fi.pa165.project.entity.ServiceCheck"/>
+                
 
 	</session-factory>
 

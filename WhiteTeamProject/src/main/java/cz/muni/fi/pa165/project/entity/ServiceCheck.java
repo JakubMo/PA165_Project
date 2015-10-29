@@ -46,7 +46,6 @@ public class ServiceCheck implements Serializable {
     /**
      * ID of vehicle that goes to service check.
      */
-    @Column(name = "vehicle")
     @ManyToOne
     @NotNull
     private Vehicle vehicle;

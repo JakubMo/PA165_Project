@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.project.entity;
 
-import com.sun.istack.internal.NotNull;
+import javax.validation.constraints.NotNull;
 import cz.muni.fi.pa165.project.enums.Category;
 
 import javax.persistence.*;
