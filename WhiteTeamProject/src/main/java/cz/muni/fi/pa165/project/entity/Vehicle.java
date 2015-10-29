@@ -12,51 +12,79 @@ import java.util.List;
 @Table(name = "vehicle")
 public class Vehicle {
 
+	/**
+	 * Vehicle's vin
+	 */
 	@Id
 	@Column(name = "vin")
 	@NotNull
 	private String vin;
 
+	/**
+	 * Vehicle's brand
+	 */
 	@Column(name = "brand")
 	@NotNull
 	private String brand;
 
+	/**
+	 * Vehicle's model
+	 */
 	@Column(name = "model")
 	@NotNull
 	private String model;
 
+	/**
+	 * Type of the vehicle
+	 */
 	@Column(name = "type")
 	@NotNull
 	private String type;
 
+	/**
+	 * Vehicle's year of production
+	 */
 	@Column(name = "year_of_production")
 	@NotNull
-	private Date yearOfProduction;
+	private int yearOfProduction;
 
+	/**
+	 * Vehicle's engine type
+	 */
 	@Column(name = "engine_type")
 	@NotNull
 	private String engineType;
 
+	/**
+	 * Current vehicle's mileage
+	 */
 	@Column(name = "mileage")
 	@NotNull
 	private Long mileage;
 
+	/**
+	 * Number of days between service checks of the vehicle
+	 */
 	@Column(name = "service_check_interval")
 	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date serviceCheckInterval;
+	private int serviceCheckInterval;
 
-//	@Column(name = "service_check_mileage_interval")
-//	@NotNull
-//	private long serviceCheckMileageInterval;
-
+	/**
+	 * Max approved mileage, after that the vehicle will not be available
+	 */
 	@Column(name = "max_mileage")
 	@NotNull
 	private Long maxMileage;
 
+	/**
+	 * List of the vehicle's service checks
+	 */
 	@OneToMany(mappedBy = "vehicle")
 	private List<ServiceCheck> serviceChecks;
 
+	/**
+	 * List of the vehicle's drives
+	 */
 	@OneToMany(mappedBy="vehicle")
 	private List<Drive> drives;
 
@@ -84,11 +112,11 @@ public class Vehicle {
 		this.type = type;
 	}
 
-	public Date getYearOfProduction() {
+	public int getYearOfProduction() {
 		return yearOfProduction;
 	}
 
-	public void setYearOfProduction(Date yearOfProduction) {
+	public void setYearOfProduction(int yearOfProduction) {
 		this.yearOfProduction = yearOfProduction;
 	}
 
@@ -108,22 +136,13 @@ public class Vehicle {
 		this.mileage = mileage;
 	}
 
-	public Date getServiceInterval() {
+	public int  getServiceInterval() {
 		return this.serviceCheckInterval;
 	}
 
-	public void setServiceInterval(Date serviceCheckInterval) {
+	public void setServiceInterval(int serviceCheckInterval) {
 		this.serviceCheckInterval = serviceCheckInterval;
 	}
-
-
-//	public long getServiceCheckMileageInterval() {
-//		return serviceCheckMileageInterval;
-//	}
-//
-//	public void setServiceCheckMileageInterval(long serviceCheckMileageInterval) {
-//		this.serviceCheckMileageInterval = serviceCheckMileageInterval;
-//	}
 
 	public String getModel() {
 		return model;
