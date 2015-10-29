@@ -15,7 +15,9 @@ public class ServiceCheckDaoImpl implements ServiceCheckDao {
     public void insertServiceCheck(ServiceCheck serviceCheck) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.getTransaction().begin();
+        
         session.save(serviceCheck);
+        
         session.getTransaction().commit();
     }
 
@@ -23,7 +25,9 @@ public class ServiceCheckDaoImpl implements ServiceCheckDao {
     public void updateServiceCheck(ServiceCheck serviceCheck) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.getTransaction().begin();
+        
         session.update(serviceCheck);
+        
         session.getTransaction().commit();
     }
 
@@ -31,7 +35,9 @@ public class ServiceCheckDaoImpl implements ServiceCheckDao {
     public void deleteServiceCheck(ServiceCheck serviceCheck) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.getTransaction().begin();
+        
         session.delete(serviceCheck);
+        
         session.getTransaction().commit();
     }
 
@@ -39,7 +45,9 @@ public class ServiceCheckDaoImpl implements ServiceCheckDao {
     public ServiceCheck findServiceCheck(Long id) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.getTransaction().begin();
+        
         ServiceCheck serviceCheck = (ServiceCheck) session.get(ServiceCheck.class, id);
+        
         session.getTransaction().commit();
         return serviceCheck;
     }
@@ -48,7 +56,9 @@ public class ServiceCheckDaoImpl implements ServiceCheckDao {
     public List<ServiceCheck> getAllServiceChecks() {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.getTransaction().begin();
+        
         List<ServiceCheck> serviceChecks = session.createCriteria(ServiceCheck.class).list();
+        
         session.getTransaction().commit();
         return serviceChecks;
     }    
