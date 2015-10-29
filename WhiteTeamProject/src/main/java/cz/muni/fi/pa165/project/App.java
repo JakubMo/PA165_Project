@@ -24,13 +24,13 @@ public class App {
 		employee.setRole("role");
 		employee.setCredit(new BigDecimal(10000));
 
-		employeeDao.insertEmployee(employee);
+		employeeDao.create(employee);
 		//employee.setId(1L);
 		//employeeDao.insertEmployee(employee);
 		employee.setFirstname("Updated");
-		employeeDao.updateEmployee(employee);
+		employeeDao.update(employee);
                 Long id = employee.getId();
-		System.out.println(employeeDao.getEmployee(id).toString());
+		System.out.println(employeeDao.findById(id).toString());
 
 		HibernateUtil.getSessionFactory().close();
 	}

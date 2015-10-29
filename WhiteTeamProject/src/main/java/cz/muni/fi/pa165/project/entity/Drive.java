@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.project.entity;
 
 import cz.muni.fi.pa165.project.enums.DriveStatus;
+import java.io.Serializable;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -16,37 +17,59 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
+ * Provides entity for drive record
+ * 
  * @author Jakub Mozucha | j.mozucha@gmail.com | created: 10/26/2015
  */
-
 @Entity
-public class Drive {
+public class Drive implements Serializable{
+    /**
+     * ID of drive record
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
     
+    /**
+     * Vehicle used.
+     */
     @ManyToOne
     @NotNull
     private Vehicle vehicle;
     
+    /**
+     * Employee who used the vehicle.
+     */
     @ManyToOne
     @NotNull
     private Employee employee;
     
+    /**
+     * Date when the drive starts.
+     */
     @Column(name = "start_date")
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
     
+    /**
+     * Date when the drive ends
+     */
     @Column(name = "end_date")
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
     
+    /**
+     * Kilometers driven during the drive
+     */
     @Column(name = "km")
     private BigDecimal km;
     
+    /**
+     * Current status of the drive
+     */
     @Enumerated
     @NotNull
     @Column (name = "state")

@@ -7,7 +7,8 @@ import java.util.List;
 import org.hibernate.Session;
 
 /**
- *
+ * Provides implementation of {@link DriveDao} interface.
+ * 
  * @author Jakub Mozucha | j.mozucha@gmail.com | created: 10/27/2015
  */
 public class DriveDaoImpl implements DriveDao {
