@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.project;
 import cz.muni.fi.pa165.project.dao.*;
 import cz.muni.fi.pa165.project.entity.Drive;
 import cz.muni.fi.pa165.project.entity.Employee;
+import cz.muni.fi.pa165.project.entity.ServiceCheck;
 import cz.muni.fi.pa165.project.entity.Vehicle;
 import cz.muni.fi.pa165.project.enums.Category;
 import cz.muni.fi.pa165.project.enums.DriveStatus;
@@ -338,7 +339,7 @@ public class DriveTest {
 	private Vehicle createVehicle(String vin) {
 		Vehicle vehicle = new Vehicle();
 		vehicle.setBrand("brand");
-		vehicle.setDrives(new ArrayList<>());
+		vehicle.setDrives(new ArrayList<Drive>());
 		vehicle.setEngineType("engine");
 		vehicle.setMaxMileage(1000000L);
 		vehicle.setMileage(10000L);
@@ -346,7 +347,7 @@ public class DriveTest {
 		vehicle.setEngineType("diesel");
 		vehicle.setType("type");
 		vehicle.setVin(vin);
-		vehicle.setServiceChecks(new ArrayList<>());
+		vehicle.setServiceChecks(new ArrayList<ServiceCheck>());
 		vehicle.setServiceInterval(365);
 		return vehicle;
 	}
