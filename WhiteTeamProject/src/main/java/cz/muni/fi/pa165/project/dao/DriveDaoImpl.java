@@ -1,6 +1,8 @@
 package cz.muni.fi.pa165.project.dao;
 
 import cz.muni.fi.pa165.project.entity.Drive;
+import cz.muni.fi.pa165.project.entity.Employee;
+import cz.muni.fi.pa165.project.entity.Vehicle;
 import cz.muni.fi.pa165.project.util.HibernateUtil;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,36 @@ public class DriveDaoImpl implements DriveDao {
         session.getTransaction().begin();
         
         drives = session.createCriteria(Drive.class).list();
+        
+        session.getTransaction().commit();
+        
+        return drives;
+    }
+    
+    @Override
+    public List<Drive> getAllDrivesByVehicle(Vehicle vehicle){
+        List<Drive> drives = new ArrayList<Drive>();
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.getTransaction().begin();
+        
+        drives = session.createQuery("select d from Drive d where d.vehicle:v")
+                .setParameter("v", vehicle)
+                .list();
+        
+        session.getTransaction().commit();
+        
+        return drives;
+    }
+    
+    @Override
+    public List<Drive> getAllDrivesByEmployee(Employee employee){
+        List<Drive> drives = new ArrayList<Drive>();
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.getTransaction().begin();
+        
+        drives = session.createQuery("select d from Drive d where d.employee:e")
+                .setParameter("e", employee)
+                .list();
         
         session.getTransaction().commit();
         

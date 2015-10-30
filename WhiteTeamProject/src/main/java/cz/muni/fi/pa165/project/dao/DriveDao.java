@@ -1,6 +1,8 @@
 package cz.muni.fi.pa165.project.dao;
 
 import cz.muni.fi.pa165.project.entity.Drive;
+import cz.muni.fi.pa165.project.entity.Employee;
+import cz.muni.fi.pa165.project.entity.Vehicle;
 import java.util.List;
 
 /**
@@ -18,6 +20,21 @@ public interface DriveDao {
      */
     public List<Drive> getAllDrives();
     
+    /**
+     * Creates collection of all drive records for specific car
+     * 
+     * @param vehicle
+     * @return list of {@link Drive} records 
+     */
+    public List<Drive> getAllDrivesByVehicle(Vehicle vehicle);
+    
+    /**
+     * Creates collection of all drive records for specific employee
+     * 
+     * @param employee
+     * @return list of all {@link Drive} records 
+     */
+    public List<Drive> getAllDrivesByEmployee(Employee employee);
     /**
      * Finds drive record by drive id.
      * 

@@ -97,8 +97,10 @@ public class ServiceCheckTest {
      * Finds all created vehicles and their service checks and tests equals method
      */
     @Test(priority=2)
-    public void findVehiclesAndServiceChecks(){
+    public void findAllVehiclesAndServiceChecks(){
         List<Vehicle> vehicles = new VehicleDaoImpl().findAll();
+        List<ServiceCheck> scsAll = new ServiceCheckDaoImpl().getAllServiceChecks();
+        Assert.assertEquals(scsAll.size(), 4);
         Assert.assertEquals(vehicles.size(), 2);
         Vehicle v1 = vehicles.get(0);
         Vehicle v2 = vehicles.get(1);
@@ -199,4 +201,7 @@ public class ServiceCheckTest {
         Assert.assertEquals(scs1.size(), 2);
         Assert.assertEquals(scs2.size(), 1);
     }
+    
+    //@Test(priority=5)
+    //public void testDeletionException
 }
