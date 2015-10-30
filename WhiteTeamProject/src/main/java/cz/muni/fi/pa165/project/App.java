@@ -75,7 +75,7 @@ public class App {
                     .uniqueResult();
             session.getTransaction().commit();
             vehicle = vehicleDao.findByVin(vehicleVin);
-            
+            /*
             DriveDao driveDao = new DriveDaoImpl();
             Drive drive = new Drive();
             drive.setEmployee(employee);
@@ -90,7 +90,7 @@ public class App {
             
             System.out.println(drive.toString());
             
-            
+            */
             
             HibernateUtil.getSessionFactory().close();
 	}
