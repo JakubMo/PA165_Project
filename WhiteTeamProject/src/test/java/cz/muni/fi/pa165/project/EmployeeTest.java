@@ -4,6 +4,7 @@ import cz.muni.fi.pa165.project.dao.EmployeeDao;
 import cz.muni.fi.pa165.project.dao.EmployeeDaoImpl;
 import cz.muni.fi.pa165.project.entity.Employee;
 import cz.muni.fi.pa165.project.enums.Category;
+import cz.muni.fi.pa165.project.util.HibernateErrorException;
 import cz.muni.fi.pa165.project.util.HibernateUtil;
 import java.math.BigDecimal;
 import java.util.List;
@@ -45,7 +46,7 @@ public class EmployeeTest {
     }
     
     @Test(priority = 1)
-    public void employeeCreateTest() {
+    public void employeeCreateTest() throws HibernateErrorException {
         EmployeeDao employeeDao = new EmployeeDaoImpl();
         
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -73,7 +74,7 @@ public class EmployeeTest {
     }
     
     @Test(priority = 2)
-    public void employeeFindTest() {
+    public void employeeFindTest() throws HibernateErrorException {
         EmployeeDao employeeDao = new EmployeeDaoImpl();
         
         List<Employee> employees = employeeDao.findAll();       
@@ -86,7 +87,7 @@ public class EmployeeTest {
     }
     
     @Test(priority = 3)
-    public void employeeUpdateTest() {
+    public void employeeUpdateTest() throws HibernateErrorException {
         EmployeeDao employeeDao = new EmployeeDaoImpl();
         
         String updatedEmail = "newemail@firma.email";
@@ -113,7 +114,7 @@ public class EmployeeTest {
     }
     
     @Test(priority = 4)
-    public void employeeDeleteTest() {
+    public void employeeDeleteTest() throws HibernateErrorException {
         EmployeeDao employeeDao = new EmployeeDaoImpl();
         
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
