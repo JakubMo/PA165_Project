@@ -5,6 +5,7 @@ import cz.muni.fi.pa165.project.enums.Category;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Employee entity
@@ -12,7 +13,6 @@ import java.math.BigDecimal;
  * @author Tomas Borcin | tborcin@redhat.com | created: 10/25/15.
  */
 
-//TODO one to many --> employee has more drives
 @Entity
 public class Employee {
 
@@ -72,10 +72,16 @@ public class Employee {
 	@NotNull
 	private Category category;
 
+	/**
+	 * List of the employee's drives
+	 */
+	@OneToMany(mappedBy = "employee")
+	private List<Drive> drives;
+
 	public Employee() {
 	}
 
-	public Employee(Long id, String firstname, String lastname, String email, String phoneNumber, String role, BigDecimal credit, Category category) {
+	public Employee(Long id, String firstname, String lastname, String email, String phoneNumber, String role, BigDecimal credit, Category category, List<Drive> drives) {
 		this.id = id;
 		this.firstname = firstname;
 		this.lastname = lastname;
@@ -84,6 +90,7 @@ public class Employee {
 		this.role = role;
 		this.credit = credit;
 		this.category = category;
+		this.drives = drives;
 	}
 
 	public Long getId() {
@@ -148,6 +155,14 @@ public class Employee {
 
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+
+	public List<Drive> getDrives() {
+		return drives;
+	}
+
+	public void setDrives(List<Drive> drives) {
+		this.drives = drives;
 	}
 
 	@Override
