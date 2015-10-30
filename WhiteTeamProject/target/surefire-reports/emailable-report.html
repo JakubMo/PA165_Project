@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>TestNG Report</title><style type="text/css">table {margin-bottom:10px;border-collapse:collapse;empty-cells:show}th,td {border:1px solid #009;padding:.25em .5em}th {vertical-align:bottom}td {vertical-align:top}table a {font-weight:bold}.stripe td {background-color: #E6EBF9}.num {text-align:right}.passedodd td {background-color: #3F3}.passedeven td {background-color: #0A0}.skippedodd td {background-color: #DDD}.skippedeven td {background-color: #CCC}.failedodd td,.attn {background-color: #F33}.failedeven td,.stripe .attn {background-color: #D00}.stacktrace {white-space:pre;font-family:monospace}.totop {font-size:85%;text-align:center;border-bottom:2px solid #000}</style></head><body><table><tr><th>Test</th><th># Passed</th><th># Skipped</th><th># Failed</th><th>Time (ms)</th><th>Included Groups</th><th>Excluded Groups</th></tr><tr><th colspan="7">Command line suite</th></tr><tr><td><a href="#t0">Command line test</a></td><td class="num">2</td><td class="num">0</td><td class="num attn">15</td><td class="num">3,118</td><td></td><td></td></tr></table><table><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">Command line suite</th></tr></tbody><tbody id="t0"><tr><th colspan="4">Command line test &#8212; failed</th></tr><tr class="failedeven"><td rowspan="7">cz.muni.fi.pa165.project.DriveTest</td><td><a href="#m0">createDrive</a></td><td rowspan="1">1446240649158</td><td rowspan="1">2941</td></tr><tr class="failedeven"><td><a href="#m1">deleteDrive</a></td><td rowspan="1">1446240652173</td><td rowspan="1">0</td></tr><tr class="failedeven"><td><a href="#m2">getAllDrives</a></td><td rowspan="1">1446240652174</td><td rowspan="1">1</td></tr><tr class="failedeven"><td><a href="#m3">getDriveByEmployee</a></td><td rowspan="1">1446240652176</td><td rowspan="1">0</td></tr><tr class="failedeven"><td><a href="#m4">getDriveById</a></td><td rowspan="1">1446240652177</td><td rowspan="1">0</td></tr><tr class="failedeven"><td><a href="#m5">getDriveByVehicle</a></td><td rowspan="1">1446240652178</td><td rowspan="1">1</td></tr><tr class="failedeven"><td><a href="#m6">updateDrive</a></td><td rowspan="1">1446240652179</td><td rowspan="1">1</td></tr><tr class="failedodd"><td rowspan="4">cz.muni.fi.pa165.project.EmployeeTest</td><td><a href="#m7">employeeCreateTest</a></td><td rowspan="1">1446240652181</td><td rowspan="1">1</td></tr><tr class="failedodd"><td><a href="#m8">employeeDeleteTest</a></td><td rowspan="1">1446240652199</td><td rowspan="1">1</td></tr><tr class="failedodd"><td><a href="#m9">employeeFindTest</a></td><td rowspan="1">1446240652195</td><td rowspan="1">0</td></tr><tr class="failedodd"><td><a href="#m10">employeeUpdateTest</a></td><td rowspan="1">1446240652197</td><td rowspan="1">0</td></tr><tr class="failedeven"><td rowspan="4">cz.muni.fi.pa165.project.ServiceCheckTest</td><td><a href="#m11">ServiceCheckDeleteTest</a></td><td rowspan="1">1446240652207</td><td rowspan="1">0</td></tr><tr class="failedeven"><td><a href="#m12">ServiceCheckInsertTest</a></td><td rowspan="1">1446240652183</td><td rowspan="1">1</td></tr><tr class="failedeven"><td><a href="#m13">ServiceCheckUpdateTest</a></td><td rowspan="1">1446240652198</td><td rowspan="1">0</td></tr><tr class="failedeven"><td><a href="#m14">findAllVehiclesAndServiceChecks</a></td><td rowspan="1">1446240652196</td><td rowspan="1">0</td></tr><tr><th colspan="4">Command line test &#8212; passed</th></tr><tr class="passedeven"><td rowspan="2">cz.muni.fi.pa165.project.ServiceCheckTest</td><td><a href="#m15">testDoubleDeletionException</a></td><td rowspan="1">1446240652210</td><td rowspan="1">2</td></tr><tr class="passedeven"><td><a href="#m16">testUpdateAfterDelete</a></td><td rowspan="1">1446240652219</td><td rowspan="1">1</td></tr></tbody></table><h2>Command line test</h2><h3 id="m0">cz.muni.fi.pa165.project.DriveTest#createDrive</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.hibernate.exception.ConstraintViolationException: could not execute statement
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:129)
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:49)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:126)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:112)
+	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:190)
+	at org.hibernate.engine.jdbc.batch.internal.NonBatchingBatch.addToBatch(NonBatchingBatch.java:62)
+	at org.hibernate.persister.entity.AbstractEntityPersister.update(AbstractEntityPersister.java:3281)
+	at org.hibernate.persister.entity.AbstractEntityPersister.updateOrInsert(AbstractEntityPersister.java:3183)
+	at org.hibernate.persister.entity.AbstractEntityPersister.update(AbstractEntityPersister.java:3525)
+	at org.hibernate.action.internal.EntityUpdateAction.execute(EntityUpdateAction.java:159)
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:463)
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:349)
+	at org.hibernate.event.internal.AbstractFlushingEventListener.performExecutions(AbstractFlushingEventListener.java:350)
+	at org.hibernate.event.internal.DefaultFlushEventListener.onFlush(DefaultFlushEventListener.java:56)
+	at org.hibernate.internal.SessionImpl.flush(SessionImpl.java:1222)
+	at org.hibernate.internal.SessionImpl.managedFlush(SessionImpl.java:425)
+	at org.hibernate.engine.transaction.internal.jdbc.JdbcTransaction.beforeTransactionCommit(JdbcTransaction.java:101)
+	at org.hibernate.engine.transaction.spi.AbstractTransactionImpl.commit(AbstractTransactionImpl.java:177)
+	at cz.muni.fi.pa165.project.dao.DriveDaoImpl.insertDrive(DriveDaoImpl.java:106)
+	at cz.muni.fi.pa165.project.DriveTest.createDrive(DriveTest.java:69)
+Caused by: org.h2.jdbc.JdbcSQLException: Referential integrity constraint violation: &quot;FK_OWWY85BVXT5QJTV6YV86GGXFX: PUBLIC.DRIVE FOREIGN KEY(VEHICLE_VIN) REFERENCES PUBLIC.VEHICLE(VIN) (&apos;REWGF69849SADF&apos;)&quot;; SQL statement:
+update Drive set employee_id=?, end_date=?, km=?, start_date=?, state=?, vehicle_vin=? where id=? [23506-189]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.get(DbException.java:155)
+	at org.h2.constraint.ConstraintReferential.checkRowOwnTable(ConstraintReferential.java:372)
+	at org.h2.constraint.ConstraintReferential.checkRow(ConstraintReferential.java:314)
+	at org.h2.table.Table.fireConstraints(Table.java:920)
+	at org.h2.table.Table.fireAfterRow(Table.java:938)
+	at org.h2.command.dml.Update.update(Update.java:151)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:78)
+	at org.h2.command.Command.executeUpdate(Command.java:253)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdateInternal(JdbcPreparedStatement.java:157)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdate(JdbcPreparedStatement.java:143)
+	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:187)
+	... 49 more
+... Removed 34 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m1">cz.muni.fi.pa165.project.DriveTest#deleteDrive</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.hibernate.TransactionException: nested transactions not supported
+	at org.hibernate.engine.transaction.spi.AbstractTransactionImpl.begin(AbstractTransactionImpl.java:154)
+	at cz.muni.fi.pa165.project.dao.EmployeeDaoImpl.create(EmployeeDaoImpl.java:19)
+	at cz.muni.fi.pa165.project.DriveTest.deleteDrive(DriveTest.java:295)
+... Removed 34 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m2">cz.muni.fi.pa165.project.DriveTest#getAllDrives</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">cz.muni.fi.pa165.project.util.HibernateErrorException: org.hibernate.TransactionException: nested transactions not supported
+	at cz.muni.fi.pa165.project.dao.DriveDaoImpl.getAllDrives(DriveDaoImpl.java:33)
+	at cz.muni.fi.pa165.project.DriveTest.getAllDrives(DriveTest.java:83)
+Caused by: org.hibernate.TransactionException: nested transactions not supported
+	at org.hibernate.engine.transaction.spi.AbstractTransactionImpl.begin(AbstractTransactionImpl.java:154)
+	at cz.muni.fi.pa165.project.dao.DriveDaoImpl.getAllDrives(DriveDaoImpl.java:25)
+	... 35 more
+... Removed 34 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m3">cz.muni.fi.pa165.project.DriveTest#getDriveByEmployee</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.hibernate.TransactionException: nested transactions not supported
+	at org.hibernate.engine.transaction.spi.AbstractTransactionImpl.begin(AbstractTransactionImpl.java:154)
+	at cz.muni.fi.pa165.project.dao.EmployeeDaoImpl.create(EmployeeDaoImpl.java:19)
+	at cz.muni.fi.pa165.project.DriveTest.getDriveByEmployee(DriveTest.java:149)
+... Removed 34 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m4">cz.muni.fi.pa165.project.DriveTest#getDriveById</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.hibernate.TransactionException: nested transactions not supported
+	at org.hibernate.engine.transaction.spi.AbstractTransactionImpl.begin(AbstractTransactionImpl.java:154)
+	at cz.muni.fi.pa165.project.dao.EmployeeDaoImpl.create(EmployeeDaoImpl.java:19)
+	at cz.muni.fi.pa165.project.DriveTest.getDriveById(DriveTest.java:120)
+... Removed 34 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m5">cz.muni.fi.pa165.project.DriveTest#getDriveByVehicle</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.hibernate.TransactionException: nested transactions not supported
+	at org.hibernate.engine.transaction.spi.AbstractTransactionImpl.begin(AbstractTransactionImpl.java:154)
+	at cz.muni.fi.pa165.project.dao.EmployeeDaoImpl.create(EmployeeDaoImpl.java:19)
+	at cz.muni.fi.pa165.project.DriveTest.getDriveByVehicle(DriveTest.java:184)
+... Removed 34 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m6">cz.muni.fi.pa165.project.DriveTest#updateDrive</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.hibernate.TransactionException: nested transactions not supported
+	at org.hibernate.engine.transaction.spi.AbstractTransactionImpl.begin(AbstractTransactionImpl.java:154)
+	at cz.muni.fi.pa165.project.dao.EmployeeDaoImpl.create(EmployeeDaoImpl.java:19)
+	at cz.muni.fi.pa165.project.DriveTest.updateDrive(DriveTest.java:216)
+... Removed 34 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m7">cz.muni.fi.pa165.project.EmployeeTest#employeeCreateTest</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.hibernate.TransactionException: nested transactions not supported
+	at org.hibernate.engine.transaction.spi.AbstractTransactionImpl.begin(AbstractTransactionImpl.java:154)
+	at cz.muni.fi.pa165.project.EmployeeTest.employeeCreateTest(EmployeeTest.java:53)
+... Removed 34 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m8">cz.muni.fi.pa165.project.EmployeeTest#employeeDeleteTest</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.hibernate.TransactionException: nested transactions not supported
+	at org.hibernate.engine.transaction.spi.AbstractTransactionImpl.begin(AbstractTransactionImpl.java:154)
+	at cz.muni.fi.pa165.project.EmployeeTest.employeeDeleteTest(EmployeeTest.java:121)
+... Removed 34 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m9">cz.muni.fi.pa165.project.EmployeeTest#employeeFindTest</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.hibernate.TransactionException: nested transactions not supported
+	at org.hibernate.engine.transaction.spi.AbstractTransactionImpl.begin(AbstractTransactionImpl.java:154)
+	at cz.muni.fi.pa165.project.dao.EmployeeDaoImpl.findAll(EmployeeDaoImpl.java:30)
+	at cz.muni.fi.pa165.project.EmployeeTest.employeeFindTest(EmployeeTest.java:80)
+... Removed 34 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m10">cz.muni.fi.pa165.project.EmployeeTest#employeeUpdateTest</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.hibernate.TransactionException: nested transactions not supported
+	at org.hibernate.engine.transaction.spi.AbstractTransactionImpl.begin(AbstractTransactionImpl.java:154)
+	at cz.muni.fi.pa165.project.dao.EmployeeDaoImpl.update(EmployeeDaoImpl.java:54)
+	at cz.muni.fi.pa165.project.EmployeeTest.employeeUpdateTest(EmployeeTest.java:101)
+... Removed 34 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m11">cz.muni.fi.pa165.project.ServiceCheckTest#ServiceCheckDeleteTest</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.hibernate.TransactionException: nested transactions not supported
+	at org.hibernate.engine.transaction.spi.AbstractTransactionImpl.begin(AbstractTransactionImpl.java:154)
+	at cz.muni.fi.pa165.project.ServiceCheckTest.ServiceCheckDeleteTest(ServiceCheckTest.java:169)
+... Removed 34 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m12">cz.muni.fi.pa165.project.ServiceCheckTest#ServiceCheckInsertTest</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.hibernate.TransactionException: nested transactions not supported
+	at org.hibernate.engine.transaction.spi.AbstractTransactionImpl.begin(AbstractTransactionImpl.java:154)
+	at cz.muni.fi.pa165.project.dao.VehicleDaoImpl.insert(VehicleDaoImpl.java:74)
+	at cz.muni.fi.pa165.project.ServiceCheckTest.ServiceCheckInsertTest(ServiceCheckTest.java:59)
+... Removed 34 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m13">cz.muni.fi.pa165.project.ServiceCheckTest#ServiceCheckUpdateTest</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.hibernate.TransactionException: nested transactions not supported
+	at org.hibernate.engine.transaction.spi.AbstractTransactionImpl.begin(AbstractTransactionImpl.java:154)
+	at cz.muni.fi.pa165.project.ServiceCheckTest.ServiceCheckUpdateTest(ServiceCheckTest.java:141)
+... Removed 34 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m14">cz.muni.fi.pa165.project.ServiceCheckTest#findAllVehiclesAndServiceChecks</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.hibernate.TransactionException: nested transactions not supported
+	at org.hibernate.engine.transaction.spi.AbstractTransactionImpl.begin(AbstractTransactionImpl.java:154)
+	at cz.muni.fi.pa165.project.dao.VehicleDaoImpl.findAll(VehicleDaoImpl.java:18)
+	at cz.muni.fi.pa165.project.ServiceCheckTest.findAllVehiclesAndServiceChecks(ServiceCheckTest.java:108)
+... Removed 34 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m15">cz.muni.fi.pa165.project.ServiceCheckTest#testDoubleDeletionException</h3><table class="result"><tr><th>Expected Exception</th></tr><tr><td><div class="stacktrace">org.hibernate.HibernateException: cz.muni.fi.pa165.project.util.HibernateErrorException: org.hibernate.TransactionException: nested transactions not supported
+	at cz.muni.fi.pa165.project.ServiceCheckTest.testDoubleDeletionException(ServiceCheckTest.java:201)
+Caused by: cz.muni.fi.pa165.project.util.HibernateErrorException: org.hibernate.TransactionException: nested transactions not supported
+	at cz.muni.fi.pa165.project.dao.ServiceCheckDaoImpl.findServiceCheck(ServiceCheckDaoImpl.java:75)
+	at cz.muni.fi.pa165.project.ServiceCheckTest.testDoubleDeletionException(ServiceCheckTest.java:197)
+	... 34 more
+Caused by: org.hibernate.TransactionException: nested transactions not supported
+	at org.hibernate.engine.transaction.spi.AbstractTransactionImpl.begin(AbstractTransactionImpl.java:154)
+	at cz.muni.fi.pa165.project.dao.ServiceCheckDaoImpl.findServiceCheck(ServiceCheckDaoImpl.java:66)
+	... 35 more
+... Removed 34 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m16">cz.muni.fi.pa165.project.ServiceCheckTest#testUpdateAfterDelete</h3><table class="result"><tr><th>Expected Exception</th></tr><tr><td><div class="stacktrace">org.hibernate.HibernateException: cz.muni.fi.pa165.project.util.HibernateErrorException: org.hibernate.TransactionException: nested transactions not supported
+	at cz.muni.fi.pa165.project.ServiceCheckTest.testUpdateAfterDelete(ServiceCheckTest.java:214)
+Caused by: cz.muni.fi.pa165.project.util.HibernateErrorException: org.hibernate.TransactionException: nested transactions not supported
+	at cz.muni.fi.pa165.project.dao.ServiceCheckDaoImpl.findServiceCheck(ServiceCheckDaoImpl.java:75)
+	at cz.muni.fi.pa165.project.ServiceCheckTest.testUpdateAfterDelete(ServiceCheckTest.java:209)
+	... 34 more
+Caused by: org.hibernate.TransactionException: nested transactions not supported
+	at org.hibernate.engine.transaction.spi.AbstractTransactionImpl.begin(AbstractTransactionImpl.java:154)
+	at cz.muni.fi.pa165.project.dao.ServiceCheckDaoImpl.findServiceCheck(ServiceCheckDaoImpl.java:66)
+	... 35 more
+... Removed 34 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p></body></html>

@@ -1,80 +1,98 @@
 package cz.muni.fi.pa165.project.dao;
 
 import cz.muni.fi.pa165.project.entity.Vehicle;
+import cz.muni.fi.pa165.project.util.HibernateErrorException;
 import cz.muni.fi.pa165.project.util.HibernateUtil;
 import org.hibernate.Session;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.HibernateException;
 
 /**
  * @author Mario Kudolani | mariok@mail.muni.cz | created: 27.10.2015
  */
 public class VehicleDaoImpl implements VehicleDao {
 
-	public List<Vehicle> findAll() {
-		List<Vehicle> vehicles;
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.getTransaction().begin();
+    public List<Vehicle> findAll() throws HibernateErrorException {
+        try {
+            List<Vehicle> vehicles;
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.getTransaction().begin();
 
-		vehicles = session.createCriteria(Vehicle.class).list();
+            vehicles = session.createCriteria(Vehicle.class).list();
 
-		session.getTransaction().commit();
+            session.getTransaction().commit();
 
-		return vehicles;
-	}
+            return vehicles;
+        } catch (HibernateException ex) {
+            throw new HibernateErrorException(ex);
+        }
+    }
 
-	public Vehicle findByVin(String vin) {
-		if(vin == null){
-			throw new IllegalArgumentException("Vin is null!");
-		}
+    public Vehicle findByVin(String vin) throws HibernateErrorException {
+        if (vin == null) {
+            throw new IllegalArgumentException("Vin is null!");
+        }
+        try {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.getTransaction().begin();
 
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.getTransaction().begin();
+            Vehicle vehicle = (Vehicle) session.get(Vehicle.class, vin);
 
-		Vehicle vehicle = (Vehicle) session.get(Vehicle.class, vin);
+            session.getTransaction().commit();
 
-		session.getTransaction().commit();
+            return vehicle;
+        } catch (HibernateException ex) {
+            throw new HibernateErrorException(ex);
+        }
+    }
 
-		return vehicle;
-	}
+    public void update(Vehicle vehicle) throws HibernateErrorException {
+        if (vehicle == null) {
+            throw new IllegalArgumentException("Vehicle is null!");
+        }
+        try {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.getTransaction().begin();
 
-	public void update(Vehicle vehicle) {
-		if(vehicle == null){
-			throw new IllegalArgumentException("Vehicle is null!");
-		}
+            session.update(vehicle);
 
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.getTransaction().begin();
+            session.getTransaction().commit();
+        } catch (HibernateException ex) {
+            throw new HibernateErrorException(ex);
+        }
+    }
 
-		session.update(vehicle);
+    public void delete(Vehicle vehicle) throws HibernateErrorException {
+        if (vehicle == null) {
+            throw new IllegalArgumentException("Vehicle is null!");
+        }
+        try {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.getTransaction().begin();
 
-		session.getTransaction().commit();
-	}
+            session.delete(vehicle);
 
-	public void delete(Vehicle vehicle) {
-		if(vehicle == null){
-			throw new IllegalArgumentException("Vehicle is null!");
-		}
+            session.getTransaction().commit();
+        } catch (HibernateException ex) {
+            throw new HibernateErrorException(ex);
+        }
+    }
 
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.getTransaction().begin();
+    public void insert(Vehicle vehicle) throws HibernateErrorException {
+        if (vehicle == null) {
+            throw new IllegalArgumentException("Vehicle is null!");
+        }
+        try {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.getTransaction().begin();
 
-		session.delete(vehicle);
+            session.save(vehicle);
 
-		session.getTransaction().commit();
-	}
-
-	public void insert(Vehicle vehicle) {
-		if(vehicle == null){
-			throw new IllegalArgumentException("Vehicle is null!");
-		}
-
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.getTransaction().begin();
-
-		session.save(vehicle);
-
-		session.getTransaction().commit();
-	}
+            session.getTransaction().commit();
+        } catch (HibernateException ex) {
+            throw new HibernateErrorException(ex);
+        }
+    }
 }

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite verbose="0" name="Failed suite [Command line suite]">
+  <test name="Command line test(failed)">
+    <classes>
+      <class name="cz.muni.fi.pa165.project.ServiceCheckTest">
+        <methods>
+          <include name="ServiceCheckUpdateTest"/>
+          <include name="ServiceCheckDeleteTest"/>
+          <include name="ServiceCheckInsertTest"/>
+          <include name="findAllVehiclesAndServiceChecks"/>
+        </methods>
+      </class> <!-- cz.muni.fi.pa165.project.ServiceCheckTest -->
+      <class name="cz.muni.fi.pa165.project.DriveTest">
+        <methods>
+          <include name="deleteDrive"/>
+          <include name="getAllDrives"/>
+          <include name="getDriveByEmployee"/>
+          <include name="getDriveByVehicle"/>
+          <include name="getDriveById"/>
+          <include name="createDrive"/>
+          <include name="updateDrive"/>
+          <include name="initializeDrive"/>
+        </methods>
+      </class> <!-- cz.muni.fi.pa165.project.DriveTest -->
+      <class name="cz.muni.fi.pa165.project.EmployeeTest">
+        <methods>
+          <include name="initialize"/>
+          <include name="employeeCreateTest"/>
+          <include name="employeeDeleteTest"/>
+          <include name="employeeFindTest"/>
+          <include name="employeeUpdateTest"/>
+        </methods>
+      </class> <!-- cz.muni.fi.pa165.project.EmployeeTest -->
+    </classes>
+  </test> <!-- Command line test(failed) -->
+</suite> <!-- Failed suite [Command line suite] -->

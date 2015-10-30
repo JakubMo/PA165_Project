@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.project.dao;
 
 import cz.muni.fi.pa165.project.entity.Vehicle;
+import cz.muni.fi.pa165.project.util.HibernateErrorException;
 
 import java.util.List;
 
@@ -12,32 +13,37 @@ public interface VehicleDao {
 	/**
 	 * List all vehicles
 	 * @return list with vehicles
+     * @throws cz.muni.fi.pa165.project.util.HibernateErrorException
 	 */
-	List<Vehicle> findAll();
+	List<Vehicle> findAll() throws HibernateErrorException;
 
 	/**
 	 * Get vehicle by id
 	 *
 	 * @param vin vehicle's vin
 	 * @return vehicle
+     * @throws cz.muni.fi.pa165.project.util.HibernateErrorException
 	 */
-	Vehicle findByVin(String vin);
+	Vehicle findByVin(String vin) throws HibernateErrorException;
 
 	/**
 	 * Update vehicle
 	 * @param vehicle vehicle to be updated
+     * @throws cz.muni.fi.pa165.project.util.HibernateErrorException
 	 */
-	void update(Vehicle vehicle);
+	void update(Vehicle vehicle) throws HibernateErrorException;
 
 	/**
 	 * Remove vehicle
 	 * @param vehicle vehicle to be removed
+     * @throws cz.muni.fi.pa165.project.util.HibernateErrorException
 	 */
-	void delete(Vehicle vehicle);
+	void delete(Vehicle vehicle) throws HibernateErrorException;
 
 	/**
 	 * Insert new vehicle
 	 * @param vehicle vehicle to be inserted
+     * @throws cz.muni.fi.pa165.project.util.HibernateErrorException
 	 */
-	void insert(Vehicle vehicle);
+	void insert(Vehicle vehicle) throws HibernateErrorException;
 }
