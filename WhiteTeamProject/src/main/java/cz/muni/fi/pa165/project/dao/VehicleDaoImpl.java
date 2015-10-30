@@ -15,9 +15,10 @@ import org.hibernate.HibernateException;
 public class VehicleDaoImpl implements VehicleDao {
 
     public List<Vehicle> findAll() throws HibernateErrorException {
+        Session session = null;
         try {
             List<Vehicle> vehicles;
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
             session.getTransaction().begin();
 
             vehicles = session.createCriteria(Vehicle.class).list();
@@ -26,6 +27,9 @@ public class VehicleDaoImpl implements VehicleDao {
 
             return vehicles;
         } catch (HibernateException ex) {
+            if (session != null) {
+                session.getTransaction().rollback();
+            }
             throw new HibernateErrorException(ex);
         }
     }
@@ -34,8 +38,9 @@ public class VehicleDaoImpl implements VehicleDao {
         if (vin == null) {
             throw new IllegalArgumentException("Vin is null!");
         }
+        Session session = null;
         try {
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
             session.getTransaction().begin();
 
             Vehicle vehicle = (Vehicle) session.get(Vehicle.class, vin);
@@ -44,6 +49,9 @@ public class VehicleDaoImpl implements VehicleDao {
 
             return vehicle;
         } catch (HibernateException ex) {
+            if (session != null) {
+                session.getTransaction().rollback();
+            }
             throw new HibernateErrorException(ex);
         }
     }
@@ -52,14 +60,18 @@ public class VehicleDaoImpl implements VehicleDao {
         if (vehicle == null) {
             throw new IllegalArgumentException("Vehicle is null!");
         }
+        Session session = null;
         try {
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
             session.getTransaction().begin();
 
             session.update(vehicle);
 
             session.getTransaction().commit();
         } catch (HibernateException ex) {
+            if (session != null) {
+                session.getTransaction().rollback();
+            }
             throw new HibernateErrorException(ex);
         }
     }
@@ -68,14 +80,18 @@ public class VehicleDaoImpl implements VehicleDao {
         if (vehicle == null) {
             throw new IllegalArgumentException("Vehicle is null!");
         }
+        Session session = null;
         try {
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
             session.getTransaction().begin();
 
             session.delete(vehicle);
 
             session.getTransaction().commit();
         } catch (HibernateException ex) {
+            if (session != null) {
+                session.getTransaction().rollback();
+            }
             throw new HibernateErrorException(ex);
         }
     }
@@ -84,14 +100,18 @@ public class VehicleDaoImpl implements VehicleDao {
         if (vehicle == null) {
             throw new IllegalArgumentException("Vehicle is null!");
         }
+        Session session = null;
         try {
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
             session.getTransaction().begin();
 
             session.save(vehicle);
 
             session.getTransaction().commit();
         } catch (HibernateException ex) {
+            if (session != null) {
+                session.getTransaction().rollback();
+            }
             throw new HibernateErrorException(ex);
         }
     }

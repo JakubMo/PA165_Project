@@ -95,7 +95,7 @@ public class EmployeeTest {
         String updatedPhoneNumber = "0179 324 865";
         
         Employee updatedEmployee2 = new Employee(employee2.getId(), employee2.getFirstname(), employee2.getLastname(), employee2.getEmail(), 
-                employee2.getPhoneNumber(), employee2.getRole(), employee2.getCredit(), employee2.getCategory());
+                employee2.getPhoneNumber(), employee2.getRole(), employee2.getCredit(), employee2.getCategory(), employee2.getDrives());
         updatedEmployee2.setEmail(updatedEmail);
         updatedEmployee2.setPhoneNumber(updatedPhoneNumber);
         
