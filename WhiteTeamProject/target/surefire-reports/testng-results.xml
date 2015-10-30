@@ -2,46 +2,46 @@
 <testng-results skipped="0" failed="0" total="8" passed="8">
   <reporter-output>
   </reporter-output>
-  <suite name="Command line suite" duration-ms="2357" started-at="2015-10-30T14:36:25Z" finished-at="2015-10-30T14:36:28Z">
+  <suite name="Command line suite" duration-ms="1160" started-at="2015-10-30T14:47:36Z" finished-at="2015-10-30T14:47:37Z">
     <groups>
     </groups>
-    <test name="Command line test" duration-ms="2357" started-at="2015-10-30T14:36:25Z" finished-at="2015-10-30T14:36:28Z">
+    <test name="Command line test" duration-ms="1160" started-at="2015-10-30T14:47:36Z" finished-at="2015-10-30T14:47:37Z">
       <class name="cz.muni.fi.pa165.project.ServiceCheckTest">
-        <test-method status="PASS" signature="ServiceCheckInsertTest()[pri:0, instance:cz.muni.fi.pa165.project.ServiceCheckTest@1cd072a9]" name="ServiceCheckInsertTest" duration-ms="39" started-at="2015-10-30T15:36:28Z" finished-at="2015-10-30T15:36:28Z">
+        <test-method status="PASS" signature="ServiceCheckInsertTest()[pri:0, instance:cz.muni.fi.pa165.project.ServiceCheckTest@1ba5a14]" name="ServiceCheckInsertTest" duration-ms="22" started-at="2015-10-30T15:47:37Z" finished-at="2015-10-30T15:47:37Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- ServiceCheckInsertTest -->
-        <test-method status="PASS" signature="findAllVehiclesAndServiceChecks()[pri:0, instance:cz.muni.fi.pa165.project.ServiceCheckTest@1cd072a9]" name="findAllVehiclesAndServiceChecks" duration-ms="58" started-at="2015-10-30T15:36:28Z" finished-at="2015-10-30T15:36:28Z">
+        <test-method status="PASS" signature="findAllVehiclesAndServiceChecks()[pri:0, instance:cz.muni.fi.pa165.project.ServiceCheckTest@1ba5a14]" name="findAllVehiclesAndServiceChecks" duration-ms="19" started-at="2015-10-30T15:47:37Z" finished-at="2015-10-30T15:47:37Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- findAllVehiclesAndServiceChecks -->
-        <test-method status="PASS" signature="ServiceCheckUpdateTest()[pri:0, instance:cz.muni.fi.pa165.project.ServiceCheckTest@1cd072a9]" name="ServiceCheckUpdateTest" duration-ms="47" started-at="2015-10-30T15:36:28Z" finished-at="2015-10-30T15:36:28Z">
+        <test-method status="PASS" signature="ServiceCheckUpdateTest()[pri:0, instance:cz.muni.fi.pa165.project.ServiceCheckTest@1ba5a14]" name="ServiceCheckUpdateTest" duration-ms="7" started-at="2015-10-30T15:47:37Z" finished-at="2015-10-30T15:47:37Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- ServiceCheckUpdateTest -->
-        <test-method status="PASS" signature="ServiceCheckDeleteTest()[pri:0, instance:cz.muni.fi.pa165.project.ServiceCheckTest@1cd072a9]" name="ServiceCheckDeleteTest" duration-ms="33" started-at="2015-10-30T15:36:28Z" finished-at="2015-10-30T15:36:28Z">
+        <test-method status="PASS" signature="ServiceCheckDeleteTest()[pri:0, instance:cz.muni.fi.pa165.project.ServiceCheckTest@1ba5a14]" name="ServiceCheckDeleteTest" duration-ms="7" started-at="2015-10-30T15:47:37Z" finished-at="2015-10-30T15:47:37Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- ServiceCheckDeleteTest -->
       </class> <!-- cz.muni.fi.pa165.project.ServiceCheckTest -->
       <class name="cz.muni.fi.pa165.project.EmployeeTest">
-        <test-method status="PASS" signature="initialize()[pri:0, instance:cz.muni.fi.pa165.project.EmployeeTest@880ec60]" name="initialize" is-config="true" duration-ms="15" started-at="2015-10-30T15:36:25Z" finished-at="2015-10-30T15:36:26Z">
+        <test-method status="PASS" signature="initialize()[pri:0, instance:cz.muni.fi.pa165.project.EmployeeTest@1251891]" name="initialize" is-config="true" duration-ms="12" started-at="2015-10-30T15:47:36Z" finished-at="2015-10-30T15:47:36Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- initialize -->
-        <test-method status="PASS" signature="employeeCreateTest()[pri:0, instance:cz.muni.fi.pa165.project.EmployeeTest@880ec60]" name="employeeCreateTest" duration-ms="2035" started-at="2015-10-30T15:36:26Z" finished-at="2015-10-30T15:36:28Z">
+        <test-method status="PASS" signature="employeeCreateTest()[pri:0, instance:cz.muni.fi.pa165.project.EmployeeTest@1251891]" name="employeeCreateTest" duration-ms="1060" started-at="2015-10-30T15:47:36Z" finished-at="2015-10-30T15:47:37Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- employeeCreateTest -->
-        <test-method status="PASS" signature="employeeFindTest()[pri:0, instance:cz.muni.fi.pa165.project.EmployeeTest@880ec60]" name="employeeFindTest" duration-ms="25" started-at="2015-10-30T15:36:28Z" finished-at="2015-10-30T15:36:28Z">
+        <test-method status="PASS" signature="employeeFindTest()[pri:0, instance:cz.muni.fi.pa165.project.EmployeeTest@1251891]" name="employeeFindTest" duration-ms="13" started-at="2015-10-30T15:47:37Z" finished-at="2015-10-30T15:47:37Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- employeeFindTest -->
-        <test-method status="PASS" signature="employeeUpdateTest()[pri:0, instance:cz.muni.fi.pa165.project.EmployeeTest@880ec60]" name="employeeUpdateTest" duration-ms="48" started-at="2015-10-30T15:36:28Z" finished-at="2015-10-30T15:36:28Z">
+        <test-method status="PASS" signature="employeeUpdateTest()[pri:0, instance:cz.muni.fi.pa165.project.EmployeeTest@1251891]" name="employeeUpdateTest" duration-ms="6" started-at="2015-10-30T15:47:37Z" finished-at="2015-10-30T15:47:37Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- employeeUpdateTest -->
-        <test-method status="PASS" signature="employeeDeleteTest()[pri:0, instance:cz.muni.fi.pa165.project.EmployeeTest@880ec60]" name="employeeDeleteTest" duration-ms="27" started-at="2015-10-30T15:36:28Z" finished-at="2015-10-30T15:36:28Z">
+        <test-method status="PASS" signature="employeeDeleteTest()[pri:0, instance:cz.muni.fi.pa165.project.EmployeeTest@1251891]" name="employeeDeleteTest" duration-ms="4" started-at="2015-10-30T15:47:37Z" finished-at="2015-10-30T15:47:37Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- employeeDeleteTest -->

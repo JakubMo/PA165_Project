@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.project.dao;
 
 import cz.muni.fi.pa165.project.entity.ServiceCheck;
+import cz.muni.fi.pa165.project.entity.Vehicle;
 import java.util.List;
 
 /**
@@ -44,4 +45,12 @@ public interface ServiceCheckDao {
      * @return list of all service checks
      */
     public List<ServiceCheck> getAllServiceChecks();
+    
+    /**
+     * Finds all service checks of given vehicle.
+     * 
+     * @param vehicle target vehicle
+     * @return collection of service checks of vehicle
+     */
+    public List<ServiceCheck> getAllServiceChecksByVehicle(Vehicle vehicle);
 }
