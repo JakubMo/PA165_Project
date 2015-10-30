@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,6 +27,7 @@ public class ServiceCheck implements Serializable {
      * ID of service check.
      */
     @Id
+    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
@@ -33,6 +35,7 @@ public class ServiceCheck implements Serializable {
     /**
      * Current status of service check.
      */
+    @Enumerated
     @Column(name = "status")
     private ServiceCheckStatus status;
     
@@ -53,13 +56,14 @@ public class ServiceCheck implements Serializable {
     /**
      * Employee who did the service check.
      */
-    @Column(name = "service_employee")
     @NotNull
+    @Column(name = "service_employee")
     private String serviceEmployee;
     
     /**
      * Optional report message of service check.
      */
+    @NotNull
     @Column(name = "report")
     private String report;
 
@@ -223,7 +227,7 @@ public class ServiceCheck implements Serializable {
         final ServiceCheck other = (ServiceCheck) obj;
         return this.getId().equals(other.getId()) && 
                 (this.getStatus() == other.getStatus()) && 
-                this.getServiceCheckDate().equals(other.getServiceCheckDate()) && 
+                ( ((this.getServiceCheckDate() == null) && (other.getServiceCheckDate() == null)) || this.getServiceCheckDate().equals(other.getServiceCheckDate()) ) &&    // both are null or they are equal
                 this.getVehicle().equals(other.getVehicle()) && 
                 this.getServiceEmployee().equals(other.getServiceEmployee()) && 
                 this.getReport().equals(other.getReport());
@@ -232,12 +236,12 @@ public class ServiceCheck implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 97 * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = 97 * hash + this.id.hashCode();
         hash = 97 * hash + this.status.getValue();
         hash = 97 * hash + (this.serviceCheckDate != null ? this.serviceCheckDate.hashCode() : 0);
         hash = 97 * hash + this.vehicle.hashCode();
         hash = 97 * hash + this.serviceEmployee.hashCode();
-        hash = 97 * hash + (this.report != null ? this.report.hashCode() : 0);
+        hash = 97 * hash + this.report.hashCode();
         return hash;
     }
 }
