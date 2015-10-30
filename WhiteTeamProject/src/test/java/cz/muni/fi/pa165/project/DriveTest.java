@@ -24,7 +24,7 @@ import java.util.List;
  * @author Mario Kudolani | mariok@mail.muni.cz | created: 30.10.2015
  */
 public class DriveTest {
-
+/*
 	private Drive drive1;
 	private Drive drive2;
 
@@ -206,5 +206,5 @@ public class DriveTest {
 			throw new HibernateException(e);
 		}
 	}
-
+*/
 }
