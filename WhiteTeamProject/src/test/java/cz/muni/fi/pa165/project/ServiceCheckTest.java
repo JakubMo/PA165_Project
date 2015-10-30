@@ -106,7 +106,8 @@ public class ServiceCheckTest {
     public void findAllVehiclesAndServiceChecks() {
         try {
             List<Vehicle> vehicles = new VehicleDaoImpl().findAll();
-            List<ServiceCheck> scsAll = new ServiceCheckDaoImpl().getAllServiceChecks();
+            ServiceCheckDao scDao = new ServiceCheckDaoImpl();
+            List<ServiceCheck> scsAll = scDao.getAllServiceChecks();
             Assert.assertEquals(scsAll.size(), 4);
             Assert.assertEquals(vehicles.size(), 2);
             Vehicle v1 = vehicles.get(0);
@@ -114,17 +115,8 @@ public class ServiceCheckTest {
             Assert.assertEquals(v1, v1);
             Assert.assertNotEquals(v1, v2);
 
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            session.getTransaction().begin();
-
-            List<ServiceCheck> scs1 = session.createQuery("select s from ServiceCheck s where s.vehicle=:v")
-                    .setParameter("v", v1)
-                    .list();
-
-            List<ServiceCheck> scs2 = session.createQuery("select s from ServiceCheck s where s.vehicle=:v")
-                    .setParameter("v", v2)
-                    .list();
-            session.getTransaction().commit();
+            List<ServiceCheck> scs1 = scDao.getAllServiceChecksByVehicle(v1);
+            List<ServiceCheck> scs2 = scDao.getAllServiceChecksByVehicle(v2);
 
             Assert.assertEquals(scs1.size(), 3);
             Assert.assertEquals(scs2.size(), 1);
@@ -153,27 +145,16 @@ public class ServiceCheckTest {
                     .uniqueResult();
             session.getTransaction().commit();
 
+            ServiceCheckDao scDao = new ServiceCheckDaoImpl();
             VehicleDao vDao = new VehicleDaoImpl();
             Vehicle v1 = vDao.findByVin(v1Vin);
             Vehicle v2 = vDao.findByVin(v2Vin);
 
             sc.setVehicle(v2);
-            new ServiceCheckDaoImpl().updateServiceCheck(sc);
+            scDao.updateServiceCheck(sc);
 
-            if (!session.isOpen()) {
-                session = HibernateUtil.getSessionFactory().openSession();
-            }
-
-            session.getTransaction().begin();
-
-            List<ServiceCheck> scs1 = session.createQuery("select s from ServiceCheck s where s.vehicle=:v")
-                    .setParameter("v", v1)
-                    .list();
-
-            List<ServiceCheck> scs2 = session.createQuery("select s from ServiceCheck s where s.vehicle=:v")
-                    .setParameter("v", v2)
-                    .list();
-            session.getTransaction().commit();
+            List<ServiceCheck> scs1 = scDao.getAllServiceChecksByVehicle(v1);
+            List<ServiceCheck> scs2 = scDao.getAllServiceChecksByVehicle(v2);
 
             Assert.assertEquals(scs1.size(), scs2.size());
         } catch (HibernateErrorException hex) {
@@ -192,26 +173,15 @@ public class ServiceCheckTest {
                     .uniqueResult();
             session.getTransaction().commit();
 
+            ServiceCheckDao scDao = new ServiceCheckDaoImpl();
             VehicleDao vDao = new VehicleDaoImpl();
             Vehicle v1 = vDao.findByVin(v1Vin);
             Vehicle v2 = vDao.findByVin(v2Vin);
 
-            new ServiceCheckDaoImpl().deleteServiceCheck(sc);
+            scDao.deleteServiceCheck(sc);
 
-            if (!session.isOpen()) {
-                session = HibernateUtil.getSessionFactory().openSession();
-            }
-
-            session.getTransaction().begin();
-
-            List<ServiceCheck> scs1 = session.createQuery("select s from ServiceCheck s where s.vehicle=:v")
-                    .setParameter("v", v1)
-                    .list();
-
-            List<ServiceCheck> scs2 = session.createQuery("select s from ServiceCheck s where s.vehicle=:v")
-                    .setParameter("v", v2)
-                    .list();
-            session.getTransaction().commit();
+            List<ServiceCheck> scs1 = scDao.getAllServiceChecksByVehicle(v1);
+            List<ServiceCheck> scs2 = scDao.getAllServiceChecksByVehicle(v2);
 
             Assert.assertEquals(scs1.size(), 2);
             Assert.assertEquals(scs2.size(), 1);
@@ -227,6 +197,19 @@ public class ServiceCheckTest {
             ServiceCheck sc = scDao.findServiceCheck(1L);
             scDao.deleteServiceCheck(sc);
             scDao.deleteServiceCheck(sc);
+        } catch (HibernateErrorException hex) {
+            throw new HibernateException(hex);
+        }
+    }
+    
+    @Test(priority=6, expectedExceptions=HibernateException.class)
+    public void testUpdateAfterDelete(){
+        try {
+            ServiceCheckDao scDao = new ServiceCheckDaoImpl(); 
+            ServiceCheck sc = scDao.findServiceCheck(1L);
+            scDao.deleteServiceCheck(sc);
+            sc.setServiceEmployee("Martin");
+            scDao.updateServiceCheck(sc);
         } catch (HibernateErrorException hex) {
             throw new HibernateException(hex);
         }

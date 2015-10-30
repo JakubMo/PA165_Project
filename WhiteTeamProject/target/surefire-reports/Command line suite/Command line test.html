@@ -55,11 +55,11 @@ function toggleAllBoxes() {
 <body>
 <h2 align='center'>Command line test</h2><table border='1' align="center">
 <tr>
-<td>Tests passed/Failed/Skipped:</td><td>9/0/0</td>
+<td>Tests passed/Failed/Skipped:</td><td>10/0/0</td>
 </tr><tr>
-<td>Started on:</td><td>Fri Oct 30 16:36:03 CET 2015</td>
+<td>Started on:</td><td>Fri Oct 30 16:47:05 CET 2015</td>
 </tr>
-<tr><td>Total time:</td><td>2 seconds (2282 ms)</td>
+<tr><td>Total time:</td><td>2 seconds (2459 ms)</td>
 </tr><tr>
 <td>Included groups:</td><td></td>
 </tr><tr>
@@ -78,17 +78,17 @@ function toggleAllBoxes() {
 <td title='cz.muni.fi.pa165.project.ServiceCheckTest.ServiceCheckDeleteTest()'><b>ServiceCheckDeleteTest</b><br>Test class: cz.muni.fi.pa165.project.ServiceCheckTest</td>
 <td></td>
 <td>0</td>
-<td>cz.muni.fi.pa165.project.ServiceCheckTest@5594a1b5</td></tr>
+<td>cz.muni.fi.pa165.project.ServiceCheckTest@3b6eb2ec</td></tr>
 <tr>
 <td title='cz.muni.fi.pa165.project.ServiceCheckTest.ServiceCheckInsertTest()'><b>ServiceCheckInsertTest</b><br>Test class: cz.muni.fi.pa165.project.ServiceCheckTest</td>
 <td></td>
 <td>0</td>
-<td>cz.muni.fi.pa165.project.ServiceCheckTest@5594a1b5</td></tr>
+<td>cz.muni.fi.pa165.project.ServiceCheckTest@3b6eb2ec</td></tr>
 <tr>
 <td title='cz.muni.fi.pa165.project.ServiceCheckTest.ServiceCheckUpdateTest()'><b>ServiceCheckUpdateTest</b><br>Test class: cz.muni.fi.pa165.project.ServiceCheckTest</td>
 <td></td>
 <td>0</td>
-<td>cz.muni.fi.pa165.project.ServiceCheckTest@5594a1b5</td></tr>
+<td>cz.muni.fi.pa165.project.ServiceCheckTest@3b6eb2ec</td></tr>
 <tr>
 <td title='cz.muni.fi.pa165.project.EmployeeTest.employeeCreateTest()'><b>employeeCreateTest</b><br>Test class: cz.muni.fi.pa165.project.EmployeeTest</td>
 <td></td>
@@ -113,14 +113,14 @@ function toggleAllBoxes() {
 <td title='cz.muni.fi.pa165.project.ServiceCheckTest.findAllVehiclesAndServiceChecks()'><b>findAllVehiclesAndServiceChecks</b><br>Test class: cz.muni.fi.pa165.project.ServiceCheckTest</td>
 <td></td>
 <td>0</td>
-<td>cz.muni.fi.pa165.project.ServiceCheckTest@5594a1b5</td></tr>
+<td>cz.muni.fi.pa165.project.ServiceCheckTest@3b6eb2ec</td></tr>
 <tr>
 <td title='cz.muni.fi.pa165.project.ServiceCheckTest.testDoubleDeletionException()'><b>testDoubleDeletionException</b><br>Test class: cz.muni.fi.pa165.project.ServiceCheckTest</td>
 <td><div><pre>org.hibernate.HibernateException: cz.muni.fi.pa165.project.util.HibernateErrorException: org.hibernate.StaleStateException: Batch update returned unexpected row count from update [0]; actual row count: 0; expected: 1
-	at cz.muni.fi.pa165.project.ServiceCheckTest.testDoubleDeletionException(ServiceCheckTest.java:231)
+	at cz.muni.fi.pa165.project.ServiceCheckTest.testDoubleDeletionException(ServiceCheckTest.java:201)
 Caused by: cz.muni.fi.pa165.project.util.HibernateErrorException: org.hibernate.StaleStateException: Batch update returned unexpected row count from update [0]; actual row count: 0; expected: 1
 	at cz.muni.fi.pa165.project.dao.ServiceCheckDaoImpl.deleteServiceCheck(ServiceCheckDaoImpl.java:58)
-	at cz.muni.fi.pa165.project.ServiceCheckTest.testDoubleDeletionException(ServiceCheckTest.java:229)
+	at cz.muni.fi.pa165.project.ServiceCheckTest.testDoubleDeletionException(ServiceCheckTest.java:199)
 	... 34 more
 Caused by: org.hibernate.StaleStateException: Batch update returned unexpected row count from update [0]; actual row count: 0; expected: 1
 	at org.hibernate.jdbc.Expectations$BasicExpectation.checkBatched(Expectations.java:81)
@@ -139,9 +139,9 @@ Caused by: org.hibernate.StaleStateException: Batch update returned unexpected r
 	at org.hibernate.engine.transaction.spi.AbstractTransactionImpl.commit(AbstractTransactionImpl.java:177)
 	at cz.muni.fi.pa165.project.dao.ServiceCheckDaoImpl.deleteServiceCheck(ServiceCheckDaoImpl.java:55)
 	... 35 more
-... Removed 34 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1209451152", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
-<div class='stack-trace' id='stack-trace1209451152'><pre>org.hibernate.HibernateException: cz.muni.fi.pa165.project.util.HibernateErrorException: org.hibernate.StaleStateException: Batch update returned unexpected row count from update [0]; actual row count: 0; expected: 1
-	at cz.muni.fi.pa165.project.ServiceCheckTest.testDoubleDeletionException(ServiceCheckTest.java:231)
+... Removed 34 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace82825098", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace82825098'><pre>org.hibernate.HibernateException: cz.muni.fi.pa165.project.util.HibernateErrorException: org.hibernate.StaleStateException: Batch update returned unexpected row count from update [0]; actual row count: 0; expected: 1
+	at cz.muni.fi.pa165.project.ServiceCheckTest.testDoubleDeletionException(ServiceCheckTest.java:201)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -178,7 +178,7 @@ Caused by: org.hibernate.StaleStateException: Batch update returned unexpected r
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:68)
 Caused by: cz.muni.fi.pa165.project.util.HibernateErrorException: org.hibernate.StaleStateException: Batch update returned unexpected row count from update [0]; actual row count: 0; expected: 1
 	at cz.muni.fi.pa165.project.dao.ServiceCheckDaoImpl.deleteServiceCheck(ServiceCheckDaoImpl.java:58)
-	at cz.muni.fi.pa165.project.ServiceCheckTest.testDoubleDeletionException(ServiceCheckTest.java:229)
+	at cz.muni.fi.pa165.project.ServiceCheckTest.testDoubleDeletionException(ServiceCheckTest.java:199)
 	... 34 more
 Caused by: org.hibernate.StaleStateException: Batch update returned unexpected row count from update [0]; actual row count: 0; expected: 1
 	at org.hibernate.jdbc.Expectations$BasicExpectation.checkBatched(Expectations.java:81)
@@ -199,7 +199,67 @@ Caused by: org.hibernate.StaleStateException: Batch update returned unexpected r
 	... 35 more
 </pre></div></td>
 <td>0</td>
-<td>cz.muni.fi.pa165.project.ServiceCheckTest@5594a1b5</td></tr>
+<td>cz.muni.fi.pa165.project.ServiceCheckTest@3b6eb2ec</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.project.ServiceCheckTest.testUpdateAfterDelete()'><b>testUpdateAfterDelete</b><br>Test class: cz.muni.fi.pa165.project.ServiceCheckTest</td>
+<td><div><pre>org.hibernate.HibernateException: cz.muni.fi.pa165.project.util.HibernateErrorException: org.hibernate.TransactionException: nested transactions not supported
+	at cz.muni.fi.pa165.project.ServiceCheckTest.testUpdateAfterDelete(ServiceCheckTest.java:214)
+Caused by: cz.muni.fi.pa165.project.util.HibernateErrorException: org.hibernate.TransactionException: nested transactions not supported
+	at cz.muni.fi.pa165.project.dao.ServiceCheckDaoImpl.findServiceCheck(ServiceCheckDaoImpl.java:75)
+	at cz.muni.fi.pa165.project.ServiceCheckTest.testUpdateAfterDelete(ServiceCheckTest.java:209)
+	... 34 more
+Caused by: org.hibernate.TransactionException: nested transactions not supported
+	at org.hibernate.engine.transaction.spi.AbstractTransactionImpl.begin(AbstractTransactionImpl.java:154)
+	at cz.muni.fi.pa165.project.dao.ServiceCheckDaoImpl.findServiceCheck(ServiceCheckDaoImpl.java:66)
+	... 35 more
+... Removed 34 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace2048102341", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace2048102341'><pre>org.hibernate.HibernateException: cz.muni.fi.pa165.project.util.HibernateErrorException: org.hibernate.TransactionException: nested transactions not supported
+	at cz.muni.fi.pa165.project.ServiceCheckTest.testUpdateAfterDelete(ServiceCheckTest.java:214)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:84)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
+	at org.testng.TestRunner.privateRun(TestRunner.java:767)
+	at org.testng.TestRunner.run(TestRunner.java:617)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:348)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:343)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:305)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:254)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1224)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1149)
+	at org.testng.TestNG.run(TestNG.java:1057)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:70)
+	at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.executeMulti(TestNGDirectoryTestSuite.java:158)
+	at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.execute(TestNGDirectoryTestSuite.java:98)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:111)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:164)
+	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:110)
+	at org.apache.maven.surefire.booter.SurefireStarter.invokeProvider(SurefireStarter.java:175)
+	at org.apache.maven.surefire.booter.SurefireStarter.runSuitesInProcessWhenForked(SurefireStarter.java:107)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:68)
+Caused by: cz.muni.fi.pa165.project.util.HibernateErrorException: org.hibernate.TransactionException: nested transactions not supported
+	at cz.muni.fi.pa165.project.dao.ServiceCheckDaoImpl.findServiceCheck(ServiceCheckDaoImpl.java:75)
+	at cz.muni.fi.pa165.project.ServiceCheckTest.testUpdateAfterDelete(ServiceCheckTest.java:209)
+	... 34 more
+Caused by: org.hibernate.TransactionException: nested transactions not supported
+	at org.hibernate.engine.transaction.spi.AbstractTransactionImpl.begin(AbstractTransactionImpl.java:154)
+	at cz.muni.fi.pa165.project.dao.ServiceCheckDaoImpl.findServiceCheck(ServiceCheckDaoImpl.java:66)
+	... 35 more
+</pre></div></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.project.ServiceCheckTest@3b6eb2ec</td></tr>
 </table><p>
 </body>
 </html>

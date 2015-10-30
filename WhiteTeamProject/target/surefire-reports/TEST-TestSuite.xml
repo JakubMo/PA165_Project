@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="9" failures="0" name="TestSuite" time="2.771" errors="0" skipped="0">
+<testsuite tests="10" failures="0" name="TestSuite" time="3.123" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/home/jakub/jdk1.8.0_65/jre/lib/amd64"/>
@@ -60,13 +60,14 @@
     <property name="sun.desktop" value="gnome"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="cz.muni.fi.pa165.project.EmployeeTest" name="employeeCreateTest" time="2.014"/>
-  <testcase classname="cz.muni.fi.pa165.project.ServiceCheckTest" name="ServiceCheckInsertTest" time="0.04"/>
-  <testcase classname="cz.muni.fi.pa165.project.EmployeeTest" name="employeeFindTest" time="0.032"/>
-  <testcase classname="cz.muni.fi.pa165.project.ServiceCheckTest" name="findAllVehiclesAndServiceChecks" time="0.045"/>
+  <testcase classname="cz.muni.fi.pa165.project.EmployeeTest" name="employeeCreateTest" time="2.087"/>
+  <testcase classname="cz.muni.fi.pa165.project.ServiceCheckTest" name="ServiceCheckInsertTest" time="0.036"/>
+  <testcase classname="cz.muni.fi.pa165.project.EmployeeTest" name="employeeFindTest" time="0.042"/>
+  <testcase classname="cz.muni.fi.pa165.project.ServiceCheckTest" name="findAllVehiclesAndServiceChecks" time="0.098"/>
   <testcase classname="cz.muni.fi.pa165.project.EmployeeTest" name="employeeUpdateTest" time="0.028"/>
-  <testcase classname="cz.muni.fi.pa165.project.ServiceCheckTest" name="ServiceCheckUpdateTest" time="0.018"/>
-  <testcase classname="cz.muni.fi.pa165.project.EmployeeTest" name="employeeDeleteTest" time="0.015"/>
-  <testcase classname="cz.muni.fi.pa165.project.ServiceCheckTest" name="ServiceCheckDeleteTest" time="0.027"/>
+  <testcase classname="cz.muni.fi.pa165.project.ServiceCheckTest" name="ServiceCheckUpdateTest" time="0.05"/>
+  <testcase classname="cz.muni.fi.pa165.project.EmployeeTest" name="employeeDeleteTest" time="0.019"/>
+  <testcase classname="cz.muni.fi.pa165.project.ServiceCheckTest" name="ServiceCheckDeleteTest" time="0.035"/>
   <testcase classname="cz.muni.fi.pa165.project.ServiceCheckTest" name="testDoubleDeletionException" time="0.019"/>
+  <testcase classname="cz.muni.fi.pa165.project.ServiceCheckTest" name="testUpdateAfterDelete" time="0"/>
 </testsuite>
