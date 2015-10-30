@@ -19,6 +19,7 @@ import static org.testng.Assert.*;
  * @author Marek
  */
 public class EmployeeTest {
+    
     private Employee employee1;
     private Employee employee2;
     

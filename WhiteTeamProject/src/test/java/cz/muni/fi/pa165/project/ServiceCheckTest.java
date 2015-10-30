@@ -22,7 +22,6 @@ import org.testng.annotations.Test;
  *
  * @author Jakub Mozucha | j.mozucha@gmail.com | created: 10/29/2015
  */
-
 public class ServiceCheckTest {
 
     String v1Vin = "IPK204t4FG";
@@ -33,62 +32,62 @@ public class ServiceCheckTest {
      */
     @Test(priority = 1)
     public void ServiceCheckInsertTest() {
-        VehicleDao vehicleDao = new VehicleDaoImpl();
-        Vehicle v1 = new Vehicle();
-        v1.setVin(v1Vin);
-        v1.setModel("Mustang");
-        v1.setBrand("Ford");
-        v1.setType("5 door");
-        v1.setYearOfProduction(2009);
-        v1.setEngineType("petrol");
-        v1.setMaxMileage(200000L);
-        v1.setMileage(10000L);
-        v1.setServiceInterval(150);
-
-        Vehicle v2 = new Vehicle();
-        v2.setVin(v2Vin);
-        v2.setModel("Accord");
-        v2.setBrand("Honda");
-        v2.setType("5 door");
-        v2.setYearOfProduction(2007);
-        v2.setEngineType("petrol");
-        v2.setMaxMileage(250000L);
-        v2.setMileage(49000L);
-        v2.setServiceInterval(200);
-
-        vehicleDao.insert(v1);
-        vehicleDao.insert(v2);
-
-        ServiceCheckDao scDao = new ServiceCheckDaoImpl();
-        ServiceCheck sc1 = new ServiceCheck();
-        sc1.setStatus(ServiceCheckStatus.DONE_OK);
-        sc1.setVehicle(v1);
-        sc1.setServiceEmployee("Peter");
-        sc1.setServiceCheckDate(new Date(115, 10, 4));
-        sc1.setReport("please handle with care");
-
-        ServiceCheck sc2 = new ServiceCheck();
-        sc2.setStatus(ServiceCheckStatus.DONE_OK);
-        sc2.setVehicle(v1);
-        sc2.setServiceEmployee("Peter");
-        sc2.setServiceCheckDate(new Date(115, 10, 4));
-        sc2.setReport("please handle with care");
-
-        ServiceCheck sc3 = new ServiceCheck();
-        sc3.setStatus(ServiceCheckStatus.DONE_NOT_OK);
-        sc3.setVehicle(v1);
-        sc3.setServiceEmployee("Peter");
-        sc3.setServiceCheckDate(new Date(115, 10, 4));
-        sc3.setReport("please handle with care");
-
-        ServiceCheck sc4 = new ServiceCheck();
-        sc4.setStatus(ServiceCheckStatus.DONE_OK);
-        sc4.setVehicle(v2);
-        sc4.setServiceEmployee("Peter");
-        sc4.setServiceCheckDate(new Date(115, 10, 4));
-        sc4.setReport("please handle with care");
-
         try {
+            VehicleDao vehicleDao = new VehicleDaoImpl();
+            Vehicle v1 = new Vehicle();
+            v1.setVin(v1Vin);
+            v1.setModel("Mustang");
+            v1.setBrand("Ford");
+            v1.setType("5 door");
+            v1.setYearOfProduction(2009);
+            v1.setEngineType("petrol");
+            v1.setMaxMileage(200000L);
+            v1.setMileage(10000L);
+            v1.setServiceInterval(150);
+
+            Vehicle v2 = new Vehicle();
+            v2.setVin(v2Vin);
+            v2.setModel("Accord");
+            v2.setBrand("Honda");
+            v2.setType("5 door");
+            v2.setYearOfProduction(2007);
+            v2.setEngineType("petrol");
+            v2.setMaxMileage(250000L);
+            v2.setMileage(49000L);
+            v2.setServiceInterval(200);
+
+            vehicleDao.insert(v1);
+            vehicleDao.insert(v2);
+
+            ServiceCheckDao scDao = new ServiceCheckDaoImpl();
+            ServiceCheck sc1 = new ServiceCheck();
+            sc1.setStatus(ServiceCheckStatus.DONE_OK);
+            sc1.setVehicle(v1);
+            sc1.setServiceEmployee("Peter");
+            sc1.setServiceCheckDate(new Date(115, 10, 4));
+            sc1.setReport("please handle with care");
+
+            ServiceCheck sc2 = new ServiceCheck();
+            sc2.setStatus(ServiceCheckStatus.DONE_OK);
+            sc2.setVehicle(v1);
+            sc2.setServiceEmployee("Peter");
+            sc2.setServiceCheckDate(new Date(115, 10, 4));
+            sc2.setReport("please handle with care");
+
+            ServiceCheck sc3 = new ServiceCheck();
+            sc3.setStatus(ServiceCheckStatus.DONE_NOT_OK);
+            sc3.setVehicle(v1);
+            sc3.setServiceEmployee("Peter");
+            sc3.setServiceCheckDate(new Date(115, 10, 4));
+            sc3.setReport("please handle with care");
+
+            ServiceCheck sc4 = new ServiceCheck();
+            sc4.setStatus(ServiceCheckStatus.DONE_OK);
+            sc4.setVehicle(v2);
+            sc4.setServiceEmployee("Peter");
+            sc4.setServiceCheckDate(new Date(115, 10, 4));
+            sc4.setReport("please handle with care");
+
             scDao.insertServiceCheck(sc1);
             scDao.insertServiceCheck(sc2);
             scDao.insertServiceCheck(sc3);
@@ -190,10 +189,10 @@ public class ServiceCheckTest {
         }
     }
 
-    @Test(priority=5, expectedExceptions=HibernateException.class)
-    public void testDoubleDeletionException(){
+    @Test(priority = 5, expectedExceptions = HibernateException.class)
+    public void testDoubleDeletionException() {
         try {
-            ServiceCheckDao scDao = new ServiceCheckDaoImpl(); 
+            ServiceCheckDao scDao = new ServiceCheckDaoImpl();
             ServiceCheck sc = scDao.findServiceCheck(1L);
             scDao.deleteServiceCheck(sc);
             scDao.deleteServiceCheck(sc);
@@ -201,11 +200,11 @@ public class ServiceCheckTest {
             throw new HibernateException(hex);
         }
     }
-    
-    @Test(priority=6, expectedExceptions=HibernateException.class)
-    public void testUpdateAfterDelete(){
+
+    @Test(priority = 6, expectedExceptions = HibernateException.class)
+    public void testUpdateAfterDelete() {
         try {
-            ServiceCheckDao scDao = new ServiceCheckDaoImpl(); 
+            ServiceCheckDao scDao = new ServiceCheckDaoImpl();
             ServiceCheck sc = scDao.findServiceCheck(1L);
             scDao.deleteServiceCheck(sc);
             sc.setServiceEmployee("Martin");

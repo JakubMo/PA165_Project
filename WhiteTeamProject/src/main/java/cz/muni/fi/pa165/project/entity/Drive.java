@@ -180,7 +180,7 @@ public class Drive implements Serializable{
         if (vehicle == null){
             if(other.getVehicle() != null)
                 return false;
-        } else if (vehicle.equals(other.getVehicle()))
+        } else if (!vehicle.equals(other.getVehicle()))
             return false;
         //startDate
         if (startDate == null){
@@ -198,7 +198,7 @@ public class Drive implements Serializable{
         if (km == null){
             if(other.getKm() != null)
                 return false;
-        } else if (!km.equals(other.getKm()))
+        } else if (km.compareTo(other.getKm()) != 0)
             return false;
         //state
         if (state == null){

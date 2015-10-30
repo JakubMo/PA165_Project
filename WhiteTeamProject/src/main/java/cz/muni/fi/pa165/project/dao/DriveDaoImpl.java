@@ -40,7 +40,7 @@ public class DriveDaoImpl implements DriveDao {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.getTransaction().begin();
         
-        drives = session.createQuery("select d from Drive d where d.vehicle:v")
+        drives = session.createQuery("select d from Drive d where d.vehicle=:v")
                 .setParameter("v", vehicle)
                 .list();
         
@@ -55,7 +55,7 @@ public class DriveDaoImpl implements DriveDao {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.getTransaction().begin();
         
-        drives = session.createQuery("select d from Drive d where d.employee:e")
+        drives = session.createQuery("select d from Drive d where d.employee=:e")
                 .setParameter("e", employee)
                 .list();
         
