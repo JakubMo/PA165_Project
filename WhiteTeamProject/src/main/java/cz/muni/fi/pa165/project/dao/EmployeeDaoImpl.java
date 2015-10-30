@@ -7,8 +7,10 @@ import org.hibernate.Session;
 import java.util.List;
 
 /**
-* @author Tomas Borcin | tborcin@redhat.com | created: 10/25/15.
-*/
+ * {@link DriveDao} interface implementation.
+ *
+ * @author Tomas Borcin | tborcin@redhat.com | created: 10/25/15.
+ */
 public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override

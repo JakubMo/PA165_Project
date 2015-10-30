@@ -5,8 +5,10 @@ import cz.muni.fi.pa165.project.entity.Employee;
 import java.util.List;
 
 /**
-* @author Tomas Borcin | tborcin@redhat.com | created: 10/25/15.
-*/
+ * Employee DAO interface
+ *
+ * @author Tomas Borcin | tborcin@redhat.com | created: 10/25/15.
+ */
 public interface EmployeeDao {
 
 

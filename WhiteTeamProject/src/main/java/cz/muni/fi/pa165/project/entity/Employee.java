@@ -1,12 +1,14 @@
 package cz.muni.fi.pa165.project.entity;
 
-import javax.validation.constraints.NotNull;
 import cz.muni.fi.pa165.project.enums.Category;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 /**
+ * Employee entity
+ *
  * @author Tomas Borcin | tborcin@redhat.com | created: 10/25/15.
  */
 
@@ -14,34 +16,58 @@ import java.math.BigDecimal;
 @Entity
 public class Employee {
 
+	/**
+	 * Employee id.
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	/**
+	 * Employee first name.
+	 */
 	@Column
 	@NotNull
 	private String firstname;
 
+	/**
+	 * Employee last name.
+	 */
 	@Column
 	@NotNull
 	private String lastname;
 
+	/**
+	 * Employee email.
+	 */
 	@Column
 	@NotNull
 	private String email;
 
+	/**
+	 * Employee phone number.
+	 */
 	@Column
 	@NotNull
 	private String phoneNumber;
 
+	/**
+	 * Employee role in organization.
+	 */
 	@Column
 	@NotNull
 	private String role;
 
+	/**
+	 * Available credit of employee.
+	 */
 	@Column
 	@NotNull
 	private BigDecimal credit;
 
+	/**
+	 * Category in which employee belongs to. Defines which cars he can borrow.
+	 */
 	@Enumerated
 	@NotNull
 	private Category category;
@@ -162,10 +188,10 @@ public class Employee {
 	@Override
 	public int hashCode() {
 		int result = ((id == null) ? 1 : id.hashCode());
-		result = 31 * result + ((firstname==null) ? 0 : firstname.hashCode());
-		result = 31 * result + (lastname==null ? 0 : lastname.hashCode());
-		result = 31 * result + (email==null ? 0 : email.hashCode());
-		result = 31 * result + (phoneNumber==null ? 0 : phoneNumber.hashCode());
+		result = 31 * result + ((firstname == null) ? 0 : firstname.hashCode());
+		result = 31 * result + (lastname == null ? 0 : lastname.hashCode());
+		result = 31 * result + (email == null ? 0 : email.hashCode());
+		result = 31 * result + (phoneNumber == null ? 0 : phoneNumber.hashCode());
 		result = 31 * result + (role == null ? 0 : role.hashCode());
 		result = 31 * result + (credit == null ? 0 : credit.hashCode());
 		result = 31 * result + (category == null ? 0 : category.hashCode());
