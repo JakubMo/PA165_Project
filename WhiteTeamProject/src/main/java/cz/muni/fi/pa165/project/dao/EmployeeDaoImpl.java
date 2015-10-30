@@ -17,12 +17,16 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
     @Override
     public void create(Employee employee) throws HibernateErrorException {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.getTransaction().begin();
+        try {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.getTransaction().begin();
 
-        session.save(employee);
+            session.save(employee);
 
-        session.getTransaction().commit();
+            session.getTransaction().commit();
+        } catch (HibernateException ex) {
+            throw new HibernateErrorException(ex);
+        }
     }
 
     @Override
