@@ -7,204 +7,352 @@ import cz.muni.fi.pa165.project.entity.Vehicle;
 import cz.muni.fi.pa165.project.enums.Category;
 import cz.muni.fi.pa165.project.enums.DriveStatus;
 import cz.muni.fi.pa165.project.util.HibernateErrorException;
-import org.hibernate.HibernateError;
-import org.hibernate.HibernateException;
-import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.fail;
+
 /**
- * Test for Drive entity
+ * Unit tests for Drive entity
  *
- * @author Mario Kudolani | mariok@mail.muni.cz | created: 30.10.2015
+ * @author Tomas Borcin | tborcin@redhat.com | created: 10/30/15.
  */
 public class DriveTest {
 /*
 	private Drive drive1;
 	private Drive drive2;
-
-	private Vehicle vehicle1;
-
-	private Employee employee1;
-	private Employee employee2;
+	private final String vin1 = "KDJG454SD4DS";
+	private final String vin2 = "REWGF69849SADF";
 
 	@BeforeClass
-	public void init() throws HibernateErrorException {
-
-		vehicle1 = new Vehicle();
-		vehicle1.setVin("v1Vin");
-		vehicle1.setModel("Mustang");
-		vehicle1.setBrand("Ford");
-		vehicle1.setType("5 door");
-		vehicle1.setYearOfProduction(2009);
-		vehicle1.setEngineType("petrol");
-		vehicle1.setMaxMileage(200000L);
-		vehicle1.setMileage(10000L);
-		vehicle1.setServiceInterval(150);
-
-		VehicleDao vehicleDao = new VehicleDaoImpl();
-		vehicleDao.insert(vehicle1);
-
-
-		employee1 = new Employee();
-		employee1.setId(1L);
-		employee1.setFirstname("Jozko");
-		employee1.setLastname("Mrkvicka");
-		employee1.setEmail("jozkomrkvicka@firma.mail");
-		employee1.setPhoneNumber("0987 654 321");
-		employee1.setRole("user");
-		employee1.setCredit(new BigDecimal("1230.50"));
-		employee1.setCategory(Category.SILVER);
-
-		employee2 = new Employee();
-		employee2.setId(2L);
-		employee2.setFirstname("Janko");
-		employee2.setLastname("Hrasko");
-		employee2.setEmail("hraskoj@firma.mail");
-		employee2.setPhoneNumber("0963 852 741");
-		employee2.setRole("admin");
-		employee2.setCredit(new BigDecimal("45700.00"));
-		employee2.setCategory(Category.PLATINUM);
-
-		EmployeeDao employeeDao = new EmployeeDaoImpl();
-		employeeDao.create(employee1);
-		employeeDao.create(employee2);
-
+	public void initializeDrive() {
 		drive1 = new Drive();
 		Calendar calendar = new GregorianCalendar();
-		calendar.set(2015, 10, 4);
+		calendar.set(2015, 9, 9);
 		drive1.setStartDate(calendar.getTime());
-		calendar.set(2015, 10, 4);
+		calendar.set(2015, 10, 10);
 		drive1.setEndDate(calendar.getTime());
-		drive1.setState(DriveStatus.COMPLETED);
-		drive1.setVehicle(vehicle1);
-		drive1.setEmployee(employee1);
-		drive1.setKm(new BigDecimal(100L));
+		drive1.setState(DriveStatus.APPROVED);
+		drive1.setVehicle(createVehicle(vin1));
+		drive1.setEmployee(createEmployee("Firstname", "Lastname"));
+		drive1.setKm(new BigDecimal(10000));
 
 		drive2 = new Drive();
 		calendar = new GregorianCalendar();
-		calendar.set(2015, 10, 6);
+		calendar.set(2015, 8, 6);
 		drive2.setStartDate(calendar.getTime());
-		calendar.set(2015, 10, 8);
+		calendar.set(2015, 9, 4);
 		drive2.setEndDate(calendar.getTime());
 		drive2.setState(DriveStatus.COMPLETED);
-		drive2.setVehicle(vehicle1);
-		drive2.setEmployee(employee2);
-		drive2.setKm(new BigDecimal(300L));
+		drive2.setVehicle(createVehicle(vin2));
+		drive2.setEmployee(createEmployee("Firstname", "Lastname"));
+		drive2.setKm(new BigDecimal(10000));
 	}
 
-	@Test(priority = 1)
-	public void createDriveTest(){
+	@Test
+	public void createDrive() throws HibernateErrorException {
+		DriveDao driveDao = new DriveDaoImpl();
+		EmployeeDao employeeDao = new EmployeeDaoImpl();
+		VehicleDao vehicleDao = new VehicleDaoImpl();
+
+		employeeDao.create(createEmployee("Firstname", "Lastname"));
+		vehicleDao.insert(createVehicle(vin1));
+		driveDao.insertDrive(drive1);
+		driveDao.insertDrive(drive2);
 		try {
-			DriveDao driveDao = new DriveDaoImpl();
+			driveDao.insertDrive(new Drive());
+			fail("Drive attributes are null, exception should be thrown");
+		} catch (Exception e) {
+		}
+	}
 
+	@Test
+	public void getAllDrives() throws HibernateErrorException {
+		DriveDao driveDao = new DriveDaoImpl();
+		EmployeeDao employeeDao = new EmployeeDaoImpl();
+		VehicleDao vehicleDao = new VehicleDaoImpl();
 
-			List<Drive> driveList = driveDao.getAllDrives();
+		List<Drive> drives = driveDao.getAllDrives();
 
-			Assert.assertEquals(driveList.size(), 0);
+		assertEquals(drives.size(), 0);
 
+		employeeDao.create(createEmployee("Firstname", "Lastname"));
+		vehicleDao.insert(createVehicle(vin1));
+
+		try {
 			driveDao.insertDrive(drive1);
 			driveDao.insertDrive(drive2);
-
-			driveList = driveDao.getAllDrives();
-			Assert.assertEquals(driveList.size(), 2);
-
 		} catch (HibernateErrorException e) {
-			Assert.fail();
+			e.printStackTrace();
+		}
+
+		drives = driveDao.getAllDrives();
+
+		assertEquals(drives.size(), 2);
+		assertEquals(drive1, drives.get(0));
+		assertEquals(drive2, drives.get(1));
+
+		try {
+			driveDao.insertDrive(new Drive());
+		} catch (Exception e) {
+		}
+
+		drives = driveDao.getAllDrives();
+		assertEquals(drives.size(), 2);
+		assertEquals(drive1, drives.get(0));
+		assertEquals(drive2, drives.get(1));
+	}
+
+	@Test
+	public void getDriveById() throws HibernateErrorException {
+		DriveDao driveDao = new DriveDaoImpl();
+		EmployeeDao employeeDao = new EmployeeDaoImpl();
+		VehicleDao vehicleDao = new VehicleDaoImpl();
+
+		employeeDao.create(createEmployee("Firstname", "Lastname"));
+		vehicleDao.insert(createVehicle(vin1));
+		try {
+			driveDao.insertDrive(drive1);
+		} catch (HibernateErrorException e) {
+			e.printStackTrace();
+		}
+
+		assertEquals(drive1, driveDao.getDrive(drive1.getId()));
+		assertEquals(null, driveDao.getDrive(drive2.getId()));
+
+		try {
+			driveDao.insertDrive(drive2);
+		} catch (HibernateErrorException e) {
+			e.printStackTrace();
+		}
+
+		assertEquals(drive2, driveDao.getDrive(drive2.getId()));
+		assertEquals(drive1, driveDao.getDrive(drive1.getId()));
+	}
+
+	@Test
+	public void getDriveByEmployee() throws HibernateErrorException {
+		DriveDao driveDao = new DriveDaoImpl();
+		EmployeeDao employeeDao = new EmployeeDaoImpl();
+		VehicleDao vehicleDao = new VehicleDaoImpl();
+
+		Employee employee = createEmployee("Firstname", "Lastname");
+
+		employeeDao.create(employee);
+		vehicleDao.insert(createVehicle(vin1));
+
+		try {
+			driveDao.insertDrive(drive1);
+		} catch (HibernateErrorException e) {
+			e.printStackTrace();
+		}
+
+		List<Drive> drives = driveDao.getAllDrivesByEmployee(employee);
+
+		assertEquals(1, drives.size());
+		assertEquals(drive1, drives.get(0));
+
+		try {
+			driveDao.insertDrive(drive2);
+		} catch (HibernateErrorException e) {
+			e.printStackTrace();
+		}
+
+		drives = driveDao.getAllDrivesByEmployee(employee);
+
+		assertEquals(2, drives.size());
+		assertEquals(drive1, drives.get(0));
+		assertEquals(drive2, drives.get(1));
+	}
+
+	@Test
+	public void getDriveByVehicle() throws HibernateErrorException {
+		DriveDao driveDao = new DriveDaoImpl();
+		EmployeeDao employeeDao = new EmployeeDaoImpl();
+		VehicleDao vehicleDao = new VehicleDaoImpl();
+
+		Vehicle vehicle = createVehicle(vin1);
+
+		employeeDao.create(createEmployee("Firstname", "Lastname"));
+		vehicleDao.insert(vehicle);
+
+		try {
+			driveDao.insertDrive(drive1);
+		} catch (HibernateErrorException e) {
+			e.printStackTrace();
+		}
+
+		List<Drive> drives = driveDao.getAllDrivesByVehicle(vehicle);
+
+		assertEquals(1, drives.size());
+		assertEquals(drive1, drives.get(0));
+
+		try {
+			driveDao.insertDrive(drive2);
+		} catch (HibernateErrorException e) {
+			e.printStackTrace();
+		}
+
+		drives = driveDao.getAllDrivesByVehicle(vehicle);
+
+		assertEquals(1, drives.size());
+		assertEquals(drive1, drives.get(0));
+	}
+
+	@Test
+	public void updateDrive() throws HibernateErrorException {
+		DriveDao driveDao = new DriveDaoImpl();
+		EmployeeDao employeeDao = new EmployeeDaoImpl();
+		VehicleDao vehicleDao = new VehicleDaoImpl();
+
+		employeeDao.create(createEmployee("Firstname", "Lastname"));
+		vehicleDao.insert(createVehicle(vin1));
+
+		try {
+			driveDao.insertDrive(drive1);
+			driveDao.insertDrive(drive2);
+		} catch (HibernateErrorException e) {
+			e.printStackTrace();
+		}
+
+		drive1.setKm(new BigDecimal(13216));
+		driveDao.updateDrive(drive1);
+		try {
+			assertEquals(new BigDecimal(13216), driveDao.getDrive(drive1.getId()).getKm());
+		} catch (HibernateErrorException e) {
+			e.printStackTrace();
+		}
+
+		drive1.setState(DriveStatus.CANCELLED);
+		driveDao.updateDrive(drive1);
+		try {
+			assertEquals(DriveStatus.CANCELLED, driveDao.getDrive(drive1.getId()).getState());
+		} catch (HibernateErrorException e) {
+			e.printStackTrace();
+		}
+
+		Calendar calendar = new GregorianCalendar();
+		calendar.set(2015, 2, 2);
+		drive1.setStartDate(calendar.getTime());
+		driveDao.updateDrive(drive1);
+		try {
+			assertEquals(calendar.getTime(), driveDao.getDrive(drive1.getId()).getStartDate());
+		} catch (HibernateErrorException e) {
+			e.printStackTrace();
+		}
+
+		calendar = new GregorianCalendar();
+		calendar.set(2015, 2, 2);
+		drive1.setStartDate(calendar.getTime());
+		driveDao.updateDrive(drive1);
+		try {
+			assertEquals(calendar.getTime(), driveDao.getDrive(drive1.getId()).getStartDate());
+		} catch (HibernateErrorException e) {
+			e.printStackTrace();
+		}
+
+		Employee employee = createEmployee("NewLastname", "NewFirstname");
+		drive1.setEmployee(employee);
+		driveDao.updateDrive(drive1);
+		try {
+			assertEquals(employee, driveDao.getDrive(drive1.getId()).getEmployee());
+		} catch (HibernateErrorException e) {
+			e.printStackTrace();
+		}
+
+		String newVin = "GFUKC56846FE";
+		Vehicle vehicle = createVehicle(newVin);
+		drive1.setVehicle(vehicle);
+		driveDao.updateDrive(drive1);
+		try {
+			assertEquals(vehicle, driveDao.getDrive(drive1.getId()).getVehicle());
+		} catch (HibernateErrorException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			assertEquals(drive2, driveDao.getDrive(drive2.getId()));
+		} catch (HibernateErrorException e) {
+			e.printStackTrace();
+		}
+		;
+	}
+
+	@Test
+	public void deleteDrive() throws HibernateErrorException {
+		DriveDao driveDao = new DriveDaoImpl();
+		EmployeeDao employeeDao = new EmployeeDaoImpl();
+		VehicleDao vehicleDao = new VehicleDaoImpl();
+
+		employeeDao.create(createEmployee("Firstname", "Lastname"));
+		vehicleDao.insert(createVehicle(vin1));
+
+		try {
+			driveDao.insertDrive(drive1);
+			driveDao.insertDrive(drive2);
+		} catch (HibernateErrorException e) {
+			e.printStackTrace();
+		}
+
+		driveDao.deleteDrive(drive1);
+
+		try {
+			assertEquals(null, driveDao.getDrive(drive1.getId()));
+			assertEquals(drive2, driveDao.getDrive(drive2.getId()));
+		} catch (HibernateErrorException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			driveDao.insertDrive(drive1);
+		} catch (HibernateErrorException e) {
+			e.printStackTrace();
+		}
+
+		driveDao.deleteDrive(drive2);
+
+		try {
+			assertEquals(drive1, driveDao.getDrive(drive1.getId()));
+			assertEquals(null, driveDao.getDrive(drive2.getId()));
+		} catch (HibernateErrorException e) {
+			e.printStackTrace();
+		}
+
+		driveDao.deleteDrive(drive1);
+
+		try {
+			assertEquals(null, driveDao.getDrive(drive1.getId()));
+			assertEquals(null, driveDao.getDrive(drive2.getId()));
+		} catch (HibernateErrorException e) {
+			e.printStackTrace();
 		}
 	}
 
-
-	@Test(priority = 2)
-	public void findDriveTest(){
-		try{
-			DriveDao driveDao = new DriveDaoImpl();
-
-			Drive d1 = driveDao.getDrive(this.drive1.getId());
-			Drive d2 = driveDao.getDrive(this.drive2.getId());
-
-			Assert.assertEquals(d1, this.drive1);
-			Assert.assertEquals(d2, this.drive2);
-			Assert.assertNotEquals(d1, this.drive2);
-
-
-			List<Drive> vehicleDrives = driveDao.getAllDrivesByVehicle(this.vehicle1);
-			Assert.assertEquals(vehicleDrives.size(), 2);
-
-			List<Drive> employeeDrives = driveDao.getAllDrivesByEmployee(this.employee2);
-			Assert.assertEquals(employeeDrives.size(), 1);
-
-
-		} catch (HibernateErrorException e) {
-			Assert.fail();
-		}
+	private Vehicle createVehicle(String vin) {
+		Vehicle vehicle = new Vehicle();
+		vehicle.setBrand("brand");
+		vehicle.setDrives(new ArrayList<>());
+		vehicle.setEngineType("engine");
+		vehicle.setMaxMileage(1000000L);
+		vehicle.setMileage(10000L);
+		vehicle.setModel("model");
+		vehicle.setEngineType("diesel");
+		vehicle.setType("type");
+		vehicle.setVin(vin);
+		vehicle.setServiceChecks(new ArrayList<>());
+		vehicle.setServiceInterval(365);
+		return vehicle;
 	}
 
-	@Test(priority = 3)
-	public void updateDriveTest(){
-		try{
-			DriveDao driveDao = new DriveDaoImpl();
-
-			Drive d1 = driveDao.getDrive(this.drive1.getId());
-			Assert.assertEquals(d1, this.drive1);
-
-			d1.setState(DriveStatus.CANCELLED);
-
-			driveDao.updateDrive(d1);
-
-			Drive drive = driveDao.getDrive(this.drive1.getId());
-			Assert.assertNotEquals(drive, this.drive1);
-
-			drive.setEmployee(this.employee2);
-			driveDao.updateDrive(drive);
-			List<Drive> employeesDrives = driveDao.getAllDrivesByEmployee(this.employee1);
-			Assert.assertEquals(employeesDrives.size(), 0);
-
-		} catch (HibernateErrorException e) {
-			Assert.fail();
-		}
-	}
-
-	@Test(priority = 4)
-	public void deleteDriveTest(){
-		try{
-			DriveDao driveDao = new DriveDaoImpl();
-
-			List<Drive> drives = driveDao.getAllDrives();
-			Assert.assertEquals(drives.size(), 2);
-
-			Drive d1 = driveDao.getDrive(this.drive1.getId());
-
-			driveDao.deleteDrive(d1);
-			drives = driveDao.getAllDrives();
-			Assert.assertEquals(drives.size(), 1);
-
-			d1 = driveDao.getDrive(this.drive1.getId());
-			Assert.assertNotEquals(d1, drive1);
-
-		} catch (HibernateErrorException e) {
-			Assert.fail();
-		}
-	}
-
-	@Test(priority = 5, expectedExceptions=HibernateException.class)
-	public void secondaryDeleteDriveTest(){
-		try{
-			DriveDao driveDao = new DriveDaoImpl();
-
-			Drive drive = driveDao.getDrive(this.drive2.getId());
-
-			driveDao.deleteDrive(drive);
-			driveDao.updateDrive(drive);
-
-		} catch (HibernateErrorException e) {
-			throw new HibernateException(e);
-		}
+	private Employee createEmployee(String firstname, String lastname) {
+		return new Employee(1L, firstname, lastname, "email@email.com", "0958421547", "role", new BigDecimal(5000), Category.SILVER);
 	}
 */
 }
