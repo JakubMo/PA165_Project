@@ -4,7 +4,7 @@ language: java
 install: cd WhiteTeamProject; mvn clean install;
 
 jdk:
-  - openjdk8
+  - oraclejdk8
 
 branches:
   only:
