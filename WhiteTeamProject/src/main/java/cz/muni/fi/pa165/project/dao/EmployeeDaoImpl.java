@@ -1,7 +1,7 @@
 package cz.muni.fi.pa165.project.dao;
 
 import cz.muni.fi.pa165.project.entity.Employee;
-import cz.muni.fi.pa165.project.util.HibernateErrorException;
+import cz.muni.fi.pa165.project.util.DataAccessExceptionImpl;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -22,17 +22,17 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	@PersistenceContext
 	private EntityManager em;
 
-    @Override
-    public void create(Employee employee) throws HibernateErrorException {
+	@Override
+	public void create(Employee employee) throws DataAccessExceptionImpl {
 		try {
 			em.persist(employee);
 		} catch (Exception e) {
-			new HibernateErrorException(e);
+			new DataAccessExceptionImpl(e.getMessage());
 		}
 	}
 
-    @Override
-    public List getAll() throws HibernateErrorException {
+	@Override
+	public List getAll() throws DataAccessExceptionImpl {
 		try {
 			List<Employee> result = new ArrayList<>();
 			CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
@@ -41,37 +41,37 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			result = q.getResultList();
 			return result;
 		} catch (Exception e) {
-			throw new HibernateErrorException(e);
+			throw new DataAccessExceptionImpl(e.getMessage());
 		}
 	}
 
-    @Override
-    public Employee get(Long id) throws HibernateErrorException {
+	@Override
+	public Employee get(Long id) throws DataAccessExceptionImpl {
 		try {
 			Employee result = null;
 			result = em.find(Employee.class, id);
 			return result;
 		} catch (Exception e) {
-			throw new HibernateErrorException(e);
+			throw new DataAccessExceptionImpl(e.getMessage());
 		}
 	}
 
-    @Override
-    public void update(Employee employee) throws HibernateErrorException {
+	@Override
+	public void update(Employee employee) throws DataAccessExceptionImpl {
 		try {
 			em.merge(employee);
 		} catch (Exception e) {
-			throw new HibernateErrorException(e);
+			throw new DataAccessExceptionImpl(e.getMessage());
 		}
 	}
 
-    @Override
-    public void delete(Employee employee) throws HibernateErrorException {
+	@Override
+	public void delete(Employee employee) throws DataAccessExceptionImpl {
 		try {
 			Employee remove = em.getReference(Employee.class, employee.getId());
 			em.remove(remove);
 		} catch (Exception e) {
-			throw new HibernateErrorException(e);
+			throw new DataAccessExceptionImpl(e.getMessage());
 		}
 	}
 }

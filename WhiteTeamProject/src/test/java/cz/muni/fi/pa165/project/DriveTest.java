@@ -9,12 +9,11 @@ import cz.muni.fi.pa165.project.entity.ServiceCheck;
 import cz.muni.fi.pa165.project.entity.Vehicle;
 import cz.muni.fi.pa165.project.enums.Category;
 import cz.muni.fi.pa165.project.enums.DriveStatus;
-import cz.muni.fi.pa165.project.util.HibernateErrorException;
+import cz.muni.fi.pa165.project.util.DataAccessExceptionImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,7 +52,7 @@ public class DriveTest {
 	private final String vin2 = "REWGF69849SADF";
 
 	@Test
-	public void createDrive() throws HibernateErrorException {
+	public void createDrive() throws DataAccessExceptionImpl {
 
 		List<Drive> drives = driveDao.getAll();
 
@@ -71,7 +70,7 @@ public class DriveTest {
 	}
 
 	@Test
-	public void getAll() throws HibernateErrorException {
+	public void getAll() throws DataAccessExceptionImpl {
 
 		List<Drive> drives = driveDao.getAll();
 
@@ -97,7 +96,7 @@ public class DriveTest {
 	}
 
 	@Test
-	public void getById() throws HibernateErrorException {
+	public void getById() throws DataAccessExceptionImpl {
 
 		Drive drive1 = prepareDrive1();
 		Drive drive2 = prepareDrive2();
@@ -110,7 +109,7 @@ public class DriveTest {
 		try {
 			assertEquals(null, driveDao.get(drive2.getId()));
 			fail("Finding drive without id, test should fail");
-		} catch (HibernateErrorException e) {
+		} catch (DataAccessExceptionImpl e) {
 		}
 
 		driveDao.create(drive2);
@@ -120,7 +119,7 @@ public class DriveTest {
 	}
 
 	@Test
-	public void getByEmployee() throws HibernateErrorException {
+	public void getByEmployee() throws DataAccessExceptionImpl {
 
 		Drive drive1 = prepareDrive1();
 		Drive drive2 = prepareDrive2();
@@ -144,7 +143,7 @@ public class DriveTest {
 	}
 
 	@Test
-	public void getByVehicle() throws HibernateErrorException {
+	public void getByVehicle() throws DataAccessExceptionImpl {
 
 		Drive drive1 = prepareDrive1();
 		Drive drive2 = prepareDrive2();
@@ -173,7 +172,7 @@ public class DriveTest {
 	}
 
 	@Test
-	public void update() throws HibernateErrorException {
+	public void update() throws DataAccessExceptionImpl {
 
 		Drive drive1 = prepareDrive1();
 		Drive drive2 = prepareDrive2();
@@ -216,7 +215,7 @@ public class DriveTest {
 	}
 
 	@Test
-	public void delete() throws HibernateErrorException {
+	public void delete() throws DataAccessExceptionImpl {
 
 		Drive drive1 = prepareDrive1();
 		Drive drive2 = prepareDrive2();
@@ -249,14 +248,14 @@ public class DriveTest {
 		assertEquals(null, driveDao.get(drive2.getId()));
 	}
 
-	private Employee createEmployee(String firstname, String lastname) throws HibernateErrorException {
+	private Employee createEmployee(String firstname, String lastname) throws DataAccessExceptionImpl {
 		Employee employee = new Employee(firstname, lastname, "email@email.com", "0958421547", "role", new BigDecimal(5000), Category.SILVER, new ArrayList<Drive>());
 		employeeDao.create(employee);
 
 		return employee;
 	}
 
-	private Vehicle createVehicle(String vin) throws HibernateErrorException {
+	private Vehicle createVehicle(String vin) throws DataAccessExceptionImpl {
 		Vehicle vehicle = new Vehicle();
 		vehicle.setBrand("brand");
 		vehicle.setDrives(new ArrayList<Drive>());
@@ -274,7 +273,7 @@ public class DriveTest {
 		return vehicle;
 	}
 
-	private Drive prepareDrive1() throws HibernateErrorException {
+	private Drive prepareDrive1() throws DataAccessExceptionImpl {
 		Drive drive1 = new Drive();
 		Calendar calendar = new GregorianCalendar();
 		calendar.set(2015, 9, 9);
@@ -289,7 +288,7 @@ public class DriveTest {
 		return drive1;
 	}
 
-	private Drive prepareDrive2() throws HibernateErrorException {
+	private Drive prepareDrive2() throws DataAccessExceptionImpl {
 
 		Drive drive2 = new Drive();
 		Calendar calendar = new GregorianCalendar();
@@ -305,7 +304,7 @@ public class DriveTest {
 		return drive2;
 	}
 
-	private Drive prepareDrive3() throws HibernateErrorException {
+	private Drive prepareDrive3() throws DataAccessExceptionImpl {
 		Drive drive1 = new Drive();
 		Calendar calendar = new GregorianCalendar();
 		calendar.set(2015, 9, 9);
