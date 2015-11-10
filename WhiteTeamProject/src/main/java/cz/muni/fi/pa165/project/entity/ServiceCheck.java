@@ -3,17 +3,8 @@ package cz.muni.fi.pa165.project.entity;
 import cz.muni.fi.pa165.project.enums.ServiceCheckStatus;
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
+import javax.persistence.*;
 import static javax.persistence.TemporalType.DATE;
-import javax.validation.constraints.NotNull;
 
 /**
  * Provides entity for service check.
@@ -27,7 +18,6 @@ public class ServiceCheck implements Serializable {
      * ID of service check.
      */
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
@@ -36,7 +26,7 @@ public class ServiceCheck implements Serializable {
      * Current status of service check.
      */
     @Enumerated
-    @Column(name = "status")
+    @Column(name = "status", nullable = false)
     private ServiceCheckStatus status;
     
     /**
@@ -50,21 +40,18 @@ public class ServiceCheck implements Serializable {
      * Vehicle that goes to service check.
      */
     @ManyToOne
-    @NotNull
     private Vehicle vehicle;
     
     /**
      * Employee who did the service check.
      */
-    @NotNull
-    @Column(name = "service_employee")
+    @Column(name = "service_employee", nullable = false)
     private String serviceEmployee;
     
     /**
      * Optional report message of service check.
      */
-    @NotNull
-    @Column(name = "report")
+    @Column(name = "report", nullable = false)
     private String report;
 
     /**

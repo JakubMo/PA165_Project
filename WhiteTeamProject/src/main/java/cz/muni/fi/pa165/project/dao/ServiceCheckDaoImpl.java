@@ -3,109 +3,109 @@ package cz.muni.fi.pa165.project.dao;
 import cz.muni.fi.pa165.project.entity.ServiceCheck;
 import cz.muni.fi.pa165.project.entity.Vehicle;
 import cz.muni.fi.pa165.project.util.HibernateErrorException;
-import cz.muni.fi.pa165.project.util.HibernateUtil;
 import java.util.List;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
+import org.springframework.stereotype.Repository;
 
 /**
  * Provides implementation of {@link ServiceCheckDao} interface.
  *
  * @author Marek
  */
+@Repository(value = "serviceCheckDao")
 public class ServiceCheckDaoImpl implements ServiceCheckDao {
+    
+    @PersistenceContext
+    private EntityManager em;
+    
     @Override
-    public void insertServiceCheck(ServiceCheck serviceCheck) throws HibernateErrorException {
-        try {
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            session.getTransaction().begin();
-
-            session.save(serviceCheck);
-
-            session.getTransaction().commit();
+    public void create(ServiceCheck serviceCheck) throws HibernateErrorException {
+        if(serviceCheck == null) {
+            throw new IllegalArgumentException("serviceCheck is null");
         }
-        catch(HibernateException ex) {
+        
+        try {
+            em.persist(serviceCheck);
+        }
+        catch(Exception ex) {
             throw new HibernateErrorException(ex);
         }
     }
 
     @Override
-    public void updateServiceCheck(ServiceCheck serviceCheck) throws HibernateErrorException {
-        try {
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            session.getTransaction().begin();
-
-            session.update(serviceCheck);
-
-            session.getTransaction().commit();
+    public void update(ServiceCheck serviceCheck) throws HibernateErrorException {        
+        if(serviceCheck == null) {
+            throw new IllegalArgumentException("serviceCheck is null");
         }
-        catch(HibernateException ex) {
+        
+        try {
+            em.merge(serviceCheck);
+        }
+        catch(Exception ex) {
             throw new HibernateErrorException(ex);
         }
     }
 
     @Override
-    public void deleteServiceCheck(ServiceCheck serviceCheck) throws HibernateErrorException {
-        try {
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            session.getTransaction().begin();
-
-            session.delete(serviceCheck);
-
-            session.getTransaction().commit();
+    public void delete(ServiceCheck serviceCheck) throws HibernateErrorException {
+        if(serviceCheck == null) {
+            throw new IllegalArgumentException("serviceCheck is null");
         }
-        catch(HibernateException ex) {
+        
+        try {
+            ServiceCheck remove = em.getReference(ServiceCheck.class, serviceCheck.getId());
+            em.remove(remove);
+        }
+        catch(Exception ex) {
             throw new HibernateErrorException(ex);
         }
     }
 
     @Override
-    public ServiceCheck findServiceCheck(Long id) throws HibernateErrorException {
-        try {
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            session.getTransaction().begin();
-
-            ServiceCheck serviceCheck = (ServiceCheck) session.get(ServiceCheck.class, id);
-
-            session.getTransaction().commit();
-
-            return serviceCheck;
+    public ServiceCheck get(Long id) throws HibernateErrorException {
+        if(id == null) {
+            throw new IllegalArgumentException("id is null");
         }
-        catch(HibernateException ex) {
+        
+        try {
+            ServiceCheck result = em.find(ServiceCheck.class, id);
+            return result;
+        }
+        catch(Exception ex) {
             throw new HibernateErrorException(ex);
         }
     }
 
     @Override
-    public List<ServiceCheck> getAllServiceChecks() throws HibernateErrorException {
+    public List<ServiceCheck> getAll() throws HibernateErrorException {
         try {
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            session.getTransaction().begin();
-
-            List<ServiceCheck> serviceChecks = session.createCriteria(ServiceCheck.class).list();
-
-            session.getTransaction().commit();
-
-            return serviceChecks;
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            cq.select(cq.from(ServiceCheck.class));
+            Query q = em.createQuery(cq);
+            List<ServiceCheck> result = q.getResultList();
+            return result;
         }
-        catch(HibernateException ex) {
+        catch(Exception ex) {
             throw new HibernateErrorException(ex);
         }
     }    
 
-    public List<ServiceCheck> getAllServiceChecksByVehicle(Vehicle vehicle) throws HibernateErrorException {
-        try {
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            session.getTransaction().begin();
-
-            List<ServiceCheck> serviceChecks = session.createQuery("select s from ServiceCheck s where s.vehicle=:v")
-                    .setParameter("v", vehicle).list();
-
-            session.getTransaction().commit();
-
-            return serviceChecks;
+    @Override
+    public List<ServiceCheck> getAllByVehicle(Vehicle vehicle) throws HibernateErrorException {
+        if(vehicle == null) {
+            throw new IllegalArgumentException("vehicle is null");
         }
-        catch(HibernateException ex) {
+        
+        try {
+            Query q = em.createQuery("SELECT c FROM ServiceCheck c WHERE c.vehicle = :vehicle");
+            q.setParameter("vehicle", vehicle);
+            List<ServiceCheck> result = q.getResultList();
+            return result;
+        }
+        catch(Exception ex) {
             throw new HibernateErrorException(ex);
         }
     }

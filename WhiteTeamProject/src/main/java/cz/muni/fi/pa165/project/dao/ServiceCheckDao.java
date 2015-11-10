@@ -17,7 +17,7 @@ public interface ServiceCheckDao {
      * @param serviceCheck service check to be inserted
      * @throws cz.muni.fi.pa165.project.util.HibernateErrorException thrown when error in hibernate occurs
      */
-    public void insertServiceCheck(ServiceCheck serviceCheck) throws HibernateErrorException;
+    public void create(ServiceCheck serviceCheck) throws HibernateErrorException;
     
     /**
      * Updates service check.
@@ -25,7 +25,7 @@ public interface ServiceCheckDao {
      * @param serviceCheck updated service check
      * @throws cz.muni.fi.pa165.project.util.HibernateErrorException thrown when error in hibernate occurs
      */
-    public void updateServiceCheck(ServiceCheck serviceCheck) throws HibernateErrorException;
+    public void update(ServiceCheck serviceCheck) throws HibernateErrorException;
     
     /**
      * Deletes service check.
@@ -33,7 +33,7 @@ public interface ServiceCheckDao {
      * @param serviceCheck service check to be deleted
      * @throws cz.muni.fi.pa165.project.util.HibernateErrorException thrown when error in hibernate occurs
      */
-    public void deleteServiceCheck(ServiceCheck serviceCheck) throws HibernateErrorException;
+    public void delete(ServiceCheck serviceCheck) throws HibernateErrorException;
     
     /**
      * Finds service check by id.
@@ -42,7 +42,7 @@ public interface ServiceCheckDao {
      * @return instance of {@link ServiceCheck}
      * @throws cz.muni.fi.pa165.project.util.HibernateErrorException thrown when error in hibernate occurs
      */
-    public ServiceCheck findServiceCheck(Long id) throws HibernateErrorException;
+    public ServiceCheck get(Long id) throws HibernateErrorException;
     
     /**
      * Creates collection of all service checks.
@@ -50,7 +50,7 @@ public interface ServiceCheckDao {
      * @return list of all service checks
      * @throws cz.muni.fi.pa165.project.util.HibernateErrorException thrown when error in hibernate occurs
      */
-    public List<ServiceCheck> getAllServiceChecks() throws HibernateErrorException;
+    public List<ServiceCheck> getAll() throws HibernateErrorException;
     
     /**
      * Finds all service checks of given vehicle.
@@ -59,5 +59,5 @@ public interface ServiceCheckDao {
      * @return collection of service checks of vehicle
      * @throws cz.muni.fi.pa165.project.util.HibernateErrorException thrown when error in hibernate occurs
      */
-    public List<ServiceCheck> getAllServiceChecksByVehicle(Vehicle vehicle) throws HibernateErrorException;
+    public List<ServiceCheck> getAllByVehicle(Vehicle vehicle) throws HibernateErrorException;
 }
