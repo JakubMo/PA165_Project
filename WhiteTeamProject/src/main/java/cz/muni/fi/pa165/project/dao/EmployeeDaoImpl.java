@@ -1,92 +1,59 @@
 package cz.muni.fi.pa165.project.dao;
 
-import cz.muni.fi.pa165.project.entity.Employee;
-import cz.muni.fi.pa165.project.util.HibernateErrorException;
-import cz.muni.fi.pa165.project.util.HibernateUtil;
-import org.hibernate.Session;
+import cz.muni.fi.pa165.travelagency.data.dao.EmployeeDao;
+import cz.muni.fi.pa165.travelagency.data.entity.Customer;
+import cz.muni.fi.pa165.travelagency.data.entity.Employee;
+import cz.muni.fi.pa165.travelagency.util.HibernateErrorException;
+import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
+import java.util.ArrayList;
 import java.util.List;
-import org.hibernate.HibernateException;
 
 /**
- * {@link DriveDao} interface implementation.
+ * {@link ../DriveDao} interface implementation.
  *
  * @author Tomas Borcin | tborcin@redhat.com | created: 10/25/15.
  */
+@Repository(value = "employeeDao")
 public class EmployeeDaoImpl implements EmployeeDao {
+
+	@PersistenceContext
+	private EntityManager em;
 
     @Override
     public void create(Employee employee) throws HibernateErrorException {
-        try {
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            session.getTransaction().begin();
-
-            session.save(employee);
-
-            session.getTransaction().commit();
-        } catch (HibernateException ex) {
-            throw new HibernateErrorException(ex);
-        }
+		em.persist(employee);
     }
 
     @Override
     public List findAll() throws HibernateErrorException {
-        try {
-            List employees;
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            session.getTransaction().begin();
-
-            employees = session.createCriteria(Employee.class).list();
-
-            session.getTransaction().commit();
-
-            return employees;
-        } catch (HibernateException ex) {
-            throw new HibernateErrorException(ex);
-        }
+		List<Employee> result = new ArrayList<>();
+		CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+		cq.select(cq.from(Employee.class));
+		Query q = em.createQuery(cq);
+		result = q.getResultList();
+		return result;
     }
 
     @Override
     public Employee findById(Long id) throws HibernateErrorException {
-        try {
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            session.getTransaction().begin();
-
-            Employee employee = (Employee) session.get(Employee.class, id);
-
-            session.getTransaction().commit();
-
-            return employee;
-        } catch (HibernateException ex) {
-            throw new HibernateErrorException(ex);
-        }
+		Employee result = null;
+		result = em.find(Employee.class, id);
+		return result;
     }
 
     @Override
     public void update(Employee employee) throws HibernateErrorException {
-        try {
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            session.getTransaction().begin();
-
-            session.update(employee);
-
-            session.getTransaction().commit();
-        } catch (HibernateException ex) {
-            throw new HibernateErrorException(ex);
-        }
+		em.merge(employee);
     }
 
     @Override
     public void delete(Employee employee) throws HibernateErrorException {
-        try {
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            session.getTransaction().begin();
-
-            session.delete(employee);
-
-            session.getTransaction().commit();
-        } catch (HibernateException ex) {
-            throw new HibernateErrorException(ex);
-        }
+		Employee remove = em.getReference(Employee.class, employee.getId());
+		em.remove(remove);
     }
 }

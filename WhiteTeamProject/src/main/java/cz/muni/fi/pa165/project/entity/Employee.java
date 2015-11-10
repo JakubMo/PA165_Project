@@ -1,9 +1,8 @@
 package cz.muni.fi.pa165.project.entity;
 
-import cz.muni.fi.pa165.project.enums.Category;
+import cz.muni.fi.pa165.travelagency.data.enums.Category;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -20,56 +19,49 @@ public class Employee {
 	 * Employee id.
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue
 	private Long id;
 
 	/**
 	 * Employee first name.
 	 */
 	@Column
-	@NotNull
 	private String firstname;
 
 	/**
 	 * Employee last name.
 	 */
 	@Column
-	@NotNull
 	private String lastname;
 
 	/**
 	 * Employee email.
 	 */
 	@Column
-	@NotNull
 	private String email;
 
 	/**
 	 * Employee phone number.
 	 */
 	@Column
-	@NotNull
 	private String phoneNumber;
 
 	/**
 	 * Employee role in organization.
 	 */
 	@Column
-	@NotNull
 	private String role;
 
 	/**
 	 * Available credit of employee.
 	 */
 	@Column
-	@NotNull
 	private BigDecimal credit;
 
 	/**
 	 * Category in which employee belongs to. Defines which cars he can borrow.
 	 */
 	@Enumerated
-	@NotNull
 	private Category category;
 
 	/**
@@ -81,8 +73,7 @@ public class Employee {
 	public Employee() {
 	}
 
-	public Employee(Long id, String firstname, String lastname, String email, String phoneNumber, String role, BigDecimal credit, Category category, List<Drive> drives) {
-		this.id = id;
+	public Employee(String firstname, String lastname, String email, String phoneNumber, String role, BigDecimal credit, Category category, List<Drive> drives) {
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.email = email;
@@ -95,10 +86,6 @@ public class Employee {
 
 	public Long getId() {
 		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getFirstname() {
@@ -188,7 +175,7 @@ public class Employee {
 
 		if (credit == null || email == null || firstname == null || id == null || lastname == null || phoneNumber == null || role == null || category == null)
 			return false;
-		if (!credit.equals(employee.credit)) return false;
+		if (credit.compareTo(employee.credit) != 0) return false;
 		if (!email.equals(employee.email)) return false;
 		if (!firstname.equals(employee.firstname)) return false;
 		if (!id.equals(employee.id)) return false;

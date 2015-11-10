@@ -1,0 +1,11 @@
+
+language: java
+
+install: cd WhiteTeamProject; mvn clean install;
+
+jdk:
+  - openjdk8
+
+branches:
+  only:
+    - master

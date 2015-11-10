@@ -1,7 +1,7 @@
 package cz.muni.fi.pa165.project.dao;
 
-import cz.muni.fi.pa165.project.entity.Employee;
-import cz.muni.fi.pa165.project.util.HibernateErrorException;
+import cz.muni.fi.pa165.travelagency.data.entity.Employee;
+import cz.muni.fi.pa165.travelagency.util.HibernateErrorException;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public interface EmployeeDao {
      * Create new employee.
      *
      * @param employee employee to be created
-     * @throws cz.muni.fi.pa165.project.util.HibernateErrorException
+     * @throws cz.muni.fi.pa165.travelagency.util.HibernateErrorException
      */
     public void create(Employee employee) throws HibernateErrorException;
 
@@ -24,7 +24,7 @@ public interface EmployeeDao {
      * Get all employees.
      *
      * @return list of all employees
-     * @throws cz.muni.fi.pa165.project.util.HibernateErrorException
+     * @throws cz.muni.fi.pa165.travelagency.util.HibernateErrorException
      */
     public List<Employee> findAll() throws HibernateErrorException;
 
@@ -33,7 +33,7 @@ public interface EmployeeDao {
      *
      * @param id id of employee to be found
      * @return found employee
-     * @throws cz.muni.fi.pa165.project.util.HibernateErrorException
+     * @throws cz.muni.fi.pa165.travelagency.util.HibernateErrorException
      */
     public Employee findById(Long id) throws HibernateErrorException;
 
@@ -41,7 +41,7 @@ public interface EmployeeDao {
      * Update given employee.
      *
      * @param employee employee to be updated
-     * @throws cz.muni.fi.pa165.project.util.HibernateErrorException
+     * @throws cz.muni.fi.pa165.travelagency.util.HibernateErrorException
      */
     public void update(Employee employee) throws HibernateErrorException;
 
@@ -49,7 +49,7 @@ public interface EmployeeDao {
      * Delete given employee.
      *
      * @param employee employee to be deleted
-     * @throws cz.muni.fi.pa165.project.util.HibernateErrorException
+     * @throws cz.muni.fi.pa165.travelagency.util.HibernateErrorException
      */
     public void delete(Employee employee) throws HibernateErrorException;
 }
