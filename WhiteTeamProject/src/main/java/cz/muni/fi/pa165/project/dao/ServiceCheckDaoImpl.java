@@ -2,12 +2,13 @@ package cz.muni.fi.pa165.project.dao;
 
 import cz.muni.fi.pa165.project.entity.ServiceCheck;
 import cz.muni.fi.pa165.project.entity.Vehicle;
-import cz.muni.fi.pa165.project.util.HibernateErrorException;
+import cz.muni.fi.pa165.project.util.DataAccessExceptionImpl;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -22,7 +23,7 @@ public class ServiceCheckDaoImpl implements ServiceCheckDao {
     private EntityManager em;
     
     @Override
-    public void create(ServiceCheck serviceCheck) throws HibernateErrorException {
+    public void create(ServiceCheck serviceCheck) throws DataAccessException {
         if(serviceCheck == null) {
             throw new IllegalArgumentException("serviceCheck is null");
         }
@@ -31,12 +32,12 @@ public class ServiceCheckDaoImpl implements ServiceCheckDao {
             em.persist(serviceCheck);
         }
         catch(Exception ex) {
-            throw new HibernateErrorException(ex);
+            throw new DataAccessExceptionImpl("error while creating service check", ex);
         }
     }
 
     @Override
-    public void update(ServiceCheck serviceCheck) throws HibernateErrorException {        
+    public void update(ServiceCheck serviceCheck) throws DataAccessException {        
         if(serviceCheck == null) {
             throw new IllegalArgumentException("serviceCheck is null");
         }
@@ -45,12 +46,12 @@ public class ServiceCheckDaoImpl implements ServiceCheckDao {
             em.merge(serviceCheck);
         }
         catch(Exception ex) {
-            throw new HibernateErrorException(ex);
+            throw new DataAccessExceptionImpl("error while updating service check", ex);
         }
     }
 
     @Override
-    public void delete(ServiceCheck serviceCheck) throws HibernateErrorException {
+    public void delete(ServiceCheck serviceCheck) throws DataAccessException {
         if(serviceCheck == null) {
             throw new IllegalArgumentException("serviceCheck is null");
         }
@@ -60,12 +61,12 @@ public class ServiceCheckDaoImpl implements ServiceCheckDao {
             em.remove(remove);
         }
         catch(Exception ex) {
-            throw new HibernateErrorException(ex);
+            throw new DataAccessExceptionImpl("error while deleting service check", ex);
         }
     }
 
     @Override
-    public ServiceCheck get(Long id) throws HibernateErrorException {
+    public ServiceCheck get(Long id) throws DataAccessException {
         if(id == null) {
             throw new IllegalArgumentException("id is null");
         }
@@ -75,12 +76,12 @@ public class ServiceCheckDaoImpl implements ServiceCheckDao {
             return result;
         }
         catch(Exception ex) {
-            throw new HibernateErrorException(ex);
+            throw new DataAccessExceptionImpl("error while getting service check by id", ex);
         }
     }
 
     @Override
-    public List<ServiceCheck> getAll() throws HibernateErrorException {
+    public List<ServiceCheck> getAll() throws DataAccessException {
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
             cq.select(cq.from(ServiceCheck.class));
@@ -89,12 +90,12 @@ public class ServiceCheckDaoImpl implements ServiceCheckDao {
             return result;
         }
         catch(Exception ex) {
-            throw new HibernateErrorException(ex);
+            throw new DataAccessExceptionImpl("error while getting all service checks", ex);
         }
     }    
 
     @Override
-    public List<ServiceCheck> getAllByVehicle(Vehicle vehicle) throws HibernateErrorException {
+    public List<ServiceCheck> getAllByVehicle(Vehicle vehicle) throws DataAccessException {
         if(vehicle == null) {
             throw new IllegalArgumentException("vehicle is null");
         }
@@ -106,7 +107,7 @@ public class ServiceCheckDaoImpl implements ServiceCheckDao {
             return result;
         }
         catch(Exception ex) {
-            throw new HibernateErrorException(ex);
+            throw new DataAccessExceptionImpl("error while getting service checks by vehicle", ex);
         }
     }
 }
