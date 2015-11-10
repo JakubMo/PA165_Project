@@ -56,8 +56,8 @@ public class ServiceCheckTest {
             v2.setMileage(49000L);
             v2.setServiceInterval(200);
 
-            vehicleDao.insert(v1);
-            vehicleDao.insert(v2);
+            vehicleDao.create(v1);
+            vehicleDao.create(v2);
 
             ServiceCheckDao scDao = new ServiceCheckDaoImpl();
             ServiceCheck sc1 = new ServiceCheck();
@@ -104,7 +104,7 @@ public class ServiceCheckTest {
     @Test(priority = 2)
     public void findAllVehiclesAndServiceChecks() {
         try {
-            List<Vehicle> vehicles = new VehicleDaoImpl().findAll();
+            List<Vehicle> vehicles = new VehicleDaoImpl().getAll();
             ServiceCheckDao scDao = new ServiceCheckDaoImpl();
             List<ServiceCheck> scsAll = scDao.getAllServiceChecks();
             Assert.assertEquals(scsAll.size(), 4);
@@ -146,8 +146,8 @@ public class ServiceCheckTest {
 
             ServiceCheckDao scDao = new ServiceCheckDaoImpl();
             VehicleDao vDao = new VehicleDaoImpl();
-            Vehicle v1 = vDao.findByVin(v1Vin);
-            Vehicle v2 = vDao.findByVin(v2Vin);
+            Vehicle v1 = vDao.get(v1Vin);
+            Vehicle v2 = vDao.get(v2Vin);
 
             sc.setVehicle(v2);
             scDao.updateServiceCheck(sc);
@@ -174,8 +174,8 @@ public class ServiceCheckTest {
 
             ServiceCheckDao scDao = new ServiceCheckDaoImpl();
             VehicleDao vDao = new VehicleDaoImpl();
-            Vehicle v1 = vDao.findByVin(v1Vin);
-            Vehicle v2 = vDao.findByVin(v2Vin);
+            Vehicle v1 = vDao.get(v1Vin);
+            Vehicle v2 = vDao.get(v2Vin);
 
             scDao.deleteServiceCheck(sc);
 

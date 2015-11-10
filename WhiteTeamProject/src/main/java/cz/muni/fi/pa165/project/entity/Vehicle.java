@@ -1,8 +1,7 @@
 package cz.muni.fi.pa165.project.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -12,68 +11,62 @@ import java.util.List;
 @Table(name = "vehicle")
 public class Vehicle {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+
 	/**
 	 * Vehicle's vin
 	 */
-	@Id
-	@Column(name = "vin")
-	@NotNull
+	@Column(nullable = false, unique = true)
 	private String vin;
 
 	/**
 	 * Vehicle's brand
 	 */
-	@Column(name = "brand")
-	@NotNull
+	@Column(nullable = false)
 	private String brand;
 
 	/**
 	 * Vehicle's model
 	 */
-	@Column(name = "model")
-	@NotNull
+	@Column(nullable = false)
 	private String model;
 
 	/**
 	 * Type of the vehicle
 	 */
-	@Column(name = "type")
-	@NotNull
+	@Column(nullable = false)
 	private String type;
 
 	/**
 	 * Vehicle's year of production
 	 */
-	@Column(name = "year_of_production")
-	@NotNull
+	@Column(name = "year_of_production", nullable = false)
 	private int yearOfProduction;
 
 	/**
 	 * Vehicle's engine type
 	 */
-	@Column(name = "engine_type")
-	@NotNull
+	@Column(name = "engine_type", nullable = false)
 	private String engineType;
 
 	/**
 	 * Current vehicle's mileage
 	 */
-	@Column(name = "mileage")
-	@NotNull
+	@Column(name = "mileage", nullable = false)
 	private Long mileage;
 
 	/**
 	 * Number of days between service checks of the vehicle
 	 */
-	@Column(name = "service_check_interval")
-	@NotNull
+	@Column(name = "service_check_interval", nullable = false)
 	private int serviceCheckInterval;
 
 	/**
 	 * Max approved mileage, after that the vehicle will not be available
 	 */
-	@Column(name = "max_mileage")
-	@NotNull
+	@Column(name = "max_mileage", nullable = false)
 	private Long maxMileage;
 
 	/**
@@ -87,6 +80,14 @@ public class Vehicle {
 	 */
 	@OneToMany(mappedBy="vehicle")
 	private List<Drive> drives;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
 
 	public String getVin() {
 		return vin;
@@ -136,11 +137,11 @@ public class Vehicle {
 		this.mileage = mileage;
 	}
 
-	public int  getServiceInterval() {
-		return this.serviceCheckInterval;
+	public int getServiceCheckInterval() {
+		return serviceCheckInterval;
 	}
 
-	public void setServiceInterval(int serviceCheckInterval) {
+	public void setServiceCheckInterval(int serviceCheckInterval) {
 		this.serviceCheckInterval = serviceCheckInterval;
 	}
 
@@ -161,7 +162,7 @@ public class Vehicle {
 	}
 
 	public List<Drive> getDrives() {
-		return drives;
+		return Collections.unmodifiableList(this.drives);
 	}
 
 	public void setDrives(List<Drive> drives) {
@@ -169,12 +170,14 @@ public class Vehicle {
 	}
 
 	public List<ServiceCheck> getServiceChecks() {
-		return serviceChecks;
+		return Collections.unmodifiableList(this.serviceChecks);
 	}
 
 	public void setServiceChecks(List<ServiceCheck> serviceChecks) {
 		this.serviceChecks = serviceChecks;
 	}
+
+
 
 	@Override
 	public String toString() {
@@ -187,7 +190,6 @@ public class Vehicle {
 				", engineType='" + engineType + '\'' +
 				", mileage=" + mileage +
 				", serviceCheckInterval=" + serviceCheckInterval +
-//				", serviceCheckMileageInterval=" + serviceCheckMileageInterval +
 				'}';
 	}
 
@@ -198,7 +200,7 @@ public class Vehicle {
 
 		if(!(o instanceof Vehicle)) return false;
 
-		Vehicle vehicle = (Vehicle)o;
+		final Vehicle vehicle = (Vehicle)o;
 		if(this.vin == null){
 			if(vehicle.vin != null){
 				return false;

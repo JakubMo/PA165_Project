@@ -1,118 +1,76 @@
 package cz.muni.fi.pa165.project.dao;
 
 import cz.muni.fi.pa165.project.entity.Vehicle;
-import cz.muni.fi.pa165.project.util.HibernateErrorException;
-import cz.muni.fi.pa165.project.util.HibernateUtil;
-import org.hibernate.Session;
+import cz.muni.fi.pa165.project.util.DataAccessExceptionImpl;
+import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
 import java.util.ArrayList;
 import java.util.List;
-import org.hibernate.HibernateException;
 
 /**
  * @author Mario Kudolani | mariok@mail.muni.cz | created: 27.10.2015
  */
+@Repository(value = "vehicleDao")
 public class VehicleDaoImpl implements VehicleDao {
 
-    public List<Vehicle> findAll() throws HibernateErrorException {
-        Session session = null;
+    @PersistenceContext
+    private EntityManager em;
+
+    @Override
+    public List<Vehicle> getAll() throws DataAccessException {
         try {
-            List<Vehicle> vehicles;
-            session = HibernateUtil.getSessionFactory().getCurrentSession();
-            session.getTransaction().begin();
-
-            vehicles = session.createCriteria(Vehicle.class).list();
-
-            session.getTransaction().commit();
-
-            return vehicles;
-        } catch (HibernateException ex) {
-            if (session != null) {
-                session.getTransaction().rollback();
-            }
-            throw new HibernateErrorException(ex);
+            List<Vehicle> result = new ArrayList<>();
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            cq.select(cq.from(Vehicle.class));
+            Query q = em.createQuery(cq);
+            result = q.getResultList();
+            return result;
+        } catch (Exception e) {
+            throw new DataAccessExceptionImpl("error while getting all vehicles",e);
         }
     }
 
-    public Vehicle findByVin(String vin) throws HibernateErrorException {
-        if (vin == null) {
-            throw new IllegalArgumentException("Vin is null!");
-        }
-        Session session = null;
+    @Override
+    public Vehicle get(long id) throws DataAccessException {
         try {
-            session = HibernateUtil.getSessionFactory().getCurrentSession();
-            session.getTransaction().begin();
-
-            Vehicle vehicle = (Vehicle) session.get(Vehicle.class, vin);
-
-            session.getTransaction().commit();
-
-            return vehicle;
-        } catch (HibernateException ex) {
-            if (session != null) {
-                session.getTransaction().rollback();
-            }
-            throw new HibernateErrorException(ex);
+            Vehicle result = null;
+            result = em.find(Vehicle.class, id);
+            return result;
+        } catch (Exception e) {
+            throw new DataAccessExceptionImpl("error while getting vehicle by id",e);
         }
     }
 
-    public void update(Vehicle vehicle) throws HibernateErrorException {
-        if (vehicle == null) {
-            throw new IllegalArgumentException("Vehicle is null!");
-        }
-        Session session = null;
+    @Override
+    public void update(Vehicle vehicle) throws DataAccessException {
         try {
-            session = HibernateUtil.getSessionFactory().getCurrentSession();
-            session.getTransaction().begin();
-
-            session.update(vehicle);
-
-            session.getTransaction().commit();
-        } catch (HibernateException ex) {
-            if (session != null) {
-                session.getTransaction().rollback();
-            }
-            throw new HibernateErrorException(ex);
+            em.merge(vehicle);
+        } catch (Exception e) {
+            throw new DataAccessExceptionImpl("error while updating vehicle",e);
         }
     }
 
-    public void delete(Vehicle vehicle) throws HibernateErrorException {
-        if (vehicle == null) {
-            throw new IllegalArgumentException("Vehicle is null!");
-        }
-        Session session = null;
+    @Override
+    public void delete(Vehicle vehicle) throws DataAccessException {
         try {
-            session = HibernateUtil.getSessionFactory().getCurrentSession();
-            session.getTransaction().begin();
-
-            session.delete(vehicle);
-
-            session.getTransaction().commit();
-        } catch (HibernateException ex) {
-            if (session != null) {
-                session.getTransaction().rollback();
-            }
-            throw new HibernateErrorException(ex);
+            Vehicle remove = em.getReference(Vehicle.class, vehicle.getVin());
+            em.remove(remove);
+        } catch (Exception e) {
+            throw new DataAccessExceptionImpl("error while deleting vehicle", e);
         }
     }
 
-    public void insert(Vehicle vehicle) throws HibernateErrorException {
-        if (vehicle == null) {
-            throw new IllegalArgumentException("Vehicle is null!");
-        }
-        Session session = null;
+    @Override
+    public void create(Vehicle vehicle) throws DataAccessException {
         try {
-            session = HibernateUtil.getSessionFactory().getCurrentSession();
-            session.getTransaction().begin();
-
-            session.save(vehicle);
-
-            session.getTransaction().commit();
-        } catch (HibernateException ex) {
-            if (session != null) {
-                session.getTransaction().rollback();
-            }
-            throw new HibernateErrorException(ex);
+            em.persist(vehicle);
+        } catch (Exception e) {
+            throw new DataAccessExceptionImpl("error while creeating vehicle",e);
         }
     }
 }

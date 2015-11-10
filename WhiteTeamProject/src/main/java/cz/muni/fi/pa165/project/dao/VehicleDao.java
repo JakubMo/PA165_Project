@@ -1,7 +1,7 @@
 package cz.muni.fi.pa165.project.dao;
 
 import cz.muni.fi.pa165.project.entity.Vehicle;
-import cz.muni.fi.pa165.project.util.HibernateErrorException;
+import org.springframework.dao.DataAccessException;
 
 import java.util.List;
 
@@ -13,37 +13,37 @@ public interface VehicleDao {
 	/**
 	 * List all vehicles
 	 * @return list with vehicles
-     * @throws cz.muni.fi.pa165.project.util.HibernateErrorException
+     * @throws DataAccessException
 	 */
-	List<Vehicle> findAll() throws HibernateErrorException;
+	List<Vehicle> getAll() throws DataAccessException;
 
 	/**
 	 * Get vehicle by id
 	 *
-	 * @param vin vehicle's vin
+	 * @param id - vehicle's id
 	 * @return vehicle
-     * @throws cz.muni.fi.pa165.project.util.HibernateErrorException
+     * @throws DataAccessException
 	 */
-	Vehicle findByVin(String vin) throws HibernateErrorException;
+	Vehicle get(long id) throws DataAccessException;
 
 	/**
 	 * Update vehicle
 	 * @param vehicle vehicle to be updated
-     * @throws cz.muni.fi.pa165.project.util.HibernateErrorException
+     * @throws DataAccessException
 	 */
-	void update(Vehicle vehicle) throws HibernateErrorException;
+	void update(Vehicle vehicle) throws DataAccessException;
 
 	/**
 	 * Remove vehicle
 	 * @param vehicle vehicle to be removed
-     * @throws cz.muni.fi.pa165.project.util.HibernateErrorException
+     * @throws DataAccessException
 	 */
-	void delete(Vehicle vehicle) throws HibernateErrorException;
+	void delete(Vehicle vehicle) throws DataAccessException;
 
 	/**
 	 * Insert new vehicle
 	 * @param vehicle vehicle to be inserted
-     * @throws cz.muni.fi.pa165.project.util.HibernateErrorException
+     * @throws DataAccessException
 	 */
-	void insert(Vehicle vehicle) throws HibernateErrorException;
+	void create(Vehicle vehicle) throws DataAccessException;
 }
