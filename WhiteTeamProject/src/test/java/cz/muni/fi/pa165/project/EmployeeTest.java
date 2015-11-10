@@ -1,32 +1,36 @@
 package cz.muni.fi.pa165.project;
 
 import cz.muni.fi.pa165.project.dao.EmployeeDao;
-import cz.muni.fi.pa165.project.dao.EmployeeDaoImpl;
 import cz.muni.fi.pa165.project.entity.Employee;
 import cz.muni.fi.pa165.project.enums.Category;
-import cz.muni.fi.pa165.project.util.HibernateErrorException;
-import cz.muni.fi.pa165.project.util.HibernateUtil;
+import cz.muni.fi.pa165.project.util.DataAccessExceptionImpl;
 import java.math.BigDecimal;
 import java.util.List;
-import org.hibernate.Session;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-import static org.testng.Assert.*;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  * Tests for Employee entity.
  *
  * @author Marek
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"classpath:testContext.xml"})
+@Transactional
 public class EmployeeTest {
     
-    private Employee employee1;
-    private Employee employee2;
-    
-    @BeforeClass
-    public void initialize() {
-        employee1 = new Employee();
-        employee1.setId(1L);
+    @Autowired
+    @Qualifier(value = "employeeDao")
+    private EmployeeDao employeeDao;
+        
+    private Employee prepareEmployee1() {
+        Employee employee1 = new Employee();
         employee1.setFirstname("Jozko");
         employee1.setLastname("Mrkvicka");
         employee1.setEmail("jozkomrkvicka@firma.mail");
@@ -34,9 +38,11 @@ public class EmployeeTest {
         employee1.setRole("user");
         employee1.setCredit(new BigDecimal("1230.50"));
         employee1.setCategory(Category.SILVER);
-        
-        employee2 = new Employee();
-        employee2.setId(2L);
+        return employee1;
+    }
+    
+    private Employee prepareEmployee2() {        
+        Employee employee2 = new Employee();
         employee2.setFirstname("Janko");
         employee2.setLastname("Hrasko");
         employee2.setEmail("hraskoj@firma.mail");
@@ -44,101 +50,80 @@ public class EmployeeTest {
         employee2.setRole("admin");
         employee2.setCredit(new BigDecimal("45700.00"));
         employee2.setCategory(Category.PLATINUM);
+        return employee2;
     }
     
-    @Test(priority = 1)
-    public void employeeCreateTest() throws HibernateErrorException {
-        EmployeeDao employeeDao = new EmployeeDaoImpl();
-        
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.getTransaction().begin();
-        
-        List<Employee> list = session.createQuery("select e from Employee e").list();
-        
-        session.getTransaction().commit();
-        
+    @Test
+    public void createEmployeeTest() throws DataAccessExceptionImpl {        
+        List<Employee> list = employeeDao.getAll();        
         assertEquals(list.size(), 0);
+        
+        Employee employee1 = prepareEmployee1();
+        Employee employee2 = prepareEmployee2();
         
         employeeDao.create(employee1);
         employeeDao.create(employee2);
         
-        if(!session.isOpen()) {
-            session = HibernateUtil.getSessionFactory().openSession();
-        }
-        session.getTransaction().begin();
-        
-        List<Employee> employees = session.createQuery("select e from Employee e").list();
-        
-        session.getTransaction().commit();
-        
+        List<Employee> employees = employeeDao.getAll();        
         assertEquals(employees.size(), 2);
     }
     
-    @Test(priority = 2)
-    public void employeeFindTest() throws HibernateErrorException {
-        EmployeeDao employeeDao = new EmployeeDaoImpl();
+    @Test
+    public void getEmployeesTest() throws DataAccessExceptionImpl {
+        Employee employee1 = prepareEmployee1();
+        Employee employee2 = prepareEmployee2();
         
-        List<Employee> employees = employeeDao.findAll();       
-        Employee emp1 = employeeDao.findById(employee1.getId());
-        Employee emp2 = employeeDao.findById(employee2.getId());
+        employeeDao.create(employee1);
+        employeeDao.create(employee2);
         
-        assertEquals(employees.size(), 2);   
+        List<Employee> employees = employeeDao.getAll();
+        Employee emp1 = employeeDao.get(employee1.getId());
+        Employee emp2 = employeeDao.get(employee2.getId());
+        
+        assertEquals(employees.size(), 2);
         assertEquals(emp1, employee1);
         assertEquals(emp2, employee2);
     }
     
-    @Test(priority = 3)
-    public void employeeUpdateTest() throws HibernateErrorException {
-        EmployeeDao employeeDao = new EmployeeDaoImpl();
+    @Test
+    public void updateEmployeeTest() throws DataAccessExceptionImpl {
+        Employee employee2 = prepareEmployee2();
+        employeeDao.create(employee2);
         
         String updatedEmail = "newemail@firma.email";
         String updatedPhoneNumber = "0179 324 865";
         
-        Employee updatedEmployee2 = new Employee(employee2.getId(), employee2.getFirstname(), employee2.getLastname(), employee2.getEmail(), 
-                employee2.getPhoneNumber(), employee2.getRole(), employee2.getCredit(), employee2.getCategory(), employee2.getDrives());
-        updatedEmployee2.setEmail(updatedEmail);
-        updatedEmployee2.setPhoneNumber(updatedPhoneNumber);
+        employee2.setEmail(updatedEmail);
+        employee2.setPhoneNumber(updatedPhoneNumber);
         
-        employeeDao.update(updatedEmployee2);
+        employeeDao.update(employee2);
         
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.getTransaction().begin();
+        Employee result = employeeDao.get(employee2.getId());
         
-        List<Employee> employees2 = session.createQuery("select e from Employee e where e.id=:num")
-                .setParameter("num", employee2.getId()).list();
-        
-        session.getTransaction().commit();
-        
-        assertEquals(employees2.size(), 1);
-        assertEquals(employees2.get(0).getEmail(), updatedEmail);
-        assertEquals(employees2.get(0).getPhoneNumber(), updatedPhoneNumber);
+        assertEquals(result.getEmail(), updatedEmail);
+        assertEquals(result.getPhoneNumber(), updatedPhoneNumber);
     }
     
-    @Test(priority = 4)
-    public void employeeDeleteTest() throws HibernateErrorException {
-        EmployeeDao employeeDao = new EmployeeDaoImpl();
+    @Test
+    public void deleteEmployeeTest() throws DataAccessExceptionImpl {        
+        Employee employee1 = prepareEmployee1();
+        Employee employee2 = prepareEmployee2();
         
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.getTransaction().begin();
+        employeeDao.create(employee1);
+        employeeDao.create(employee2);
         
-        List<Employee> employees = session.createQuery("select e from Employee e").list();
-        
-        session.getTransaction().commit();
-        
+        List<Employee> employees = employeeDao.getAll();
         assertEquals(employees.size(), 2);
         
         employeeDao.delete(employee1);
+        
+        List<Employee> emps = employeeDao.getAll();
+        assertEquals(emps.size(), 1);
+        assertEquals(emps.get(0), employee2);
+        
         employeeDao.delete(employee2);
         
-        if(!session.isOpen()) {
-            session = HibernateUtil.getSessionFactory().openSession();
-        }
-        session.getTransaction().begin();
-        
-        List<Employee> list = session.createQuery("select e from Employee e").list();
-        
-        session.getTransaction().commit();
-        
+        List<Employee> list = employeeDao.getAll();
         assertEquals(list.size(), 0);
     }
 }
