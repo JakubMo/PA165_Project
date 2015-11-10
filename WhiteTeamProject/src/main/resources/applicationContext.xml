@@ -18,7 +18,7 @@
     
     <context:annotation-config/>
     
-    <context:component-scan base-package="cz.muni.fi.pa165.travelagency"/>
+    <context:component-scan base-package="cz.muni.fi.pa165.project"/>
     
     <tx:annotation-driven/>
         

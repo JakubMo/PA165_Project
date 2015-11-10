@@ -17,10 +17,10 @@
                             http://www.springframework.org/schema/aop/spring-aop.xsd">
     
     <context:annotation-config/>
-    
-    <context:component-scan base-package="cz.muni.fi.pa165.travelagency.data"/>
-    
-    <tx:annotation-driven/>
+
+	<context:component-scan base-package="cz.muni.fi.pa165.project.dao"/>
+
+	<tx:annotation-driven/>
         
     <jdbc:embedded-database id="dataSource" type="DERBY"/>
     

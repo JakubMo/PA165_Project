@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.project.entity;
 
-import cz.muni.fi.pa165.travelagency.data.enums.Category;
+import cz.muni.fi.pa165.project.enums.Category;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -25,37 +25,37 @@ public class Employee {
 	/**
 	 * Employee first name.
 	 */
-	@Column
+	@Column(name = "firstname", nullable = false)
 	private String firstname;
 
 	/**
 	 * Employee last name.
 	 */
-	@Column
+	@Column(name = "lastname", nullable = false)
 	private String lastname;
 
 	/**
 	 * Employee email.
 	 */
-	@Column
+	@Column(name = "email", nullable = false)
 	private String email;
 
 	/**
 	 * Employee phone number.
 	 */
-	@Column
+	@Column(name = "phone_number", nullable = false)
 	private String phoneNumber;
 
 	/**
 	 * Employee role in organization.
 	 */
-	@Column
+	@Column(name = "role", nullable = false)
 	private String role;
 
 	/**
 	 * Available credit of employee.
 	 */
-	@Column
+	@Column(name = "credit", nullable = false)
 	private BigDecimal credit;
 
 	/**

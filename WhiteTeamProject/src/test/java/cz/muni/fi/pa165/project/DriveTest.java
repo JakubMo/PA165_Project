@@ -1,12 +1,15 @@
 package cz.muni.fi.pa165.project;
 
-import cz.muni.fi.pa165.travelagency.data.entity.Drive;
-import cz.muni.fi.pa165.travelagency.data.entity.Employee;
-import cz.muni.fi.pa165.travelagency.data.entity.ServiceCheck;
-import cz.muni.fi.pa165.travelagency.data.entity.Vehicle;
-import cz.muni.fi.pa165.travelagency.data.enums.Category;
-import cz.muni.fi.pa165.travelagency.data.enums.DriveStatus;
-import cz.muni.fi.pa165.travelagency.util.HibernateErrorException;
+import cz.muni.fi.pa165.project.dao.DriveDao;
+import cz.muni.fi.pa165.project.dao.EmployeeDao;
+import cz.muni.fi.pa165.project.dao.VehicleDao;
+import cz.muni.fi.pa165.project.entity.Drive;
+import cz.muni.fi.pa165.project.entity.Employee;
+import cz.muni.fi.pa165.project.entity.ServiceCheck;
+import cz.muni.fi.pa165.project.entity.Vehicle;
+import cz.muni.fi.pa165.project.enums.Category;
+import cz.muni.fi.pa165.project.enums.DriveStatus;
+import cz.muni.fi.pa165.project.util.HibernateErrorException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +26,6 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 /**
  * Unit tests for Drive entity
@@ -55,41 +55,41 @@ public class DriveTest {
 	@Test
 	public void createDrive() throws HibernateErrorException {
 
-		List<Drive> drives = driveDao.getAllDrives();
+		List<Drive> drives = driveDao.getAll();
 
 		assertEquals(0, drives.size());
 
 		Drive drive1 = prepareDrive1();
 		Drive drive2 = prepareDrive2();
 
-		driveDao.insertDrive(drive1);
-		driveDao.insertDrive(drive2);
+		driveDao.create(drive1);
+		driveDao.create(drive2);
 
-		drives = driveDao.getAllDrives();
+		drives = driveDao.getAll();
 
 		assertEquals(2, drives.size());
 	}
 
 	@Test
-	public void getAllDrives() throws HibernateErrorException {
+	public void getAll() throws HibernateErrorException {
 
-		List<Drive> drives = driveDao.getAllDrives();
+		List<Drive> drives = driveDao.getAll();
 
 		assertEquals(drives.size(), 0);
 
 		Drive drive1 = prepareDrive1();
 		Drive drive2 = prepareDrive2();
 
-		driveDao.insertDrive(drive1);
+		driveDao.create(drive1);
 
-		drives = driveDao.getAllDrives();
+		drives = driveDao.getAll();
 
 		assertEquals(drives.size(), 1);
 		assertTrue(drive1.equals(drives.get(0)));
 
-		driveDao.insertDrive(drive2);
+		driveDao.create(drive2);
 
-		drives = driveDao.getAllDrives();
+		drives = driveDao.getAll();
 
 		assertEquals(drives.size(), 2);
 		assertTrue(drive1.equals(drives.get(0)));
@@ -97,54 +97,54 @@ public class DriveTest {
 	}
 
 	@Test
-	public void getDriveById() throws HibernateErrorException {
+	public void getById() throws HibernateErrorException {
 
 		Drive drive1 = prepareDrive1();
 		Drive drive2 = prepareDrive2();
 
-		driveDao.insertDrive(drive1);
+		driveDao.create(drive1);
 
-		Drive drive = driveDao.getDrive(drive1.getId());
+		Drive drive = driveDao.get(drive1.getId());
 
 		assertTrue(drive1.equals(drive));
 		try {
-			assertEquals(null, driveDao.getDrive(drive2.getId()));
+			assertEquals(null, driveDao.get(drive2.getId()));
 			fail("Finding drive without id, test should fail");
-		} catch (InvalidDataAccessApiUsageException e) {
+		} catch (HibernateErrorException e) {
 		}
 
-		driveDao.insertDrive(drive2);
+		driveDao.create(drive2);
 
-		assertTrue(drive1.equals(driveDao.getDrive(drive1.getId())));
-		assertTrue(drive2.equals(driveDao.getDrive(drive2.getId())));
+		assertTrue(drive1.equals(driveDao.get(drive1.getId())));
+		assertTrue(drive2.equals(driveDao.get(drive2.getId())));
 	}
 
 	@Test
-	public void getDriveByEmployee() throws HibernateErrorException {
+	public void getByEmployee() throws HibernateErrorException {
 
 		Drive drive1 = prepareDrive1();
 		Drive drive2 = prepareDrive2();
 		Employee employee = drive1.getEmployee();
 
-		driveDao.insertDrive(drive1);
+		driveDao.create(drive1);
 
-		List<Drive> drives = driveDao.getAllDrivesByEmployee(employee);
+		List<Drive> drives = driveDao.getAllByEmployee(employee);
 
 		assertEquals(1, drives.size());
 		assertTrue(drive1.equals(drives.get(0)));
 
 		employee = drive2.getEmployee();
 
-		driveDao.insertDrive(drive2);
+		driveDao.create(drive2);
 
-		drives = driveDao.getAllDrivesByEmployee(employee);
+		drives = driveDao.getAllByEmployee(employee);
 
 		assertEquals(1, drives.size());
 		assertTrue(drive2.equals(drives.get(0)));
 	}
 
 	@Test
-	public void getDriveByVehicle() throws HibernateErrorException {
+	public void getByVehicle() throws HibernateErrorException {
 
 		Drive drive1 = prepareDrive1();
 		Drive drive2 = prepareDrive2();
@@ -152,101 +152,101 @@ public class DriveTest {
 		Vehicle vehicle1 = drive1.getVehicle();
 		Vehicle vehicle2 = drive2.getVehicle();
 
-		driveDao.insertDrive(drive1);
+		driveDao.create(drive1);
 
-		List<Drive> drives = driveDao.getAllDrivesByVehicle(vehicle1);
-
-		assertEquals(1, drives.size());
-		assertTrue(drive1.equals(drives.get(0)));
-
-		driveDao.insertDrive(drive2);
-
-		drives = driveDao.getAllDrivesByVehicle(vehicle1);
+		List<Drive> drives = driveDao.getAllByVehicle(vehicle1);
 
 		assertEquals(1, drives.size());
 		assertTrue(drive1.equals(drives.get(0)));
 
-		drives = driveDao.getAllDrivesByVehicle(vehicle2);
+		driveDao.create(drive2);
+
+		drives = driveDao.getAllByVehicle(vehicle1);
+
+		assertEquals(1, drives.size());
+		assertTrue(drive1.equals(drives.get(0)));
+
+		drives = driveDao.getAllByVehicle(vehicle2);
 
 		assertEquals(1, drives.size());
 		assertTrue(drive2.equals(drives.get(0)));
 	}
 
 	@Test
-	public void updateDrive() throws HibernateErrorException {
+	public void update() throws HibernateErrorException {
 
 		Drive drive1 = prepareDrive1();
 		Drive drive2 = prepareDrive2();
 
-		driveDao.insertDrive(drive1);
-		driveDao.insertDrive(drive2);
+		driveDao.create(drive1);
+		driveDao.create(drive2);
 
 		drive1.setKm(new BigDecimal(13216));
-		driveDao.updateDrive(drive1);
+		driveDao.update(drive1);
 
-		assertTrue(new BigDecimal(13216).compareTo(driveDao.getDrive(drive1.getId()).getKm()) == 0);
+		assertTrue(new BigDecimal(13216).compareTo(driveDao.get(drive1.getId()).getKm()) == 0);
 
 		drive1.setState(DriveStatus.CANCELLED);
-		driveDao.updateDrive(drive1);
+		driveDao.update(drive1);
 
-		assertEquals(DriveStatus.CANCELLED, driveDao.getDrive(drive1.getId()).getState());
+		assertEquals(DriveStatus.CANCELLED, driveDao.get(drive1.getId()).getState());
 
 		Calendar calendar = new GregorianCalendar();
 		calendar.set(2015, 1, 1);
 		drive1.setStartDate(calendar.getTime());
-		driveDao.updateDrive(drive1);
+		driveDao.update(drive1);
 
-		assertTrue(calendar.getTime().equals(driveDao.getDrive(drive1.getId()).getStartDate()));
+		assertTrue(calendar.getTime().equals(driveDao.get(drive1.getId()).getStartDate()));
 
 		calendar = new GregorianCalendar();
 		calendar.set(2015, 2, 2);
 		drive1.setEndDate(calendar.getTime());
-		driveDao.updateDrive(drive1);
+		driveDao.update(drive1);
 
-		assertTrue(calendar.getTime().equals(driveDao.getDrive(drive1.getId()).getEndDate()));
+		assertTrue(calendar.getTime().equals(driveDao.get(drive1.getId()).getEndDate()));
 
 		Employee employee = createEmployee("NewFirstname", "NewLastname");
 		drive1.setEmployee(employee);
 
-		driveDao.updateDrive(drive1);
+		driveDao.update(drive1);
 
-		assertTrue(employee.equals(driveDao.getDrive(drive1.getId()).getEmployee()));
+		assertTrue(employee.equals(driveDao.get(drive1.getId()).getEmployee()));
 
-		assertTrue(drive2.equals(driveDao.getDrive(drive2.getId())));
+		assertTrue(drive2.equals(driveDao.get(drive2.getId())));
 	}
 
 	@Test
-	public void deleteDrive() throws HibernateErrorException {
+	public void delete() throws HibernateErrorException {
 
 		Drive drive1 = prepareDrive1();
 		Drive drive2 = prepareDrive2();
 
-		driveDao.insertDrive(drive1);
-		driveDao.insertDrive(drive2);
+		driveDao.create(drive1);
+		driveDao.create(drive2);
 
-		assertEquals(2, driveDao.getAllDrives().size());
+		assertEquals(2, driveDao.getAll().size());
 
-		driveDao.deleteDrive(drive1);
+		driveDao.delete(drive1);
 
-		assertEquals(1, driveDao.getAllDrives().size());
-		assertEquals(null, driveDao.getDrive(drive1.getId()));
-		assertTrue(drive2.equals(driveDao.getDrive(drive2.getId())));
+		assertEquals(1, driveDao.getAll().size());
+		assertEquals(null, driveDao.get(drive1.getId()));
+		assertTrue(drive2.equals(driveDao.get(drive2.getId())));
 
 		drive1 = prepareDrive3();
 
-		driveDao.insertDrive(drive1);
+		driveDao.create(drive1);
 
-		driveDao.deleteDrive(drive2);
+		driveDao.delete(drive2);
 
-		assertEquals(1, driveDao.getAllDrives().size());
-		assertTrue(drive1.equals(driveDao.getDrive(drive1.getId())));
-		assertEquals(null, driveDao.getDrive(drive2.getId()));
+		assertEquals(1, driveDao.getAll().size());
+		assertTrue(drive1.equals(driveDao.get(drive1.getId())));
+		assertEquals(null, driveDao.get(drive2.getId()));
 
-		driveDao.deleteDrive(drive1);
+		driveDao.delete(drive1);
 
-		assertEquals(0, driveDao.getAllDrives().size());
-		assertEquals(null, driveDao.getDrive(drive1.getId()));
-		assertEquals(null, driveDao.getDrive(drive2.getId()));
+		assertEquals(0, driveDao.getAll().size());
+		assertEquals(null, driveDao.get(drive1.getId()));
+		assertEquals(null, driveDao.get(drive2.getId()));
 	}
 
 	private Employee createEmployee(String firstname, String lastname) throws HibernateErrorException {
@@ -269,7 +269,7 @@ public class DriveTest {
 		vehicle.setVin(vin);
 		vehicle.setServiceChecks(new ArrayList<ServiceCheck>());
 		vehicle.setServiceInterval(365);
-		vehicleDao.insert(vehicle);
+		vehicleDao.create(vehicle);
 
 		return vehicle;
 	}

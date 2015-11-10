@@ -1,9 +1,7 @@
 package cz.muni.fi.pa165.project.dao;
 
-import cz.muni.fi.pa165.travelagency.data.dao.EmployeeDao;
-import cz.muni.fi.pa165.travelagency.data.entity.Customer;
-import cz.muni.fi.pa165.travelagency.data.entity.Employee;
-import cz.muni.fi.pa165.travelagency.util.HibernateErrorException;
+import cz.muni.fi.pa165.project.entity.Employee;
+import cz.muni.fi.pa165.project.util.HibernateErrorException;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -26,34 +24,54 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
     @Override
     public void create(Employee employee) throws HibernateErrorException {
-		em.persist(employee);
-    }
+		try {
+			em.persist(employee);
+		} catch (Exception e) {
+			new HibernateErrorException(e);
+		}
+	}
 
     @Override
-    public List findAll() throws HibernateErrorException {
-		List<Employee> result = new ArrayList<>();
-		CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-		cq.select(cq.from(Employee.class));
-		Query q = em.createQuery(cq);
-		result = q.getResultList();
-		return result;
-    }
+    public List getAll() throws HibernateErrorException {
+		try {
+			List<Employee> result = new ArrayList<>();
+			CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+			cq.select(cq.from(Employee.class));
+			Query q = em.createQuery(cq);
+			result = q.getResultList();
+			return result;
+		} catch (Exception e) {
+			throw new HibernateErrorException(e);
+		}
+	}
 
     @Override
-    public Employee findById(Long id) throws HibernateErrorException {
-		Employee result = null;
-		result = em.find(Employee.class, id);
-		return result;
-    }
+    public Employee get(Long id) throws HibernateErrorException {
+		try {
+			Employee result = null;
+			result = em.find(Employee.class, id);
+			return result;
+		} catch (Exception e) {
+			throw new HibernateErrorException(e);
+		}
+	}
 
     @Override
     public void update(Employee employee) throws HibernateErrorException {
-		em.merge(employee);
-    }
+		try {
+			em.merge(employee);
+		} catch (Exception e) {
+			throw new HibernateErrorException(e);
+		}
+	}
 
     @Override
     public void delete(Employee employee) throws HibernateErrorException {
-		Employee remove = em.getReference(Employee.class, employee.getId());
-		em.remove(remove);
-    }
+		try {
+			Employee remove = em.getReference(Employee.class, employee.getId());
+			em.remove(remove);
+		} catch (Exception e) {
+			throw new HibernateErrorException(e);
+		}
+	}
 }
