@@ -1,14 +1,14 @@
 ----------------------------------------------------------------
-Wed Nov 11 10:10:21 CET 2015:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-0150-f5cf-6488-0000007fd7b8 
-on database directory memory:M:\Projects\NetBeans\PA165_Project\WhiteTeamProject\dataSource  with class loader sun.misc.Launcher$AppClassLoader@a57993 
-Loaded from file:/C:/Users/Marek/.m2/repository/org/apache/derby/derby/10.8.2.2/derby-10.8.2.2.jar
+Wed Nov 11 12:48:19 CET 2015:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-0150-f660-0252-00000df8ad20 
+on database directory memory:/home/tborcin/MUNI/PA165 - Vývoj programových systémů v jazyce Java/projekt/PA165_Project/WhiteTeamProject/dataSource  with class loader sun.misc.Launcher$AppClassLoader@2a139a55 
+Loaded from file:/home/tborcin/.m2/repository/org/apache/derby/derby/10.8.2.2/derby-10.8.2.2.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_45-b15
-user.dir=M:\Projects\NetBeans\PA165_Project\WhiteTeamProject
+java.runtime.version=1.8.0_45-b14
+user.dir=/home/tborcin/MUNI/PA165 - Vývoj programových systémů v jazyce Java/projekt/PA165_Project/WhiteTeamProject
 derby.system.home=null
 derby.stream.error.method=org.springframework.jdbc.datasource.embedded.OutputStreamFactory.getNoopOutputStream
 Database Class Loader started - derby.database.classpath=''
 ----------------------------------------------------------------
-Wed Nov 11 10:10:22 CET 2015:
-Shutting down instance a816c00e-0150-f5cf-6488-0000007fd7b8 on database directory memory:M:\Projects\NetBeans\PA165_Project\WhiteTeamProject\dataSource with class loader sun.misc.Launcher$AppClassLoader@a57993 
+Wed Nov 11 12:48:20 CET 2015:
+Shutting down instance a816c00e-0150-f660-0252-00000df8ad20 on database directory memory:/home/tborcin/MUNI/PA165 - Vývoj programových systémů v jazyce Java/projekt/PA165_Project/WhiteTeamProject/dataSource with class loader sun.misc.Launcher$AppClassLoader@2a139a55 

@@ -27,7 +27,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		try {
 			em.persist(employee);
 		} catch (Exception e) {
-			new DataAccessExceptionImpl(e.getMessage());
+			throw new DataAccessExceptionImpl(e.getMessage());
 		}
 	}
 
