@@ -18,7 +18,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 /**
- * Vehicle test suite
+ * test for {@link Vehicle} entity
  *
  * @author Mario Kudolani | mariok@mail.muni.cz | created: 30.10.2015.
  */
@@ -39,7 +39,7 @@ public class VehicleTest {
     }
 
     @Test
-    public void insertVehicle() throws DataAccessException {
+    public void createVehicleTest() throws DataAccessException {
         Vehicle vehicle1 = prepareVehicle1();
         Vehicle vehicle2 = prepareVehicle2();
 
@@ -48,12 +48,13 @@ public class VehicleTest {
     }
 
     @Test(expected = DataAccessException.class)
-    public void insertVehicleError() throws DataAccessException {
-        vehicleDao.create(new Vehicle());
+    public void createNullVehicleTest() throws DataAccessException {
+        vehicleDao.create(null);
     }
 
+
     @Test
-    public void getAllVehicles() throws DataAccessException {
+    public void getAllVehiclesTest() throws DataAccessException {
         Vehicle vehicle1 = prepareVehicle1();
         Vehicle vehicle2 = prepareVehicle2();
 
@@ -77,19 +78,24 @@ public class VehicleTest {
     }
 
     @Test
-    public void findVehicleByVin() throws DataAccessException {
+    public void getVehicleTest() throws DataAccessException {
         Vehicle vehicle1 = prepareVehicle1();
         Vehicle vehicle2 = prepareVehicle2();
 
         vehicleDao.create(vehicle1);
 
         assertEquals(vehicle1, vehicleDao.get(vehicle1.getId()));
-        assertEquals(null, vehicleDao.get(vehicle2.getId()));
 
         vehicleDao.create(vehicle2);
 
         assertEquals(vehicle2, vehicleDao.get(vehicle2.getId()));
         assertEquals(vehicle1, vehicleDao.get(vehicle1.getId()));
+    }
+
+
+    @Test(expected = DataAccessException.class)
+    public void getVehicleNullIdTest() throws DataAccessException {
+        this.vehicleDao.get(null);
     }
 
     @Test
@@ -137,6 +143,11 @@ public class VehicleTest {
         assertEquals(vehicle2, vehicleDao.get(vehicle2.getId()));
     }
 
+    @Test(expected = DataAccessException.class)
+    public void updateNullVehicleTest() throws DataAccessException {
+        this.vehicleDao.update(null);
+    }
+
     @Test
     public void deleteVehicle() throws DataAccessException {
         Vehicle vehicle1 = prepareVehicle1();
@@ -161,6 +172,21 @@ public class VehicleTest {
 
         assertEquals(null, vehicleDao.get(vehicle1.getId()));
         assertEquals(null, vehicleDao.get(vehicle2.getId()));
+    }
+
+    @Test(expected = DataAccessException.class)
+    public void deleteNullVehicleTest() throws DataAccessException {
+        this.vehicleDao.delete(null);
+    }
+
+    @Test(expected =  DataAccessException.class)
+    public void deleteTwiceVehicleTest() throws DataAccessException {
+        Vehicle vehicle = this.prepareVehicle1();
+
+        this.vehicleDao.create(vehicle);
+
+        this.vehicleDao.delete(vehicle);
+        this.vehicleDao.delete(vehicle);
     }
 
     private Vehicle prepareVehicle1() {
