@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * {@link ../DriveDao} interface implementation.
+ * {@link EmployeeDao} interface implementation.
  *
  * @author Tomas Borcin | tborcin@redhat.com | created: 10/25/15.
  */
