@@ -68,6 +68,11 @@ public class EmployeeTest {
         assertEquals(employees.size(), 2);
     }
     
+    @Test(expected = Exception.class)
+    public void createNullEmployeeTest() {
+        employeeDao.create(null);
+    }
+    
     @Test
     public void getEmployeesTest() throws DataAccessExceptionImpl {
         Employee employee1 = prepareEmployee1();
@@ -83,6 +88,11 @@ public class EmployeeTest {
         assertEquals(employees.size(), 2);
         assertEquals(emp1, employee1);
         assertEquals(emp2, employee2);
+    }
+    
+    @Test(expected = Exception.class)
+    public void getEmployeeNullIdTest() {
+        employeeDao.get(null);
     }
     
     @Test
@@ -102,6 +112,24 @@ public class EmployeeTest {
         
         assertEquals(result.getEmail(), updatedEmail);
         assertEquals(result.getPhoneNumber(), updatedPhoneNumber);
+    }
+    
+    @Test(expected = Exception.class)
+    public void updateNullEmployeeTest() {
+        employeeDao.update(null);
+    }
+    
+    @Test(expected = Exception.class)
+    public void updateDeletedEmployeeTest() {
+        Employee employee1 = prepareEmployee1();
+        
+        employeeDao.create(employee1);
+        employeeDao.delete(employee1);
+        
+        String updatedPhoneNumber = "0179 324 865";
+        employee1.setPhoneNumber(updatedPhoneNumber);
+        
+        employeeDao.update(employee1);
     }
     
     @Test
@@ -125,5 +153,19 @@ public class EmployeeTest {
         
         List<Employee> list = employeeDao.getAll();
         assertEquals(list.size(), 0);
+    }
+    
+    @Test(expected = Exception.class)
+    public void deleteNullEmployeeTest() {
+        employeeDao.delete(null);
+    }
+    
+    @Test(expected = Exception.class)
+    public void deleteTwiceEmployeeTest() {
+        Employee employee1 = prepareEmployee1();
+        
+        employeeDao.create(employee1);
+        employeeDao.delete(employee1);
+        employeeDao.delete(employee1);
     }
 }
