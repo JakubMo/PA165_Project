@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * {@link VehicleDao} interface implementation
+ *
  * @author Mario Kudolani | mariok@mail.muni.cz | created: 27.10.2015
  */
 @Repository(value = "vehicleDao")
@@ -36,7 +38,7 @@ public class VehicleDaoImpl implements VehicleDao {
     }
 
     @Override
-    public Vehicle get(long id) throws DataAccessException {
+    public Vehicle get(Long id) throws DataAccessException {
         try {
             Vehicle result = null;
             result = em.find(Vehicle.class, id);

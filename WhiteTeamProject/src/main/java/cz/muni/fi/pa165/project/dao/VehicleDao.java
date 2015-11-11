@@ -24,7 +24,7 @@ public interface VehicleDao {
 	 * @return vehicle
      * @throws DataAccessException
 	 */
-	Vehicle get(long id) throws DataAccessException;
+	Vehicle get(Long id) throws DataAccessException;
 
 	/**
 	 * Update vehicle

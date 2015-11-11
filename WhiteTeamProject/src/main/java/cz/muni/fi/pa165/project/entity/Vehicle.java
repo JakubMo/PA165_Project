@@ -5,15 +5,16 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * Vehicle entity
+ *
  * @author Mario Kudolani | mariok@mail.muni.cz | created: 27.10.2015
  */
 @Entity
-@Table(name = "vehicle")
 public class Vehicle {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 
 	/**
 	 * Vehicle's vin
@@ -81,11 +82,11 @@ public class Vehicle {
 	@OneToMany(mappedBy="vehicle")
 	private List<Drive> drives;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -182,7 +183,8 @@ public class Vehicle {
 	@Override
 	public String toString() {
 		return "Vehicle{" +
-				"vin='" + vin + '\'' +
+				"id='" + id + '\'' +
+				", vin='" + vin + '\'' +
 				", brand='" + brand + '\'' +
 				", model='" + model + '\'' +
 				", type='" + type + '\'' +
