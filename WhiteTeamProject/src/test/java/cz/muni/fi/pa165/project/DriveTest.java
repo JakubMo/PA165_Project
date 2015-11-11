@@ -25,6 +25,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import org.springframework.dao.DataAccessException;
 
 /**
  * Unit tests for Drive entity
@@ -106,18 +107,43 @@ public class DriveTest {
 		Drive drive = driveDao.get(drive1.getId());
 
 		assertTrue(drive1.equals(drive));
-		try {
-			assertEquals(null, driveDao.get(drive2.getId()));
-			fail("Finding drive without id, test should fail");
-		} catch (DataAccessExceptionImpl e) {
-		}
-
+		
 		driveDao.create(drive2);
 
 		assertTrue(drive1.equals(driveDao.get(drive1.getId())));
 		assertTrue(drive2.equals(driveDao.get(drive2.getId())));
 	}
 
+        @Test(expected=DataAccessException.class)
+        public void getByIdError() throws DataAccessExceptionImpl {
+            driveDao.get(null);
+        }
+        
+        @Test(expected=DataAccessException.class)
+        public void getByEmployeeError() throws DataAccessExceptionImpl {
+            driveDao.getAllByEmployee(null);
+        }
+        
+        @Test(expected=DataAccessException.class)
+        public void getByVehicleError() throws DataAccessExceptionImpl {
+            driveDao.getAllByVehicle(null);
+        }
+        
+        @Test(expected=DataAccessException.class)
+        public void updateError() throws DataAccessExceptionImpl {
+            driveDao.update(null);
+        }
+        
+        @Test(expected=DataAccessException.class)
+        public void createError() throws DataAccessExceptionImpl {
+            driveDao.create(null);
+        }
+        
+        @Test(expected=DataAccessException.class)
+        public void deleteError() throws DataAccessExceptionImpl {
+            driveDao.delete(null);
+        }
+        
 	@Test
 	public void getByEmployee() throws DataAccessExceptionImpl {
 
@@ -185,10 +211,10 @@ public class DriveTest {
 
 		assertTrue(new BigDecimal(13216).compareTo(driveDao.get(drive1.getId()).getKm()) == 0);
 
-		drive1.setState(DriveStatus.CANCELLED);
+		drive1.setDriveStatus(DriveStatus.CANCELLED);
 		driveDao.update(drive1);
 
-		assertEquals(DriveStatus.CANCELLED, driveDao.get(drive1.getId()).getState());
+		assertEquals(DriveStatus.CANCELLED, driveDao.get(drive1.getId()).getDriveStatus());
 
 		Calendar calendar = new GregorianCalendar();
 		calendar.set(2015, 1, 1);
@@ -267,7 +293,7 @@ public class DriveTest {
 		vehicle.setType("type");
 		vehicle.setVin(vin);
 		vehicle.setServiceChecks(new ArrayList<ServiceCheck>());
-		vehicle.setServiceInterval(365);
+		vehicle.setServiceCheckInterval(365);
 		vehicleDao.create(vehicle);
 
 		return vehicle;
@@ -280,7 +306,7 @@ public class DriveTest {
 		drive1.setStartDate(calendar.getTime());
 		calendar.set(2015, 10, 10);
 		drive1.setEndDate(calendar.getTime());
-		drive1.setState(DriveStatus.APPROVED);
+		drive1.setDriveStatus(DriveStatus.APPROVED);
 		drive1.setVehicle(createVehicle(vin1));
 		drive1.setEmployee(createEmployee("Firstname1", "Lastname1"));
 		drive1.setKm(new BigDecimal(10000));
@@ -296,7 +322,7 @@ public class DriveTest {
 		drive2.setStartDate(calendar.getTime());
 		calendar.set(2015, 10, 10);
 		drive2.setEndDate(calendar.getTime());
-		drive2.setState(DriveStatus.COMPLETED);
+		drive2.setDriveStatus(DriveStatus.COMPLETED);
 		drive2.setVehicle(createVehicle(vin2));
 		drive2.setEmployee(createEmployee("Firstname2", "Lastname2"));
 		drive2.setKm(new BigDecimal(10000));
@@ -311,7 +337,7 @@ public class DriveTest {
 		drive1.setStartDate(calendar.getTime());
 		calendar.set(2015, 10, 10);
 		drive1.setEndDate(calendar.getTime());
-		drive1.setState(DriveStatus.CANCELLED);
+		drive1.setDriveStatus(DriveStatus.CANCELLED);
 		drive1.setVehicle(createVehicle("FJAO836FE093G"));
 		drive1.setEmployee(createEmployee("Firstname3", "Lastname3"));
 		drive1.setKm(new BigDecimal(10000));

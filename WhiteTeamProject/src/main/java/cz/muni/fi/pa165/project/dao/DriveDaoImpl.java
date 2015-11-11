@@ -3,106 +3,135 @@ package cz.muni.fi.pa165.project.dao;
 import cz.muni.fi.pa165.project.entity.Drive;
 import cz.muni.fi.pa165.project.entity.Employee;
 import cz.muni.fi.pa165.project.entity.Vehicle;
-import cz.muni.fi.pa165.project.util.HibernateErrorException;
-import cz.muni.fi.pa165.project.util.HibernateUtil;
+import cz.muni.fi.pa165.project.util.DataAccessExceptionImpl;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
+import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
 
 /**
  * Provides implementation of {@link DriveDao} interface.
  * 
  * @author Jakub Mozucha | j.mozucha@gmail.com | created: 10/27/2015
  */
+@Repository(value = "driveDao")
 public class DriveDaoImpl implements DriveDao {
     
+    @PersistenceContext
+    private EntityManager em;
+    
     @Override
-    public List<Drive> getAllDrives() throws HibernateErrorException{
+    public void create(Drive drive) throws DataAccessException {
+        if(drive == null) {
+            throw new IllegalArgumentException("drive is null");
+        }
+        
         try {
-            List<Drive> drives = new ArrayList<Drive>();
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            session.getTransaction().begin();
-
-            drives = session.createCriteria(Drive.class).list();
-
-            session.getTransaction().commit();
-
-            return drives;
-        } catch (HibernateException ex) {
-            throw new HibernateErrorException(ex);
+            em.persist(drive);
+        } catch (Exception ex) {
+            throw new DataAccessExceptionImpl("error while creating new drive", ex);
         }
     }
     
     @Override
-    public List<Drive> getAllDrivesByVehicle(Vehicle vehicle) throws HibernateErrorException{
-        List<Drive> drives = new ArrayList<Drive>();
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.getTransaction().begin();
+    public void update(Drive drive) throws DataAccessException {
+        if(drive == null) {
+            throw new IllegalArgumentException("drive is null");
+        }
         
-        drives = session.createQuery("select d from Drive d where d.vehicle=:v")
-                .setParameter("v", vehicle)
-                .list();
-        
-        session.getTransaction().commit();
-        
-        return drives;
+        try {
+            em.merge(drive);
+        } catch (Exception ex) {
+            throw new DataAccessExceptionImpl("error while updating drive", ex);
+        }
     }
     
     @Override
-    public List<Drive> getAllDrivesByEmployee(Employee employee) throws HibernateErrorException{
-        List<Drive> drives = new ArrayList<Drive>();
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.getTransaction().begin();
-        
-        drives = session.createQuery("select d from Drive d where d.employee=:e")
-                .setParameter("e", employee)
-                .list();
-        
-        session.getTransaction().commit();
-        
-        return drives;
+    public List<Drive> getAll() throws DataAccessException {
+        try {
+            List<Drive> result = new ArrayList<>();
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            cq.select(cq.from(Drive.class));
+            Query q = em.createQuery(cq);
+            result = q.getResultList();
+            return result;
+        } catch (Exception ex) {
+            throw new DataAccessExceptionImpl("error while getting all drives", ex);
+        }
     }
     
     @Override
-    public Drive getDrive(Long id) throws HibernateErrorException{
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.getTransaction().begin();
+    public List<Drive> getAllByVehicle(Vehicle vehicle) throws DataAccessException {
+        if(vehicle == null) {
+            throw new IllegalArgumentException("vehicle is null");
+        }
         
-        Drive drive = (Drive) session.get(Drive.class, id);
-        
-        session.getTransaction().commit();
-        
-        return drive;
+        try {
+            List<Drive> results = new ArrayList<>();
+            String vin = vehicle.getVin();
+            Query q = em.createQuery(
+                    "SELECT c "
+                    + "FROM cz.muni.fi.pa165.project.entity.Drive c "
+                    + "WHERE c.vehicle = :vehicle");
+            q.setParameter("vehicle", vehicle);
+            results = q.getResultList();
+            return results;
+        } catch (Exception ex) {
+            throw new DataAccessExceptionImpl("error while getting drives by vehicle", ex);
+        }
     }
     
     @Override
-    public void updateDrive(Drive drive) throws HibernateErrorException{
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.getTransaction().begin();
+    public List<Drive> getAllByEmployee(Employee employee) throws DataAccessException {
+        if(employee == null) {
+            throw new IllegalArgumentException("employee is null");
+        }
         
-        session.update(drive);
-        
-        session.getTransaction().commit();
+        try {
+            List<Drive> results = new ArrayList<>();
+            Long vin = employee.getId();
+            Query q = em.createQuery(
+                    "SELECT c "
+                    + "FROM cz.muni.fi.pa165.project.entity.Drive c "
+                    + "WHERE c.employee = :employee");
+            q.setParameter("employee", employee);
+            results = q.getResultList();
+            return results;
+        } catch (Exception ex) {
+            throw new DataAccessExceptionImpl("error while getting all by employee", ex);
+        }
     }
     
     @Override
-    public void deleteDrive(Drive drive) throws HibernateErrorException{
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.getTransaction().begin();
+    public Drive get(Long id) throws DataAccessException {
+        if(id == null) {
+            throw new IllegalArgumentException("id is null");
+        }
         
-        session.delete(drive);
-        
-        session.getTransaction().commit();
+        try {
+            Drive result = null;
+            result = em.find(Drive.class, id);
+            return result;
+        } catch (Exception ex) {
+            throw new DataAccessExceptionImpl("error while getting drive by id", ex);
+        }
     }
     
     @Override
-    public void insertDrive(Drive drive) throws HibernateErrorException{
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.getTransaction().begin();
+    public void delete(Drive drive) throws DataAccessException {
+        if(drive == null) {
+            throw new IllegalArgumentException("drive is null");
+        }
         
-        session.save(drive);
-        
-        session.getTransaction().commit();
+        try {
+            Drive remove = em.getReference(Drive.class, drive.getId());
+            em.remove(remove);
+        } catch (Exception ex) {
+            throw new DataAccessExceptionImpl("error while deleting drive", ex);
+        }
     }
 }

@@ -58,7 +58,7 @@ public class VehicleDaoImpl implements VehicleDao {
     @Override
     public void delete(Vehicle vehicle) throws DataAccessException {
         try {
-            Vehicle remove = em.getReference(Vehicle.class, vehicle.getVin());
+            Vehicle remove = em.getReference(Vehicle.class, vehicle.getId());
             em.remove(remove);
         } catch (Exception e) {
             throw new DataAccessExceptionImpl("error while deleting vehicle", e);
