@@ -81,7 +81,7 @@ public interface VehicleFacade {
      * @return found vehicle
      * @throws DataAccessExceptionImpl 
      */
-    public VehicleDTO getVehicleByVin(Long vin) throws DataAccessExceptionImpl;
+    public VehicleDTO getVehicleByVin(String vin) throws DataAccessExceptionImpl;
     
     /**
      * Get all vehicles
