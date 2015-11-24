@@ -13,14 +13,13 @@ public class ServiceCheckCreateDTO {
     
     @NotNull
     private ServiceCheckStatus status;
-    
+
     @NotNull
     private Date serviceCheckDate;
     
     @NotNull
     private VehicleDTO vehicle;
     
-    @NotNull
     private String serviceEmployee;
     
     private String report;
