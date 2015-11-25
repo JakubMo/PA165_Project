@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.project.facade;
 import cz.muni.fi.pa165.project.dto.VehicleCreateDTO;
 import cz.muni.fi.pa165.project.dto.VehicleDTO;
 import cz.muni.fi.pa165.project.util.DataAccessExceptionImpl;
+import java.util.Date;
 
 import java.util.List;
 
@@ -73,4 +74,13 @@ public interface VehicleFacade {
      * @throws DataAccessExceptionImpl 
      */
     public List<VehicleDTO> getAll() throws DataAccessExceptionImpl;
+    
+    /**
+     * Finds all free vehicles for specified time interval
+     * @param startDate from when the vehicle is needed
+     * @param endDate until when the vehicle is needed
+     * @return List of free vehicles
+     * @throws DataAccessExceptionImpl 
+     */
+    public List<VehicleDTO> getAllFreeInDate(Date startDate, Date endDate) throws DataAccessExceptionImpl;
 }

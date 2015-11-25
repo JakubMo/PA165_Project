@@ -64,7 +64,7 @@ public class VehicleServiceImpl implements VehicleService {
         if(vehicle == null){
             throw new IllegalArgumentException("vehicle is null");
         }
-        if(maxMileage < 99999L){
+        if(maxMileage < 100000L){
             throw new IllegalArgumentException("maxMileage has to be at least 100.000, not less!");
         }
         
