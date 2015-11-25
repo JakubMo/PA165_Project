@@ -62,6 +62,14 @@ public interface ServiceCheckService {
 	void updateServiceCheckStatus(ServiceCheck serviceCheck, ServiceCheckStatus serviceCheckStatus) throws DataAccessException;
 
 	/**
+	 * Gets service check with given id
+	 * @param id id od service check to be found
+	 * @return sertice check with given id
+	 * @throws DataAccessException
+	 */
+	ServiceCheck getById(Long id) throws DataAccessException;
+
+	/**
 	 * Gets all service checks
 	 * @return list of all service checks
 	 * @throws DataAccessException
