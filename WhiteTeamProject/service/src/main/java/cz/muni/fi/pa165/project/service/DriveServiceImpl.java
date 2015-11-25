@@ -14,12 +14,14 @@ import java.util.HashSet;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
 
 /**
  * Implementation of {@link DriveService} interface. Provides implementation of the business logic.
  *
  * @author Marek
  */
+@Service
 public class DriveServiceImpl implements DriveService {
     
     @Autowired

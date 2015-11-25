@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,7 +32,7 @@ public class VehicleDaoImpl implements VehicleDao {
             result = q.getResultList();
             return result;
         } catch (Exception e) {
-            throw new DataAccessExceptionImpl("error while getting all vehicles",e);
+            throw new DataAccessExceptionImpl("error while getting all vehicles", e);
         }
     }
 
@@ -42,7 +43,25 @@ public class VehicleDaoImpl implements VehicleDao {
             result = em.find(Vehicle.class, id);
             return result;
         } catch (Exception e) {
-            throw new DataAccessExceptionImpl("error while getting vehicle by id",e);
+            throw new DataAccessExceptionImpl("error while getting vehicle by id", e);
+        }
+    }
+
+    @Override
+    public Vehicle getByVin(String vin) throws DataAccessException {
+        if (vin == null || vin.equals("")) {
+            return null;
+        }
+        try {
+            Vehicle result = null;
+            Query q = em.createQuery("SELECT v "
+                    + "FROM Vehicle v "
+                    + "WHERE v.vin = :vin");
+            q.setParameter("vin", vin);
+            result = (Vehicle) q.getSingleResult();
+            return result;
+        } catch (Exception e) {
+            throw new DataAccessExceptionImpl("error while getting vehicle by vin", e);
         }
     }
 
@@ -51,7 +70,7 @@ public class VehicleDaoImpl implements VehicleDao {
         try {
             em.merge(vehicle);
         } catch (Exception e) {
-            throw new DataAccessExceptionImpl("error while updating vehicle",e);
+            throw new DataAccessExceptionImpl("error while updating vehicle", e);
         }
     }
 
@@ -70,64 +89,62 @@ public class VehicleDaoImpl implements VehicleDao {
         try {
             em.persist(vehicle);
         } catch (Exception e) {
-            throw new DataAccessExceptionImpl("error while creeating vehicle",e);
+            throw new DataAccessExceptionImpl("error while creeating vehicle", e);
         }
     }
 
-	@Override
-	public List<Vehicle> getAllByModel(String model) throws DataAccessException {
-		if ((model == null) || (model == "")){ 
-			return getAll();
-		}
-		try{
-			List<Vehicle> results = new ArrayList<>();
-			Query q = em.createQuery(
-					"SELECT v "
-					+ "FROM cz.muni.fi.pa165.project.entity.Vehicle v "
-					+ "WHERE v.model=:model");
-			q.setParameter("model", model);
-			results = q.getResultList();
-			return results;
-		} catch (Exception ex) {
-			throw new DataAccessExceptionImpl("error while getting vehicles by mileage", ex);
-		}
-	}
+    @Override
+    public List<Vehicle> getAllByModel(String model) throws DataAccessException {
+        if ((model == null) || (model.equals(""))) {
+            return getAll();
+        }
+        try {
+            List<Vehicle> results = new ArrayList<>();
+            Query q = em.createQuery(
+                    "SELECT v "
+                    + "FROM Vehicle v "
+                    + "WHERE v.model = :model");
+            q.setParameter("model", model);
+            results = q.getResultList();
+            return results;
+        } catch (Exception ex) {
+            throw new DataAccessExceptionImpl("error while getting vehicles by mileage", ex);
+        }
+    }
 
-	@Override
-	public List<Vehicle> getAllByBrand(String brand) throws DataAccessException {
-		if ((brand == null) || (brand == "")){ 
-			return getAll();
-		}
-		try{
-			List<Vehicle> results = new ArrayList<>();
-			Query q = em.createQuery(
-					"SELECT v "
-					+ "FROM cz.muni.fi.pa165.project.entity.Vehicle v "
-					+ "WHERE v.brand=:brand");
-			q.setParameter("brand", brand);
-			results = q.getResultList();
-			return results;
-		} catch (Exception ex) {
-			throw new DataAccessExceptionImpl("error while getting vehicles by mileage", ex);
-		}
-	}
+    @Override
+    public List<Vehicle> getAllByBrand(String brand) throws DataAccessException {
+        if ((brand == null) || (brand.equals(""))) {
+            return getAll();
+        }
+        try {
+            List<Vehicle> results = new ArrayList<>();
+            Query q = em.createQuery(
+                    "SELECT v "
+                    + "FROM Vehicle v "
+                    + "WHERE v.brand = :brand");
+            q.setParameter("brand", brand);
+            results = q.getResultList();
+            return results;
+        } catch (Exception ex) {
+            throw new DataAccessExceptionImpl("error while getting vehicles by mileage", ex);
+        }
+    }
 
-	@Override
-	public List<Vehicle> getAllByMileage(Long mileage) throws DataAccessException {
-		if ((mileage == null) || (mileage == 0)){ 
-			return getAll();
-		}
-		try{
-			List<Vehicle> results = new ArrayList<>();
-			Query q = em.createQuery(
-					"SELECT v "
-					+ "FROM cz.muni.fi.pa165.project.entity.Vehicle v "
-					+ "WHERE v.mileage<=:mileage");
-			q.setParameter("mileage", mileage);
-			results = q.getResultList();
-			return results;
-		} catch (Exception ex) {
-			throw new DataAccessExceptionImpl("error while getting vehicles by mileage", ex);
-		}
-	}
+    @Override
+    public List<Vehicle> getAllByMileage(Long mileage) throws DataAccessException {
+        try {
+            List<Vehicle> results = new ArrayList<>();
+            Query q = em.createQuery(
+                    "SELECT v "
+                    + "FROM Vehicle v "
+                    + "WHERE v.mileage <= :mileage");
+            q.setParameter("mileage", mileage);
+            results = q.getResultList();
+            return results;
+        } catch (Exception ex) {
+            throw new DataAccessExceptionImpl("error while getting vehicles by mileage", ex);
+        }
+    }
+
 }

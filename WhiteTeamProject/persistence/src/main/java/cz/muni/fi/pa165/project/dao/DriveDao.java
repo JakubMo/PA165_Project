@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.project.dao;
 import cz.muni.fi.pa165.project.entity.Drive;
 import cz.muni.fi.pa165.project.entity.Employee;
 import cz.muni.fi.pa165.project.entity.Vehicle;
+import java.util.Date;
 import org.springframework.dao.DataAccessException;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public interface DriveDao {
      * Creates collection of all drive records for specific car
      * 
      * @param vehicle
-     * @return list of {@link Drive} records 
+     * @return list of {@link Drive} records by vehicle
      * @throws cz.muni.fi.pa165.project.util.DataAccessException 
      */
     List<Drive> getAllByVehicle(Vehicle vehicle) throws DataAccessException;
@@ -35,10 +36,20 @@ public interface DriveDao {
      * Creates collection of all drive records for specific employee
      * 
      * @param employee
-     * @return list of all {@link Drive} records 
+     * @return list of all {@link Drive} records by employee
      * @throws cz.muni.fi.pa165.project.util.DataAccessException 
      */
     List<Drive> getAllByEmployee(Employee employee) throws DataAccessException;
+    
+    /**
+     * Creates collection of all approved drives which intersect with given time interval
+     * @param startDate start of time interval
+     * @param endDate end of time interval
+     * @return list of all {@link Drive} in specified time interval
+     * @throws cz.muni.fi.pa165.project.util.DataAccessException 
+     */
+    public List<Drive> getAllDrivesByTimeInterval(Date startDate, Date endDate) throws DataAccessException;
+    
     /**
      * Finds drive record by drive id.
      * 

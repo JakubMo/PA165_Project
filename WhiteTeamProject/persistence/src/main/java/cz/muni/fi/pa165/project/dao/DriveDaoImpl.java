@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.project.dao;
 import cz.muni.fi.pa165.project.entity.Drive;
 import cz.muni.fi.pa165.project.entity.Employee;
 import cz.muni.fi.pa165.project.entity.Vehicle;
+import cz.muni.fi.pa165.project.enums.DriveStatus;
 import cz.muni.fi.pa165.project.util.DataAccessExceptionImpl;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -11,6 +12,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -72,7 +74,6 @@ public class DriveDaoImpl implements DriveDao {
         
         try {
             List<Drive> results = new ArrayList<>();
-            String vin = vehicle.getVin();
             Query q = em.createQuery(
                     "SELECT c "
                     + "FROM cz.muni.fi.pa165.project.entity.Drive c "
@@ -93,7 +94,6 @@ public class DriveDaoImpl implements DriveDao {
         
         try {
             List<Drive> results = new ArrayList<>();
-            Long vin = employee.getId();
             Query q = em.createQuery(
                     "SELECT c "
                     + "FROM cz.muni.fi.pa165.project.entity.Drive c "
@@ -103,6 +103,25 @@ public class DriveDaoImpl implements DriveDao {
             return results;
         } catch (Exception ex) {
             throw new DataAccessExceptionImpl("error while getting all by employee", ex);
+        }
+    }
+    
+    @Override
+    public List<Drive> getAllDrivesByTimeInterval(Date startDate, Date endDate) throws DataAccessException {
+        try{
+            List<Drive> results = new ArrayList<>();
+            Query q = em.createQuery(
+                    "SELECT c "
+                    + "FROM cz.muni.fi.pa165.project.entity.Drive c "
+                    + "WHERE (c.endDate > :startDate AND c.startDate < :endDate) "
+                    + "AND (c.driveStatus = :status)");
+            q.setParameter("startDate", startDate);
+            q.setParameter("endDate", endDate);
+            q.setParameter("status", DriveStatus.APPROVED);
+            results = q.getResultList();
+            return results;
+        } catch (Exception ex) {
+            throw new DataAccessExceptionImpl("error while getting all by time interval", ex);
         }
     }
     

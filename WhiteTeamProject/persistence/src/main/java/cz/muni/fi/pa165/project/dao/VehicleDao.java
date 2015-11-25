@@ -49,10 +49,19 @@ public interface VehicleDao {
 	 *
 	 * @param id - vehicle's id
 	 * @return vehicle
-     * @throws DataAccessException
+         * @throws DataAccessException
 	 */
 	Vehicle get(long id) throws DataAccessException;
 
+        /**
+	 * Get vehicle by VIN
+	 *
+	 * @param vin - vehicle's VIN
+	 * @return vehicle
+         * @throws DataAccessException
+	 */
+	Vehicle getByVin(String vin) throws DataAccessException;
+        
 	/**
 	 * Update vehicle
 	 * @param vehicle vehicle to be updated

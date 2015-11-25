@@ -1,5 +1,7 @@
 package cz.muni.fi.pa165.project.dto;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 /**
@@ -9,38 +11,69 @@ import javax.validation.constraints.Size;
 public class VehicleCreateDTO {
     
     /**
-     * VIN code of vehicle, has to be 17 characters long
+     * Vehicle vin (17 characters long).
      */
     @NotNull
     @Size(min=17, max=17)
     private String vin;
     
+    /**
+     * Brand of vehicle.
+     */
     @NotNull
     @Size(min=2, max=20)
     private String brand;
     
+    /**
+     * Model of vehicle.
+     */
     @NotNull
     @Size(min=2, max=30)
     private String model;
     
+    /**
+     * Type pf vehicle.
+     */
     @NotNull
     @Size(min=2, max=10)
     private String type;
     
+    /**
+     * Construction year of vehicle.
+     */
     @NotNull
+    @Min(1900L)
     private int yearOfProduction;
     
+    /**
+     * Engine type of vehicle.
+     */
     @NotNull
     @Size(min=3, max=10)
     private String engineType;
     
+    /**
+     * Distance driven.
+     */
     @NotNull
+    @Min(0L)
     private Long mileage;
     
+    /**
+     * Service check interval in months. Maximum is 12 months (min is 1 month)
+     */
     @NotNull
+    @Min(1L)
+    @Max(12L)
     private int serviceCheckInterval;
     
+    /**
+     * Maximum mileage for vehicle. When mileage is higher,
+     * the vehicle is not visible in system. The lowest allowed
+     * value is 100 000.
+     */
     @NotNull
+    @Min(100000L)
     private Long maxMileage;
 
     public String getVin() {

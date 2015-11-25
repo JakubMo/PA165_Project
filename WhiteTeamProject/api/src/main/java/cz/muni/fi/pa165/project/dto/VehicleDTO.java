@@ -53,7 +53,8 @@ public class VehicleDTO {
     
     /**
      * Maximum mileage for vehicle. When mileage is higher,
-     * the vehicle is not visible in system.
+     * the vehicle is not visible in system. The lowest allowed
+     * value is 100 000.
      */
     private Long maxMileage;
 
