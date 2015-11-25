@@ -118,11 +118,21 @@ public interface DriveService {
     public Collection<Drive> findAllByEmployee(Employee employee) throws DataAccessException;
     
     /**
-     * Gets all drives f given drive status.
+     * Gets all drives of given drive status.
      * 
      * @param status status of wanted drives
      * @return collection of drives of given drive status
      * @throws DataAccessException 
      */
     public Collection<Drive> findAllByStatus(DriveStatus status) throws DataAccessException;
+    
+    /**
+     * Gets all drives within given time interval.
+     * 
+     * @param startDate start date of interval
+     * @param endDate end date of interval
+     * @return collection of all drives within given interval
+     * @throws DataAccessException 
+     */
+    public Collection<Drive> findAllByTimeInterval(Date startDate, Date endDate) throws DataAccessException;
 }

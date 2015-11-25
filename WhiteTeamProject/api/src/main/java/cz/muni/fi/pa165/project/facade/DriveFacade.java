@@ -126,4 +126,14 @@ public interface DriveFacade {
      * @throws DataAccessException 
      */
     public Collection<DriveDTO> findAllByStatus(DriveStatus status) throws DataAccessException;
+    
+    /**
+     * Gets all drives within given time interval.
+     * 
+     * @param startDate start date of interval
+     * @param endDate end date of interval
+     * @return collection of all drives within given interval
+     * @throws DataAccessException 
+     */
+    public Collection<DriveDTO> findAllByTimeInterval(Date startDate, Date endDate) throws DataAccessException;
 }

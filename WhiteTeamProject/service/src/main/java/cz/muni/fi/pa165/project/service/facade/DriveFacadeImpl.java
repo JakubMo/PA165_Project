@@ -11,6 +11,7 @@ import cz.muni.fi.pa165.project.enums.DriveStatus;
 import cz.muni.fi.pa165.project.facade.DriveFacade;
 import cz.muni.fi.pa165.project.service.BeanMappingService;
 import cz.muni.fi.pa165.project.service.DriveService;
+import cz.muni.fi.pa165.project.service.VehicleService;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
@@ -32,6 +33,9 @@ public class DriveFacadeImpl implements DriveFacade{
     @Inject
     private DriveService driveService;
     
+    @Inject
+    private VehicleService vehicleService;
+    
     @Autowired
     private BeanMappingService beanMappingService;
     
@@ -42,6 +46,11 @@ public class DriveFacadeImpl implements DriveFacade{
         }
         
         Drive drive = beanMappingService.mapTo(driveCreateDTO, Drive.class);
+        Collection<Vehicle> freeVehicles = vehicleService.getAllFreeInDate(drive.getStartDate(), drive.getEndDate());
+        if(!freeVehicles.contains(drive.getVehicle())) {
+            throw new IllegalStateException("Vehicle of given drive is not free in required time interval.");
+        }
+        
         driveService.createDrive(drive);
     }
 
@@ -114,7 +123,12 @@ public class DriveFacadeImpl implements DriveFacade{
         }
         
         Drive drive = driveService.findById(id);
+        if(drive.getEndDate().after(new Date())) {
+            throw new IllegalStateException("End date of drive is in the future, this drive cannot be completed now.");
+        }
+        
         driveService.completeDrive(drive);
+        vehicleService.updateMileage(drive.getVehicle(), drive.getKm().longValue());
     }
 
     @Override
@@ -171,6 +185,22 @@ public class DriveFacadeImpl implements DriveFacade{
         }
         
         Collection<Drive> drives = driveService.findAllByStatus(status);
+        return beanMappingService.mapTo(drives, DriveDTO.class);
+    }
+
+    @Override
+    public Collection<DriveDTO> findAllByTimeInterval(Date startDate, Date endDate) throws DataAccessException {
+        if(startDate == null) {
+            throw new IllegalArgumentException("start date is null");
+        }
+        if(endDate == null) {
+            throw new IllegalArgumentException("end date is null");
+        }
+        if(endDate.before(startDate)) {
+            throw new IllegalArgumentException("end date is before start date");
+        }
+        
+        Collection<Drive> drives = driveService.findAllByTimeInterval(startDate, endDate);
         return beanMappingService.mapTo(drives, DriveDTO.class);
     }
 }

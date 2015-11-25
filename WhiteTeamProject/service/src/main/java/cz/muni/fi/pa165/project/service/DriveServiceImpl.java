@@ -46,7 +46,7 @@ public class DriveServiceImpl implements DriveService {
         if(drive == null) {
             throw new IllegalArgumentException("drive is null");
         }
-        
+                
         driveDao.create(drive);
     }
 
@@ -123,6 +123,9 @@ public class DriveServiceImpl implements DriveService {
         if(drive == null) {
             throw new IllegalArgumentException("id is null");
         }
+        if(drive.getEndDate().after(new Date())) {
+            throw new IllegalStateException("End date of drive is in the future, this drive cannot be completed now.");
+        }
         
         checkTransitions(drive.getDriveStatus(), DriveStatus.COMPLETED);
         drive.setDriveStatus(DriveStatus.COMPLETED);
@@ -185,5 +188,20 @@ public class DriveServiceImpl implements DriveService {
             }
         }        
         return result;
+    }
+
+    @Override
+    public Collection<Drive> findAllByTimeInterval(Date startDate, Date endDate) throws DataAccessException {
+        if(startDate == null) {
+            throw new IllegalArgumentException("start date is null");
+        }
+        if(endDate == null) {
+            throw new IllegalArgumentException("end date is null");
+        }
+        if(endDate.before(startDate)) {
+            throw new IllegalArgumentException("end date is before start date");
+        }
+        
+        return driveDao.getAllDrivesByTimeInterval(startDate, endDate);
     }
 }
