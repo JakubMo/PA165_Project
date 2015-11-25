@@ -1,7 +1,5 @@
 package cz.muni.fi.pa165.project.service.util;
 
-import java.util.Objects;
-
 /**
  * Defines transition from one state to another.
  *
