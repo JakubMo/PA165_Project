@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.TemporalType;
 
 /**
  * Provides implementation of {@link DriveDao} interface.
@@ -113,10 +114,10 @@ public class DriveDaoImpl implements DriveDao {
             Query q = em.createQuery(
                     "SELECT c "
                     + "FROM cz.muni.fi.pa165.project.entity.Drive c "
-                    + "WHERE (c.endDate > :startDate AND c.startDate < :endDate) "
+                    + "WHERE (c.endDate >= :startDate AND c.startDate <= :endDate) "
                     + "AND (c.driveStatus = :status)");
-            q.setParameter("startDate", startDate);
-            q.setParameter("endDate", endDate);
+            q.setParameter("startDate", startDate, TemporalType.TIMESTAMP);
+            q.setParameter("endDate", endDate, TemporalType.TIMESTAMP);
             q.setParameter("status", DriveStatus.APPROVED);
             results = q.getResultList();
             return results;

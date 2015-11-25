@@ -29,6 +29,7 @@ public class VehicleTest {
 
     private String vin1 = "IPK204t4FG";
     private String vin2 = "DRH244yOKS";
+    private String vin3 = "HJY83HJSA2";
 
     @Autowired
     @Qualifier(value = "vehicleDao")
@@ -77,7 +78,7 @@ public class VehicleTest {
     }
 
     @Test
-    public void findVehicleByVin() throws DataAccessException {
+    public void findVehicleById() throws DataAccessException {
         Vehicle vehicle1 = prepareVehicle1();
         Vehicle vehicle2 = prepareVehicle2();
 
@@ -92,6 +93,69 @@ public class VehicleTest {
         assertEquals(vehicle1, vehicleDao.get(vehicle1.getId()));
     }
 
+    @Test
+    public void findVehicleByVin() throws DataAccessException {
+        Vehicle vehicle1 = prepareVehicle1();
+        Vehicle vehicle2 = prepareVehicle2();
+        
+        vehicleDao.create(vehicle1);
+        vehicleDao.create(vehicle2);
+        
+        assertEquals(vehicle1, vehicleDao.getByVin(vehicle1.getVin()));
+        assertEquals(vehicle2, vehicleDao.getByVin(vehicle2.getVin()));
+    }
+    
+    @Test
+    public void findVehiclesByModel() throws DataAccessException {
+        Vehicle vehicle1 = prepareVehicle1();
+        Vehicle vehicle2 = prepareVehicle2();
+        Vehicle vehicle3 = prepareVehicle2_1();
+        
+        vehicleDao.create(vehicle1);
+        vehicleDao.create(vehicle2);
+        vehicleDao.create(vehicle3);
+        
+        assertEquals(1, vehicleDao.getAllByModel(vehicle1.getModel()).size());
+        assertEquals(2, vehicleDao.getAllByModel(vehicle2.getModel()).size());
+    }
+    
+    @Test
+    public void findVehiclesByBrand() throws DataAccessException {
+        Vehicle vehicle1 = prepareVehicle1();
+        Vehicle vehicle2 = prepareVehicle2();
+        Vehicle vehicle3 = prepareVehicle2_1();
+        
+        vehicleDao.create(vehicle1);
+        vehicleDao.create(vehicle2);
+        vehicleDao.create(vehicle3);
+        
+        assertEquals(2, vehicleDao.getAllByBrand(vehicle1.getBrand()).size());
+        assertEquals(1, vehicleDao.getAllByBrand(vehicle2.getBrand()).size());
+    }
+    
+    @Test
+    public void findVehiclesByMileage() throws DataAccessException {
+        Vehicle vehicle1 = prepareVehicle1();
+        Vehicle vehicle2 = prepareVehicle2();
+        Vehicle vehicle3 = prepareVehicle2_1();
+        
+        vehicleDao.create(vehicle1);
+        vehicleDao.create(vehicle2);
+        vehicleDao.create(vehicle3);
+        
+        assertEquals(0, vehicleDao.getAllByMileage(9999L).size());
+        assertEquals(1, vehicleDao.getAllByMileage(10000L).size());
+        assertEquals(1, vehicleDao.getAllByMileage(10001L).size());
+        
+        assertEquals(1, vehicleDao.getAllByMileage(29999L).size());
+        assertEquals(2, vehicleDao.getAllByMileage(30000L).size());
+        assertEquals(2, vehicleDao.getAllByMileage(30001L).size());
+        
+        assertEquals(2, vehicleDao.getAllByMileage(44999L).size());
+        assertEquals(3, vehicleDao.getAllByMileage(45000L).size());
+        assertEquals(3, vehicleDao.getAllByMileage(45001L).size());
+    }
+    
     @Test
     public void updateVehicle() throws DataAccessException {
         Vehicle vehicle1 = prepareVehicle1();
@@ -187,6 +251,20 @@ public class VehicleTest {
         vehicle2.setEngineType("diesel");
         vehicle2.setMaxMileage(110000L);
         vehicle2.setMileage(10000L);
+        vehicle2.setServiceCheckInterval(200);
+        return vehicle2;
+    }
+    
+    private Vehicle prepareVehicle2_1() {
+        Vehicle vehicle2 = new Vehicle();
+        vehicle2.setVin(vin3);
+        vehicle2.setModel("Model2");
+        vehicle2.setBrand("Brand1");
+        vehicle2.setType("type3");
+        vehicle2.setYearOfProduction(2007);
+        vehicle2.setEngineType("diesel");
+        vehicle2.setMaxMileage(110000L);
+        vehicle2.setMileage(30000L);
         vehicle2.setServiceCheckInterval(200);
         return vehicle2;
     }
