@@ -22,15 +22,6 @@ public interface VehicleFacade {
     public void createVehicle(VehicleCreateDTO v) throws DataAccessExceptionImpl;
     
     /**
-     * Updates vin for selected vehicle
-     * 
-     * @param vehicleId vehicle to update
-     * @param vin new VIN, has to be 17 characters long!
-     * @throws DataAccessExceptionImpl 
-     */
-    public void updateVin(Long vehicleId, String vin) throws DataAccessExceptionImpl;
-    
-    /**
      * Updates service check interval for vehicle.
      * 
      * @param vehicleId vehicle to update
@@ -49,15 +40,6 @@ public interface VehicleFacade {
     public void updateMaxMileage(Long vehicleId, Long max) throws DataAccessExceptionImpl;
     
     /**
-     * Updates vehicle mileage.
-     * 
-     * @param vehicleId vehicle to update
-     * @param mileage new mileage
-     * @throws DataAccessExceptionImpl 
-     */
-    public void updateMileage(Long vehicleId, Long mileage) throws DataAccessExceptionImpl;
-    
-    /**
      * Deletes vehicle.
      * 
      * @param id id of vehicle to be deleted
@@ -66,22 +48,31 @@ public interface VehicleFacade {
     public void deleteVehicle(Long id) throws DataAccessExceptionImpl;
     
     /**
-     * Finds vehicle by Id
+     * Finds vehicle by model
      * 
-     * @param id id of vehicle to find
-     * @return found vehicle
+     * @param model model of vehicle to find
+     * @return List of found found vehicle
      * @throws DataAccessExceptionImpl 
      */
-    public VehicleDTO getVehicleById(Long id) throws DataAccessExceptionImpl;
+    public List<VehicleDTO> getAllByModel(String model) throws DataAccessExceptionImpl;
     
     /**
-     * Finds vehicle by vin
+     * Finds vehicle by brand
      * 
-     * @param vin vin of vehicle to find
-     * @return found vehicle
+     * @param brand manufacturer of vehicle to find
+     * @return List of found vehicles
      * @throws DataAccessExceptionImpl 
      */
-    public VehicleDTO getVehicleByVin(String vin) throws DataAccessExceptionImpl;
+    public List<VehicleDTO> getAllByBrand(String brand) throws DataAccessExceptionImpl;
+    
+    /**
+     * Finds vehicle with lower mileage than given
+     * 
+     * @param mileage max mileage of vehicle to find
+     * @return List of found vehicles
+     * @throws DataAccessExceptionImpl 
+     */
+    public List<VehicleDTO> getAllByMileage(Long mileage) throws DataAccessExceptionImpl;
     
     /**
      * Get all vehicles
@@ -89,5 +80,5 @@ public interface VehicleFacade {
      * @return List of all vehicles
      * @throws DataAccessExceptionImpl 
      */
-    public List<VehicleDTO> getAllVehicles() throws DataAccessExceptionImpl;
+    public List<VehicleDTO> getAll() throws DataAccessExceptionImpl;
 }

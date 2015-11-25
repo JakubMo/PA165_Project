@@ -73,4 +73,61 @@ public class VehicleDaoImpl implements VehicleDao {
             throw new DataAccessExceptionImpl("error while creeating vehicle",e);
         }
     }
+
+	@Override
+	public List<Vehicle> getAllByModel(String model) throws DataAccessException {
+		if ((model == null) || (model == "")){ 
+			return getAll();
+		}
+		try{
+			List<Vehicle> results = new ArrayList<>();
+			Query q = em.createQuery(
+					"SELECT v "
+					+ "FROM cz.muni.fi.pa165.project.entity.Vehicle v "
+					+ "WHERE v.model=:model");
+			q.setParameter("model", model);
+			results = q.getResultList();
+			return results;
+		} catch (Exception ex) {
+			throw new DataAccessExceptionImpl("error while getting vehicles by mileage", ex);
+		}
+	}
+
+	@Override
+	public List<Vehicle> getAllByBrand(String brand) throws DataAccessException {
+		if ((brand == null) || (brand == "")){ 
+			return getAll();
+		}
+		try{
+			List<Vehicle> results = new ArrayList<>();
+			Query q = em.createQuery(
+					"SELECT v "
+					+ "FROM cz.muni.fi.pa165.project.entity.Vehicle v "
+					+ "WHERE v.brand=:brand");
+			q.setParameter("brand", brand);
+			results = q.getResultList();
+			return results;
+		} catch (Exception ex) {
+			throw new DataAccessExceptionImpl("error while getting vehicles by mileage", ex);
+		}
+	}
+
+	@Override
+	public List<Vehicle> getAllByMileage(Long mileage) throws DataAccessException {
+		if ((mileage == null) || (mileage == 0)){ 
+			return getAll();
+		}
+		try{
+			List<Vehicle> results = new ArrayList<>();
+			Query q = em.createQuery(
+					"SELECT v "
+					+ "FROM cz.muni.fi.pa165.project.entity.Vehicle v "
+					+ "WHERE v.mileage<=:mileage");
+			q.setParameter("mileage", mileage);
+			results = q.getResultList();
+			return results;
+		} catch (Exception ex) {
+			throw new DataAccessExceptionImpl("error while getting vehicles by mileage", ex);
+		}
+	}
 }

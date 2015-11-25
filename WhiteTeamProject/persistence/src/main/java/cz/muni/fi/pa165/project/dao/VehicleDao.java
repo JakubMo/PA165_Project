@@ -18,6 +18,33 @@ public interface VehicleDao {
 	List<Vehicle> getAll() throws DataAccessException;
 
 	/**
+	 * List all vehicles by certain model.
+	 * @param model model of vehicles to find, if null or empty, all vehicles
+	 * are returned
+	 * @return list with found vehicles
+     * @throws DataAccessException
+	 */
+	List<Vehicle> getAllByModel(String model) throws DataAccessException;
+	
+	/**
+	 * List all vehicles by manufacturer
+	 * @param brand manufacturer of vehicles to find, if null or empty, all vehicles
+	 * are returned
+	 * @return list with found vehicles
+     * @throws DataAccessException
+	 */
+	List<Vehicle> getAllByBrand(String brand) throws DataAccessException;
+	
+	/**
+	 * List all vehicles with lower mileage than given
+	 * @param mileage max mileage of vehicles to find, if null or equal to 0, all vehicles
+	 * are returned
+	 * @return list with found vehicles
+     * @throws DataAccessException
+	 */
+	List<Vehicle> getAllByMileage(Long mileage) throws DataAccessException;
+	
+	/**
 	 * Get vehicle by id
 	 *
 	 * @param id - vehicle's id
