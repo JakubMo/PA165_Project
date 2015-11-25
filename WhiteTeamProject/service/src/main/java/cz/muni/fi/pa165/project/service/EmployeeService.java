@@ -26,7 +26,7 @@ public interface EmployeeService {
 	 * @param id id of employee to be found.
 	 * @return employee with given id.
 	 */
-	Employee get(Long id);
+	Employee get(Long id) throws DataAccessExceptionImpl;
 
 	/**
 	 * Get all employees.

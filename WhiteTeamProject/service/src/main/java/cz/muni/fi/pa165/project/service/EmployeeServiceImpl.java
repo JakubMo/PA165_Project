@@ -34,7 +34,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public Employee get(Long id) {
+	public Employee get(Long id) throws DataAccessExceptionImpl {
 		return employeeDao.get(id);
 	}
 
@@ -56,15 +56,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public boolean authenticate(Employee employee, String password) {
 		return validatePassword(password, employee.getPasswordHash());
-	}
-
-	private boolean validEmail(String email) {
-		String EMAIL_PATTERN =
-				"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-						+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
-		Matcher matcher = pattern.matcher(email);
-		return matcher.matches();
 	}
 
 	private static String generateStrongPasswordHash(String password) {
