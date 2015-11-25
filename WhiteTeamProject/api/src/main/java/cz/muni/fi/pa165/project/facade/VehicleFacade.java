@@ -28,7 +28,7 @@ public interface VehicleFacade {
      * @param vin new VIN, has to be 17 characters long!
      * @throws DataAccessExceptionImpl 
      */
-    public void updateVin(Long vehicleId, Long vin) throws DataAccessExceptionImpl;
+    public void updateVin(Long vehicleId, String vin) throws DataAccessExceptionImpl;
     
     /**
      * Updates service check interval for vehicle.

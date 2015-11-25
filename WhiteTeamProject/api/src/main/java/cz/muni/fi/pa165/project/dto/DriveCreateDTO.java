@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.project.dto;
 import cz.muni.fi.pa165.project.enums.DriveStatus;
 import java.math.BigDecimal;
 import java.util.Date;
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 
@@ -200,5 +201,17 @@ public class DriveCreateDTO {
                 ", km=" + km + 
                 ", driveStatus=" + driveStatus + 
                 '}';
+    }
+    
+    @AssertTrue(message = "Start date must be before end date.")
+    public boolean isStartDateBeforeEndDate() {
+        if(startDate == null) {
+            throw new IllegalStateException("start date is null");
+        }
+        if(endDate == null) {
+            throw new IllegalStateException("end date is null");
+        }
+        
+        return startDate.before(endDate);
     }
 }
