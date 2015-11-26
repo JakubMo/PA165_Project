@@ -2,11 +2,16 @@ package cz.muni.fi.pa165.project.dao;
 
 import cz.muni.fi.pa165.project.entity.ServiceCheck;
 import cz.muni.fi.pa165.project.entity.Vehicle;
+import cz.muni.fi.pa165.project.enums.ServiceCheckStatus;
 import cz.muni.fi.pa165.project.util.DataAccessExceptionImpl;
+
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
 import javax.persistence.criteria.CriteriaQuery;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
@@ -110,4 +115,48 @@ public class ServiceCheckDaoImpl implements ServiceCheckDao {
             throw new DataAccessExceptionImpl("error while getting service checks by vehicle", ex);
         }
     }
+
+    @Override
+    public List<ServiceCheck> getAllByTimeInterval(Date startDate, Date endDate) throws DataAccessException {
+        if(startDate == null){
+            throw new IllegalArgumentException("startDate is null!");
+        }
+		if(endDate == null){
+			throw new IllegalArgumentException("endDate is null!");
+		}
+		if(endDate.before(startDate)){
+			throw new IllegalArgumentException("endDate is before startDate!");
+		}
+
+		try{
+			List<ServiceCheck> result = new ArrayList<>();
+			Query q = this.em.createQuery(
+					"SELECT c FROM cz.muni.fi.pa165.project.entity.ServiceCheck c " +
+							"WHERE (c.serviceCheckDate >= :startDate AND c.serviceCheckDate <= :endDate)");
+			q.setParameter("startDate", startDate, TemporalType.DATE);
+			q.setParameter("endDate", endDate, TemporalType.DATE);
+			result = q.getResultList();
+			return result;
+		} catch (Exception ex){
+			throw new DataAccessExceptionImpl("error while getting service checks in time interval", ex);
+		}
+    }
+
+	@Override
+	public List<ServiceCheck> getAllByStatus(ServiceCheckStatus status) throws DataAccessException {
+		if(status == null){
+			throw new IllegalArgumentException("status is null!");
+		}
+
+		try{
+			List<ServiceCheck> result = new ArrayList<>();
+			Query q = this.em.createQuery("SELECT c FROM cz.muni.fi.pa165.project.entity.ServiceCheck c " +
+					"WHERE c.status = :status");
+			q.setParameter("status", status);
+			result = q.getResultList();
+			return result;
+		} catch (Exception e){
+			throw new DataAccessExceptionImpl("error while getting service checks with given status", e);
+		}
+	}
 }
