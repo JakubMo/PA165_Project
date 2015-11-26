@@ -16,9 +16,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+
 import org.springframework.dao.DataAccessException;
 
 /**
@@ -96,7 +95,50 @@ public class ServiceCheckTest {
     }
 
     @Test
-    public void ServiceCheckUpdateTest() throws DataAccessException{
+    public void getAllByStatusTest() throws DataAccessException {
+        List<ServiceCheck> scs1 = serviceCheckDao.getAllByStatus(ServiceCheckStatus.NOT_DONE);
+        Assert.assertEquals(0, scs1.size());
+
+        List<ServiceCheck> scs2 = serviceCheckDao.getAllByStatus(ServiceCheckStatus.DONE_NOT_OK);
+        Assert.assertEquals(1, scs2.size());
+
+        List<ServiceCheck> scs3 = serviceCheckDao.getAllByStatus(ServiceCheckStatus.DONE_OK);
+        Assert.assertEquals(3, scs3.size());
+    }
+
+	@Test
+	public void getAllByTimeIntervalTest() {
+		Date startDate;
+		Date endDate;
+
+		Calendar calendar = new GregorianCalendar();
+		calendar.set(2015, Calendar.SEPTEMBER, 4);
+		startDate = calendar.getTime();
+
+		calendar.set(2015, Calendar.SEPTEMBER, 5);
+		endDate = calendar.getTime();
+
+		Assert.assertEquals(0, serviceCheckDao.getAllByTimeInterval(startDate, endDate).size());
+
+		calendar.set(2015, Calendar.OCTOBER, 1);
+		endDate = calendar.getTime();
+		Assert.assertEquals(1, serviceCheckDao.getAllByTimeInterval(startDate, endDate).size());
+
+		calendar.set(2015, Calendar.OCTOBER, 5);
+		endDate = calendar.getTime();
+		Assert.assertEquals(2, serviceCheckDao.getAllByTimeInterval(startDate, endDate).size());
+
+		calendar.set(2015, Calendar.OCTOBER, 21);
+		endDate = calendar.getTime();
+		Assert.assertEquals(3, serviceCheckDao.getAllByTimeInterval(startDate, endDate).size());
+
+		calendar.set(2015, Calendar.DECEMBER, 24);
+		endDate = calendar.getTime();
+		Assert.assertEquals(4, serviceCheckDao.getAllByTimeInterval(startDate, endDate).size());
+	}
+
+    @Test
+    public void serviceCheckUpdateTest() throws DataAccessException{
         ServiceCheck sc = null;
 
         for (ServiceCheck s : serviceCheckDao.getAll()) {
@@ -119,7 +161,7 @@ public class ServiceCheckTest {
     }
 
     @Test
-    public void ServiceCheckDeleteTest() throws DataAccessException {
+    public void serviceCheckDeleteTest() throws DataAccessException {
         ServiceCheck sc = null;
 
         for (ServiceCheck s : serviceCheckDao.getAll()) {
@@ -180,6 +222,32 @@ public class ServiceCheckTest {
     public void testGetByVehicleError() throws DataAccessException {
         serviceCheckDao.getAllByVehicle(null);
     }
+
+	@Test(expected = DataAccessException.class)
+	public void testGetAllByStatusError() throws DataAccessException {
+		serviceCheckDao.getAllByStatus(null);
+	}
+
+	@Test(expected = DataAccessException.class)
+	public void testGetAllByTimeIntervalStartDateError(){
+		serviceCheckDao.getAllByTimeInterval(null, new Date());
+	}
+
+	@Test(expected = DataAccessException.class)
+	public void testGetAllByTimeIntervalEndDateError(){
+		serviceCheckDao.getAllByTimeInterval(new Date(), null);
+	}
+
+	@Test(expected = DataAccessException.class)
+	public void testGetAllByTimeIntervalEndDateBeforeStartDateError(){
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(2015,Calendar.NOVEMBER, 25);
+		Date endDate = calendar.getTime();
+		calendar.set(2015,Calendar.NOVEMBER, 26);
+		Date startDate = calendar.getTime();
+		serviceCheckDao.getAllByTimeInterval(startDate, endDate);
+	}
+
     
     private Vehicle createVehicle1() throws DataAccessException {
         Vehicle v1 = new Vehicle();
@@ -218,7 +286,9 @@ public class ServiceCheckTest {
         sc1.setStatus(ServiceCheckStatus.DONE_OK);
         sc1.setVehicle(v1);
         sc1.setServiceEmployee("Peter");
-        sc1.setServiceCheckDate(new Date(115, 10, 4));
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(2015, Calendar.OCTOBER, 1);
+        sc1.setServiceCheckDate(calendar.getTime());
         sc1.setReport("please handle with care");
         return sc1;
     }
@@ -228,7 +298,9 @@ public class ServiceCheckTest {
         sc2.setStatus(ServiceCheckStatus.DONE_OK);
         sc2.setVehicle(v1);
         sc2.setServiceEmployee("Peter");
-        sc2.setServiceCheckDate(new Date(115, 10, 4));
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(2015, Calendar.OCTOBER, 5);
+        sc2.setServiceCheckDate(calendar.getTime());
         sc2.setReport("please handle with care");
         return sc2;
     }
@@ -238,7 +310,9 @@ public class ServiceCheckTest {
         sc3.setStatus(ServiceCheckStatus.DONE_NOT_OK);
         sc3.setVehicle(v1);
         sc3.setServiceEmployee("Peter");
-        sc3.setServiceCheckDate(new Date(115, 10, 4));
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(2015, Calendar.OCTOBER, 18);
+        sc3.setServiceCheckDate(calendar.getTime());
         sc3.setReport("please handle with care");
         return sc3;
     }
@@ -248,7 +322,9 @@ public class ServiceCheckTest {
         sc4.setStatus(ServiceCheckStatus.DONE_OK);
         sc4.setVehicle(v2);
         sc4.setServiceEmployee("Peter");
-        sc4.setServiceCheckDate(new Date(115, 10, 4));
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(2015, Calendar.DECEMBER, 6);
+        sc4.setServiceCheckDate(calendar.getTime());
         sc4.setReport("please handle with care");
         return sc4;
     }
