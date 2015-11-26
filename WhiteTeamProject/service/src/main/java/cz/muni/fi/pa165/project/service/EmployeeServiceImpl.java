@@ -54,6 +54,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
+	public void delete(Employee employee) throws DataAccessExceptionImpl {
+		employeeDao.delete(employee);
+	}
+
+	@Override
+	public void update(Employee employee) throws DataAccessExceptionImpl {
+		employeeDao.update(employee);
+	}
+
+	@Override
 	public boolean authenticate(Employee employee, String password) {
 		return validatePassword(password, employee.getPasswordHash());
 	}

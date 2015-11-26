@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.project.facade;
 
 import cz.muni.fi.pa165.project.dto.EmployeeAuthenticateDTO;
 import cz.muni.fi.pa165.project.dto.EmployeeDTO;
+import cz.muni.fi.pa165.project.entity.Employee;
 import cz.muni.fi.pa165.project.util.DataAccessExceptionImpl;
 
 import java.util.Collection;
@@ -47,6 +48,22 @@ public interface EmployeeFacade {
 	 * @throws DataAccessExceptionImpl
 	 */
 	Collection<EmployeeDTO> getAllByLastName(String lastName) throws DataAccessExceptionImpl;
+
+	/**
+	 * Update given employee.
+	 *
+	 * @param employeeDTO employee to be updated
+	 * @throws cz.muni.fi.pa165.project.util.DataAccessExceptionImpl
+	 */
+	void update(EmployeeDTO employeeDTO) throws DataAccessExceptionImpl;
+
+	/**
+	 * Delete given employee.
+	 *
+	 * @param employeeDTO employee to be deleted
+	 * @throws cz.muni.fi.pa165.project.util.DataAccessExceptionImpl
+	 */
+	void delete(EmployeeDTO employeeDTO) throws DataAccessExceptionImpl;
 
 	/**
 	 * Authenticates employee.

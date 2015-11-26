@@ -55,6 +55,22 @@ public interface EmployeeService {
 	List<Employee> getAllByLastName(String lastName) throws DataAccessExceptionImpl;
 
 	/**
+	 * Update given employee.
+	 *
+	 * @param employee employee to be updated
+	 * @throws cz.muni.fi.pa165.project.util.DataAccessExceptionImpl
+	 */
+	void update(Employee employee) throws DataAccessExceptionImpl;
+
+	/**
+	 * Delete given employee.
+	 *
+	 * @param employee employee to be deleted
+	 * @throws cz.muni.fi.pa165.project.util.DataAccessExceptionImpl
+	 */
+	void delete(Employee employee) throws DataAccessExceptionImpl;
+
+	/**
 	 * Authenticates employee.
 	 *
 	 * @param employee employee to be authenticated.
