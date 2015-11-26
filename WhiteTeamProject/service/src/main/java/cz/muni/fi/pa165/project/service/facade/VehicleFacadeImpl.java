@@ -13,12 +13,16 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Vehicle facade implementation.
  * 
  * @author Jakub Mozucha | j.mozucha@gmail.com | created: 11/25/2015
  */
+@Service
+@Transactional
 public class VehicleFacadeImpl implements VehicleFacade {
 
     final static Logger log = LoggerFactory.getLogger(VehicleFacadeImpl.class);
