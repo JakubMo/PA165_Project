@@ -9,6 +9,7 @@ import cz.muni.fi.pa165.project.enums.ServiceCheckStatus;
 import cz.muni.fi.pa165.project.facade.ServiceCheckFacade;
 import cz.muni.fi.pa165.project.service.BeanMappingService;
 import cz.muni.fi.pa165.project.service.ServiceCheckService;
+import cz.muni.fi.pa165.project.service.config.ServiceConfiguration;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,6 +18,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import static org.mockito.Mockito.*;
 import org.mockito.MockitoAnnotations;
+import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -25,6 +27,7 @@ import org.testng.annotations.Test;
  *
  * @author Marek
  */
+@ContextConfiguration(classes=ServiceConfiguration.class)
 public class ServiceCheckFacadeTest {
     
     @Mock
