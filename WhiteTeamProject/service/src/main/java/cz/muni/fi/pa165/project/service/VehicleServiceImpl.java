@@ -87,11 +87,17 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public Vehicle getById(Long id) throws DataAccessExceptionImpl {
+        if(id == null){
+            throw new IllegalArgumentException("id is null!");
+        }
         return vehicleDao.get(id);
     }
 
     @Override
     public Vehicle getByVin(String vin) throws DataAccessExceptionImpl {
+		if(vin == null){
+			throw new IllegalArgumentException("vin is null");
+		}
         return vehicleDao.getByVin(vin);
     }
 
@@ -102,16 +108,25 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public List<Vehicle> getAllByModel(String model) throws DataAccessExceptionImpl {
+		if(model == null){
+			throw new IllegalArgumentException("model is null");
+		}
         return vehicleDao.getAllByModel(model);
     }
 
     @Override
     public List<Vehicle> getAllByBrand(String brand) throws DataAccessExceptionImpl {
+		if(brand == null){
+			throw new IllegalArgumentException("brand is null");
+		}
         return vehicleDao.getAllByBrand(brand);
     }
 
     @Override
     public List<Vehicle> getAllByMileage(Long mileage) throws DataAccessExceptionImpl {
+		if(mileage == null){
+			throw new IllegalArgumentException("mileage is null");
+		}
         return vehicleDao.getAllByMileage(mileage);
     }
     
@@ -128,14 +143,18 @@ public class VehicleServiceImpl implements VehicleService {
         List<Vehicle> vehicles = vehicleDao.getAll();
         List<Vehicle> results = new ArrayList<>();
         for(Vehicle v : vehicles){
+			boolean isFree = true;
             for(Drive d : drivesInDate){
                 if(v.equals(d.getVehicle())){
                     drivesInDate.remove(d);
+					isFree = false;
                     break;
                 }
-                results.add(v);
             }
-        }
+			if(isFree) {
+				results.add(v);
+			}
+		}
         return results;
     }
 }
