@@ -1,6 +1,8 @@
 package cz.muni.fi.pa165.project.service;
 
 /**
+ * Test class for {@link DriveService}.
+ *
  * @author Tomas Borcin | tborcin@redhat.com | created: 11/26/15.
  */
 
@@ -17,12 +19,14 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.dao.DataAccessException;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -130,7 +134,7 @@ public class DriveServiceTest {
 	}
 
 	@Test
-	public void findByStatusTest(){
+	public void findByStatusTest() {
 		List<Drive> expectedResult = Collections.EMPTY_LIST;
 		when(driveDao.getAll()).thenReturn(expectedResult);
 
