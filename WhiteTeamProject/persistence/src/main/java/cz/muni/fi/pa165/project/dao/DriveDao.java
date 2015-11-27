@@ -19,7 +19,7 @@ public interface DriveDao {
      * Creates collection of all drive records.
      * 
      * @return list of all {@link Drive} records 
-     * @throws cz.muni.fi.pa165.project.util.DataAccessException 
+     * @throws cz.muni.fi.pa165.project.util.DataAccessExceptionImpl
      */
     List<Drive> getAll() throws DataAccessException;
     
@@ -28,7 +28,7 @@ public interface DriveDao {
      * 
      * @param vehicle
      * @return list of {@link Drive} records by vehicle
-     * @throws cz.muni.fi.pa165.project.util.DataAccessException 
+     * @throws cz.muni.fi.pa165.project.util.DataAccessExceptionImpl
      */
     List<Drive> getAllByVehicle(Vehicle vehicle) throws DataAccessException;
     
@@ -37,7 +37,7 @@ public interface DriveDao {
      * 
      * @param employee
      * @return list of all {@link Drive} records by employee
-     * @throws cz.muni.fi.pa165.project.util.DataAccessException 
+     * @throws cz.muni.fi.pa165.project.util.DataAccessExceptionImpl
      */
     List<Drive> getAllByEmployee(Employee employee) throws DataAccessException;
     
@@ -46,7 +46,7 @@ public interface DriveDao {
      * @param startDate start of time interval
      * @param endDate end of time interval
      * @return list of all {@link Drive} in specified time interval
-     * @throws cz.muni.fi.pa165.project.util.DataAccessException 
+     * @throws cz.muni.fi.pa165.project.util.DataAccessExceptionImpl
      */
     public List<Drive> getAllDrivesByTimeInterval(Date startDate, Date endDate) throws DataAccessException;
     
@@ -55,7 +55,7 @@ public interface DriveDao {
      * 
      * @param id id of wanted drive record
      * @return instance of {@link Drive}
-     * @throws cz.muni.fi.pa165.project.util.DataAccessException
+     * @throws cz.muni.fi.pa165.project.util.DataAccessExceptionImpl
      */
     Drive get(Long id) throws DataAccessException;
     
@@ -63,7 +63,7 @@ public interface DriveDao {
      * Updates drive record.
      * 
      * @param drive updated {@link Drive} record 
-     * @throws cz.muni.fi.pa165.project.util.DataAccessException 
+     * @throws cz.muni.fi.pa165.project.util.DataAccessExceptionImpl
      */
     void update(Drive drive) throws DataAccessException;
     
@@ -71,7 +71,7 @@ public interface DriveDao {
      * Deletes drive record.
      * 
      * @param drive {@link Drive} record to be deleted 
-     * @throws cz.muni.fi.pa165.project.util.DataAccessException 
+     * @throws cz.muni.fi.pa165.project.util.DataAccessExceptionImpl
      */
     void delete(Drive drive) throws DataAccessException;
     
@@ -79,7 +79,7 @@ public interface DriveDao {
      * Inserts new drive record.
      * 
      * @param drive {@link Drive} record to be inserted
-     * @throws cz.muni.fi.pa165.project.util.DataAccessException
+     * @throws cz.muni.fi.pa165.project.util.DataAccessExceptionImpl
      */
     void create(Drive drive) throws DataAccessException;
     
