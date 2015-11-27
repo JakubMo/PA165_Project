@@ -13,6 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.Collection;
@@ -21,6 +23,8 @@ import java.util.Date;
 /**
  * @author Mario Kudolani | mariok@mail.muni.cz | created: 25.11.2015
  */
+@Service
+@Transactional
 public class ServiceCheckFacadeImpl implements ServiceCheckFacade {
 
 	final static Logger log = LoggerFactory.getLogger(ServiceCheckFacadeImpl.class);
