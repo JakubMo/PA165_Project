@@ -20,12 +20,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Implementation of {@link DriveFacade} interface.
  *
  * @author Marek
  */
+@Service
+@Transactional
 public class DriveFacadeImpl implements DriveFacade{
     
     final static Logger log = LoggerFactory.getLogger(DriveFacadeImpl.class);
