@@ -12,6 +12,7 @@ import org.hibernate.service.spi.ServiceException;
 
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 
@@ -130,5 +131,17 @@ public class EmployeeServiceTest {
         
         when(employeeDao.getAllByLastName("Svoboda")).thenReturn(empl);
         assertEquals(employeeService.getAllByLastName(employee2.getLastname()), empl);
+    }
+    
+    @Test
+    public void update(){
+        employeeService.update(employee1);
+        verify(employeeDao).update(employee1);
+    }
+    
+    @Test
+    public void delete(){
+        employeeService.delete(employee2);
+        verify(employeeDao).delete(employee2);
     }
 }
