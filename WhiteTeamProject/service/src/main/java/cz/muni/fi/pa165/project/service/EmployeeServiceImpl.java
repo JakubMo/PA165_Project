@@ -65,7 +65,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public boolean authenticate(Employee employee, String password) {
-		return validatePassword(password, employee.getPasswordHash());
+            if(employee.getPasswordHash() == null){
+                throw new IllegalArgumentException("user does not have password yet!");
+            }
+            return validatePassword(password, employee.getPasswordHash());
 	}
 
 	private static String generateStrongPasswordHash(String password) {
