@@ -72,7 +72,38 @@ public class EmployeeFacadeImpl implements EmployeeFacade {
 
 	@Override
 	public Collection<EmployeeDTO> getAllByLastName(String lastName) throws DataAccessExceptionImpl {
+		if (lastName == null) {
+			throw new IllegalArgumentException("Employee last name to be found is null.");
+		}
+		if (lastName.isEmpty()) {
+			throw new IllegalArgumentException("Employee last name to be found is empty.");
+		}
 		return beanMappingService.mapTo(employeeService.getAllByLastName(lastName), EmployeeDTO.class);
+	}
+
+	@Override
+	public void update(EmployeeDTO employeeDTO) throws DataAccessExceptionImpl {
+		if (employeeDTO == null) {
+			throw new IllegalArgumentException("Employee to be updated is null.");
+		}
+		if (employeeDTO.getId() == null) {
+			throw new IllegalArgumentException("Updated employee ID can't be null.");
+		}
+		validateEmployee(employeeDTO);
+		Employee employee = beanMappingService.mapTo(employeeDTO, Employee.class);
+		employeeService.update(employee);
+	}
+
+	@Override
+	public void delete(EmployeeDTO employeeDTO) throws DataAccessExceptionImpl {
+		if (employeeDTO == null) {
+			throw new IllegalArgumentException("Employee to be deleted is null.");
+		}
+		if (employeeDTO.getId() == null) {
+			throw new IllegalArgumentException("Deleted employee ID can't be null.");
+		}
+		Employee employee = beanMappingService.mapTo(employeeDTO, Employee.class);
+		employeeService.delete(employee);
 	}
 
 	@Override
