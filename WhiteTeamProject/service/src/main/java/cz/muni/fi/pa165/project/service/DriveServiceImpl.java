@@ -46,7 +46,10 @@ public class DriveServiceImpl implements DriveService {
         if(drive == null) {
             throw new IllegalArgumentException("drive is null");
         }
-                
+        if(drive.getId() != null) {
+            throw new IllegalArgumentException("id of drive must be null");
+        }
+        
         driveDao.create(drive);
     }
 
