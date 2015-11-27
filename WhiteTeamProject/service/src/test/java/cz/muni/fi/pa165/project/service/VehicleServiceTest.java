@@ -63,56 +63,12 @@ public class VehicleServiceTest {
 
 	@BeforeMethod
 	public void prepareVehicles(){
-		this.vehicle1 = new Vehicle();
-		vehicle1.setVin(vin1);
-		vehicle1.setModel("Astra");
-		vehicle1.setBrand("Opel");
-		vehicle1.setType("type1");
-		vehicle1.setYearOfProduction(2012);
-		vehicle1.setEngineType("gasoline");
-		vehicle1.setMaxMileage(400000L);
-		vehicle1.setMileage(45000L);
-		vehicle1.setServiceCheckInterval(365);
+		this.vehicle1 = this.prepareVehicle1();
+		this.vehicle2 = this.prepareVehicle2();
+		this.vehicle3 = this.prepareVehicle3();
 
-		this.vehicle2 = new Vehicle();
-		vehicle2.setVin(vin2);
-		vehicle2.setModel("Astra");
-		vehicle2.setBrand("Opel");
-		vehicle2.setType("type1");
-		vehicle2.setYearOfProduction(2005);
-		vehicle2.setEngineType("diesel");
-		vehicle2.setMaxMileage(110000L);
-		vehicle2.setMileage(10000L);
-		vehicle2.setServiceCheckInterval(200);
-
-		this.vehicle3 = new Vehicle();
-		vehicle3.setVin(vin3);
-		vehicle3.setModel("3");
-		vehicle3.setBrand("Mazda");
-		vehicle3.setType("type2");
-		vehicle3.setYearOfProduction(2007);
-		vehicle3.setEngineType("diesel");
-		vehicle3.setMaxMileage(110000L);
-		vehicle3.setMileage(30000L);
-		vehicle3.setServiceCheckInterval(200);
-
-		this.drive1 = new Drive();
-		drive1.setVehicle(this.vehicle1);
-		drive1.setDriveStatus(DriveStatus.APPROVED);
-		Calendar c = Calendar.getInstance();
-		c.set(2015, Calendar.NOVEMBER, 5);
-		drive1.setStartDate(c.getTime());
-		c.set(2015, Calendar.NOVEMBER, 10);
-		drive1.setEndDate(c.getTime());
-
-		this.drive2 = new Drive();
-		drive2.setVehicle(this.vehicle1);
-		drive2.setDriveStatus(DriveStatus.APPROVED);
-		c.set(2015, Calendar.NOVEMBER, 20);
-		drive2.setStartDate(c.getTime());
-		c.set(2015, Calendar.NOVEMBER, 25);
-		drive2.setEndDate(c.getTime());
-
+		this.drive1 = this.prepareDrive1();
+		this.drive2 = this.prepareDrive2();
 	}
 
 	@Test
@@ -358,5 +314,71 @@ public class VehicleServiceTest {
 	@Test(expectedExceptions = IllegalArgumentException.class)
 	public void updateNullMileageTest(){
 		this.vehicleService.updateMileage(null, 0L);
+	}
+
+	private Vehicle prepareVehicle1(){
+		Vehicle v = new Vehicle();
+		v.setVin(vin1);
+		v.setModel("Astra");
+		v.setBrand("Opel");
+		v.setType("type1");
+		v.setYearOfProduction(2012);
+		v.setEngineType("gasoline");
+		v.setMaxMileage(400000L);
+		v.setMileage(45000L);
+		v.setServiceCheckInterval(365);
+		return v;
+	}
+
+	private Vehicle prepareVehicle2(){
+		Vehicle v = new Vehicle();
+		v.setVin(vin2);
+		v.setModel("Astra");
+		v.setBrand("Opel");
+		v.setType("type1");
+		v.setYearOfProduction(2005);
+		v.setEngineType("diesel");
+		v.setMaxMileage(110000L);
+		v.setMileage(10000L);
+		v.setServiceCheckInterval(200);
+		return v;
+	}
+
+	private Vehicle prepareVehicle3(){
+		Vehicle v = new Vehicle();
+		v.setVin(vin3);
+		v.setModel("3");
+		v.setBrand("Mazda");
+		v.setType("type2");
+		v.setYearOfProduction(2007);
+		v.setEngineType("diesel");
+		v.setMaxMileage(110000L);
+		v.setMileage(30000L);
+		v.setServiceCheckInterval(200);
+		return v;
+	}
+
+	private Drive prepareDrive1(){
+		Drive d = new Drive();
+		d.setVehicle(this.vehicle1);
+		d.setDriveStatus(DriveStatus.APPROVED);
+		Calendar c = Calendar.getInstance();
+		c.set(2015, Calendar.NOVEMBER, 5);
+		d.setStartDate(c.getTime());
+		c.set(2015, Calendar.NOVEMBER, 10);
+		d.setEndDate(c.getTime());
+		return d;
+	}
+
+	private Drive prepareDrive2(){
+		Drive d = new Drive();
+		d.setVehicle(this.vehicle1);
+		d.setDriveStatus(DriveStatus.APPROVED);
+		Calendar c = Calendar.getInstance();
+		c.set(2015, Calendar.NOVEMBER, 20);
+		d.setStartDate(c.getTime());
+		c.set(2015, Calendar.NOVEMBER, 25);
+		d.setEndDate(c.getTime());
+		return d;
 	}
 }
