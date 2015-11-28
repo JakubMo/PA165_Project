@@ -6,22 +6,37 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
- *
+ * Service check entity
  * @author Jakub Mozucha | j.mozucha@gmail.com | created: 11/23/2015
  */
 public class ServiceCheckCreateDTO {
-    
+
+	/**
+	 * Service check's status
+	 */
     @NotNull
     private ServiceCheckStatus status;
 
+	/**
+	 * Date when check is been realized (or is planned)
+	 */
     @NotNull
     private Date serviceCheckDate;
-    
+
+	/**
+	 * vehicle, which was checked (or will be)
+	 */
     @NotNull
     private VehicleDTO vehicle;
-    
+
+	/**
+	 * employee of service
+	 */
     private String serviceEmployee;
-    
+
+	/**
+	 * service check's report (optional)
+	 */
     private String report;
     
     public ServiceCheckStatus getStatus() {

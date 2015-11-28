@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.Date;
 
 /**
+ * Implementation of {@link ServiceCheckFacade} interface
  * @author Mario Kudolani | mariok@mail.muni.cz | created: 25.11.2015
  */
 @Service

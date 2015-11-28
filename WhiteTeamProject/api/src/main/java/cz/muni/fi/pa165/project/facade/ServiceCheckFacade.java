@@ -22,7 +22,7 @@ public interface ServiceCheckFacade {
      * @param s service check to be created
      * @throws DataAccessExceptionImpl
      */
-    public void createServiceCheck(ServiceCheckCreateDTO s) throws DataAccessException;
+    void createServiceCheck(ServiceCheckCreateDTO s) throws DataAccessException;
     
     /**
      * Deletes given ServiceCheck
@@ -30,7 +30,7 @@ public interface ServiceCheckFacade {
      * @param checkId id of service check to be deleted
      * @throws DataAccessExceptionImpl 
      */
-    public void deleteServiceCheck(Long checkId) throws DataAccessException;
+    void deleteServiceCheck(Long checkId) throws DataAccessException;
     
     /**
      * Updates the report of service check
@@ -39,7 +39,7 @@ public interface ServiceCheckFacade {
      * @param report text of report
      * @throws DataAccessExceptionImpl 
      */
-    public void updateReport(Long checkId, String report) throws DataAccessException;
+    void updateReport(Long checkId, String report) throws DataAccessException;
 
 	/**
 	 * Updates the service check's date
@@ -48,7 +48,7 @@ public interface ServiceCheckFacade {
 	 * @param serviceCheckDate planned date of service check
 	 * @throws DataAccessExceptionImpl
 	 */
-	public void updateServiceCheckDate(Long checkId, Date serviceCheckDate) throws DataAccessException;
+	void updateServiceCheckDate(Long checkId, Date serviceCheckDate) throws DataAccessException;
 
 
 	/**
@@ -57,7 +57,7 @@ public interface ServiceCheckFacade {
 	 * @param serviceEmployee name of the service employee
 	 * @throws DataAccessExceptionImpl
 	 */
-	public void updateServiceEmployee(Long checkId, String serviceEmployee) throws DataAccessException;
+	void updateServiceEmployee(Long checkId, String serviceEmployee) throws DataAccessException;
 
 	/**
 	 * Updates the service check's status
@@ -65,7 +65,7 @@ public interface ServiceCheckFacade {
 	 * @param status service check's new status
 	 * @throws DataAccessExceptionImpl
 	 */
-	public void updateServiceCheckStatus(Long checkId, ServiceCheckStatus status) throws DataAccessException;
+	void updateServiceCheckStatus(Long checkId, ServiceCheckStatus status) throws DataAccessException;
 
     /**
      * Gets all service checks
@@ -73,7 +73,7 @@ public interface ServiceCheckFacade {
      * @return collection of all service checks
      * @throws DataAccessExceptionImpl 
      */
-    public Collection<ServiceCheckDTO> getAll() throws DataAccessException;
+    Collection<ServiceCheckDTO> getAll() throws DataAccessException;
     
     /**
      * Gets all service checks for single vehicle
@@ -82,7 +82,7 @@ public interface ServiceCheckFacade {
      * @return service checks for vehicle
      * @throws DataAccessExceptionImpl 
      */
-    public Collection<ServiceCheckDTO> getAllByVehicle(VehicleDTO vehicleDTO) throws DataAccessException;
+    Collection<ServiceCheckDTO> getAllByVehicle(VehicleDTO vehicleDTO) throws DataAccessException;
 
 	/**
 	 * Gets all service checks with given status
@@ -90,7 +90,7 @@ public interface ServiceCheckFacade {
 	 * @return collection of all service checks with given status
 	 * @throws DataAccessExceptionImpl
 	 */
-	public Collection<ServiceCheckDTO> getAllByServiceCheckStatus(ServiceCheckStatus status) throws DataAccessException;
+	Collection<ServiceCheckDTO> getAllByServiceCheckStatus(ServiceCheckStatus status) throws DataAccessException;
 
 	/**
 	 * Gets all service checks with given time interval.
@@ -99,5 +99,5 @@ public interface ServiceCheckFacade {
 	 * @return collection of all service checks with given interval
 	 * @throws DataAccessException
 	 */
-	public Collection<ServiceCheckDTO> getAllByTimeInterval(Date startDate, Date endDate) throws DataAccessException;
+	Collection<ServiceCheckDTO> getAllByTimeInterval(Date startDate, Date endDate) throws DataAccessException;
 }

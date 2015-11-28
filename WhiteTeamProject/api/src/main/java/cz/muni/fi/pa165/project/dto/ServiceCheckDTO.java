@@ -8,17 +8,35 @@ import java.util.Date;
  * @author Jakub Mozucha | j.mozucha@gmail.com | created: 11/23/2015
  */
 public class ServiceCheckDTO {
-    
+
+    /**
+     * Service check's id
+     */
     private Long id;
-    
+
+	/**
+	 * Service check's status
+	 */
     private ServiceCheckStatus status;
-    
+
+	/**
+	 * Date when check is been realized (or is planned)
+	 */
     private Date serviceCheckDate;
-    
+
+	/**
+	 * vehicle, which was checked (or will be)
+	 */
     private VehicleDTO vehicle;
-    
+
+	/**
+	 * employee of service
+	 */
     private String serviceEmployee;
-    
+
+	/**
+	 * service check's report (optional)
+	 */
     private String report;
 
     public Long getId() {
