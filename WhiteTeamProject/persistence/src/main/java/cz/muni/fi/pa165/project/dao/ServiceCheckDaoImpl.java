@@ -21,7 +21,7 @@ import org.springframework.stereotype.Repository;
  *
  * @author Marek
  */
-@Repository(value = "serviceCheckDao")
+@Repository
 public class ServiceCheckDaoImpl implements ServiceCheckDao {
     
     @PersistenceContext

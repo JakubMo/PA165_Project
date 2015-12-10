@@ -1,43 +1,43 @@
-package cz.muni.fi.pa165.project;
+package cz.muni.fi.pa165.project.dao;
 
+import cz.muni.fi.pa165.project.PersistenceLayerContext;
 import cz.muni.fi.pa165.project.dao.VehicleDao;
 import cz.muni.fi.pa165.project.entity.Vehicle;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 
 import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import static org.testng.Assert.assertEquals;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
 /**
  * Vehicle test suite
  *
  * @author Mario Kudolani | mariok@mail.muni.cz | created: 30.10.2015.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:testContext.xml"})
+@ContextConfiguration(classes = {PersistenceLayerContext.class})
+@TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
-public class VehicleTest {
+public class VehicleTest extends AbstractTestNGSpringContextTests{
 
     private String vin1 = "IPK204t4FG";
     private String vin2 = "DRH244yOKS";
     private String vin3 = "HJY83HJSA2";
 
     @Autowired
-    @Qualifier(value = "vehicleDao")
     private VehicleDao vehicleDao;
 
-    @BeforeClass
-    public static void init() {
-    }
+    @PersistenceContext
+    private EntityManager em;
 
     @Test
     public void insertVehicle() throws DataAccessException {
@@ -48,7 +48,7 @@ public class VehicleTest {
         vehicleDao.create(vehicle2);
     }
 
-    @Test(expected = DataAccessException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void insertVehicleError() throws DataAccessException {
         vehicleDao.create(new Vehicle());
     }

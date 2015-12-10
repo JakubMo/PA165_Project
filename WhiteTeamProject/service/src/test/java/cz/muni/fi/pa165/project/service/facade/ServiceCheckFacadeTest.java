@@ -29,7 +29,7 @@ import org.testng.annotations.Test;
  */
 @ContextConfiguration(classes=ServiceConfiguration.class)
 public class ServiceCheckFacadeTest {
-    
+   
     @Mock
     private BeanMappingService beanMappingService;
     

@@ -12,7 +12,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ContextConfiguration;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -20,7 +19,6 @@ import static org.mockito.Mockito.*;
 
 
 import javax.inject.Inject;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -186,5 +184,4 @@ public class VehicleFacadeTest {
 		vdto.setYearOfProduction(2014);
 		return vdto;
 	}
-
 }

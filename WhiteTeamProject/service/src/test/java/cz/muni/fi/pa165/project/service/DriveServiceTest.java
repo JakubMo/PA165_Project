@@ -12,13 +12,10 @@ import cz.muni.fi.pa165.project.entity.Employee;
 import cz.muni.fi.pa165.project.entity.Vehicle;
 import cz.muni.fi.pa165.project.enums.Category;
 import cz.muni.fi.pa165.project.enums.DriveStatus;
+import cz.muni.fi.pa165.project.service.config.ServiceConfiguration;
 import cz.muni.fi.pa165.project.util.DataAccessExceptionImpl;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -27,25 +24,39 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import javax.inject.Inject;
+import org.hibernate.service.spi.ServiceException;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+
 import static org.mockito.Mockito.*;
+import org.mockito.MockitoAnnotations;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.fail;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
-@RunWith(MockitoJUnitRunner.class)
-public class DriveServiceTest {
+@ContextConfiguration(classes = ServiceConfiguration.class)
+public class DriveServiceTest extends AbstractTestNGSpringContextTests{
 
 	@Mock
 	private DriveDao driveDao;
 
+        @Inject
 	@InjectMocks
-	private DriveServiceImpl driveService;
+	private DriveService driveService;
 
 	private List<Drive> allDrives;
 	private Drive drive1;
 	private Drive drive2;
 
-	@Before
+        @BeforeMethod
+        public void prepare() throws ServiceException {
+            MockitoAnnotations.initMocks(this);
+        }
+        
+	@BeforeMethod
 	public void prepareDrives() throws ParseException {
 		drive1 = createDrive1();
 		drive2 = createDrive2();

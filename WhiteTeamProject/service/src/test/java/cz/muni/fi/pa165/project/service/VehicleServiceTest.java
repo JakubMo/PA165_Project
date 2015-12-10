@@ -1,21 +1,21 @@
 package cz.muni.fi.pa165.project.service;
 
 import cz.muni.fi.pa165.project.dao.DriveDao;
-import cz.muni.fi.pa165.project.dao.DriveDaoImpl;
 import cz.muni.fi.pa165.project.dao.VehicleDao;
 import cz.muni.fi.pa165.project.entity.Drive;
 import cz.muni.fi.pa165.project.entity.Vehicle;
 import cz.muni.fi.pa165.project.enums.DriveStatus;
 import cz.muni.fi.pa165.project.service.config.ServiceConfiguration;
+
 import org.hibernate.service.spi.ServiceException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -23,8 +23,8 @@ import javax.inject.Inject;
 
 import java.util.*;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
+
 
 
 /**
@@ -32,7 +32,7 @@ import static org.mockito.Mockito.*;
  * @author Mario Kudolani | mariok@mail.muni.cz | created: 26.11.2015
  */
 @ContextConfiguration(classes = ServiceConfiguration.class)
-public class VehicleServiceTest {
+public class VehicleServiceTest extends AbstractTestNGSpringContextTests{
 
 	@Mock
 	private VehicleDao vehicleDao;
@@ -42,7 +42,7 @@ public class VehicleServiceTest {
 
 	@Inject
 	@InjectMocks
-	private VehicleServiceImpl vehicleService;
+	private VehicleService vehicleService;
 
 	@BeforeMethod
 	public void prepare() throws ServiceException{

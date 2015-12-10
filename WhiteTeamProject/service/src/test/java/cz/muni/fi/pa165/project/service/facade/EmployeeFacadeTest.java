@@ -4,12 +4,10 @@ import cz.muni.fi.pa165.project.dto.EmployeeDTO;
 import cz.muni.fi.pa165.project.entity.Employee;
 import cz.muni.fi.pa165.project.enums.Category;
 import cz.muni.fi.pa165.project.service.BeanMappingService;
-import cz.muni.fi.pa165.project.service.BeanMappingServiceImpl;
+
 import cz.muni.fi.pa165.project.service.EmployeeService;
 import cz.muni.fi.pa165.project.service.config.ServiceConfiguration;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 import javax.inject.Inject;
 import org.hibernate.service.spi.ServiceException;
 import org.mockito.InjectMocks;
@@ -19,8 +17,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ContextConfiguration;
-import static org.testng.Assert.assertEquals;
-import org.testng.annotations.BeforeClass;
+
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -30,7 +27,7 @@ import org.testng.annotations.Test;
  */
 @ContextConfiguration(classes=ServiceConfiguration.class)
 public class EmployeeFacadeTest {
-    
+  
     @Mock
     private BeanMappingService beanMappingService;
     

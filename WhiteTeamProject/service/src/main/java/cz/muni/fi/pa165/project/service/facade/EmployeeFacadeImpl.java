@@ -9,7 +9,7 @@ import cz.muni.fi.pa165.project.service.EmployeeService;
 import cz.muni.fi.pa165.project.util.DataAccessExceptionImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,19 +18,20 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * * Implementation of {@link EmployeeFacade} interface.
  *
  * @author Tomas Borcin | tborcin@redhat.com | created: 11/15/15.
  */
-@Service(value = "employeeServiceImpl")
+@Service
 @Transactional
 public class EmployeeFacadeImpl implements EmployeeFacade {
 
 	final static Logger log = LoggerFactory.getLogger(EmployeeFacadeImpl.class);
 
-	@Inject
+	@Autowired
 	private EmployeeService employeeService;
 
 	@Autowired

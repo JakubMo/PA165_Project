@@ -1,50 +1,52 @@
-package cz.muni.fi.pa165.project;
+package cz.muni.fi.pa165.project.dao;
 
-import cz.muni.fi.pa165.project.dao.ServiceCheckDao;
-import cz.muni.fi.pa165.project.dao.VehicleDao;
+import cz.muni.fi.pa165.project.PersistenceLayerContext;
+
 import cz.muni.fi.pa165.project.entity.Drive;
 import cz.muni.fi.pa165.project.entity.ServiceCheck;
 import cz.muni.fi.pa165.project.entity.Vehicle;
 import cz.muni.fi.pa165.project.enums.ServiceCheckStatus;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.dao.DataAccessException;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 
 import java.util.*;
-
-import org.springframework.dao.DataAccessException;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 /**
  * Test suite for ServiceCheck entity
  *
  * @author Jakub Mozucha | j.mozucha@gmail.com | created: 10/29/2015
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:testContext.xml"})
+@ContextConfiguration(classes = {PersistenceLayerContext.class})
+@TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
-public class ServiceCheckTest {
+public class ServiceCheckTest extends AbstractTestNGSpringContextTests{
 
     @Autowired
-    @Qualifier(value = "serviceCheckDao")
     private ServiceCheckDao serviceCheckDao;
 
     @Autowired
-    @Qualifier(value = "vehicleDao")
     private VehicleDao vehicleDao;
 
+    @PersistenceContext
+    private EntityManager em;
+    
     String v1Vin = "IPK204t4FG";
     String v2Vin = "DRH244yOKS";
 
     /**
      * Initializes records to the database
      */
-    @Before
+    @BeforeMethod
     public void prepare() throws DataAccessException {
         Vehicle v1 = createVehicle1();
         Vehicle v2 = createVehicle2();
@@ -183,14 +185,14 @@ public class ServiceCheckTest {
         Assert.assertEquals(scs2.size(), 1);
     }
 
-    @Test(expected = DataAccessException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void testDoubleDeletionException() {
         ServiceCheck sc = serviceCheckDao.getAll().get(0);
         serviceCheckDao.delete(sc);
         serviceCheckDao.delete(sc);
     }
 
-    @Test(expected = DataAccessException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void testUpdateAfterDelete() {
         ServiceCheck sc = serviceCheckDao.getAll().get(0);
         serviceCheckDao.delete(sc);
@@ -198,47 +200,47 @@ public class ServiceCheckTest {
         serviceCheckDao.update(sc);
     }
 
-    @Test(expected=DataAccessException.class)
+    @Test(expectedExceptions=IllegalArgumentException.class)
     public void testGetError() throws DataAccessException {
         serviceCheckDao.get(null);
     }
     
-    @Test(expected=DataAccessException.class)
+    @Test(expectedExceptions=IllegalArgumentException.class)
     public void testUpdateError() throws DataAccessException {
         serviceCheckDao.update(null);
     }
         
-    @Test(expected=DataAccessException.class)
+    @Test(expectedExceptions=IllegalArgumentException.class)
     public void testDeleteError() throws DataAccessException {
         serviceCheckDao.delete(null);
     }
     
-    @Test(expected=DataAccessException.class)
+    @Test(expectedExceptions=IllegalArgumentException.class)
     public void testCreateError() throws DataAccessException {
         serviceCheckDao.create(null);
     }
     
-    @Test(expected=DataAccessException.class)
+    @Test(expectedExceptions=IllegalArgumentException.class)
     public void testGetByVehicleError() throws DataAccessException {
         serviceCheckDao.getAllByVehicle(null);
     }
 
-	@Test(expected = DataAccessException.class)
+	@Test(expectedExceptions = IllegalArgumentException.class)
 	public void testGetAllByStatusError() throws DataAccessException {
 		serviceCheckDao.getAllByStatus(null);
 	}
 
-	@Test(expected = DataAccessException.class)
+	@Test(expectedExceptions = IllegalArgumentException.class)
 	public void testGetAllByTimeIntervalStartDateError(){
 		serviceCheckDao.getAllByTimeInterval(null, new Date());
 	}
 
-	@Test(expected = DataAccessException.class)
+	@Test(expectedExceptions = IllegalArgumentException.class)
 	public void testGetAllByTimeIntervalEndDateError(){
 		serviceCheckDao.getAllByTimeInterval(new Date(), null);
 	}
 
-	@Test(expected = DataAccessException.class)
+	@Test(expectedExceptions = IllegalArgumentException.class)
 	public void testGetAllByTimeIntervalEndDateBeforeStartDateError(){
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(2015,Calendar.NOVEMBER, 25);

@@ -1,5 +1,6 @@
-package cz.muni.fi.pa165.project;
+package cz.muni.fi.pa165.project.dao;
 
+import cz.muni.fi.pa165.project.PersistenceLayerContext;
 import cz.muni.fi.pa165.project.dao.EmployeeDao;
 import cz.muni.fi.pa165.project.entity.Employee;
 import cz.muni.fi.pa165.project.enums.Category;
@@ -7,30 +8,36 @@ import cz.muni.fi.pa165.project.util.DataAccessExceptionImpl;
 
 import java.math.BigDecimal;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.fail;
+import org.testng.annotations.Test;
 
 /**
  * Tests for Employee entity.
  *
  * @author Marek
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:testContext.xml"})
+
+@ContextConfiguration(classes = {PersistenceLayerContext.class})
+@TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
-public class EmployeeTest {
+public class EmployeeTest extends AbstractTestNGSpringContextTests{
 
 	@Autowired
-	@Qualifier(value = "employeeDao")
 	private EmployeeDao employeeDao;
+        
+        @PersistenceContext
+        private EntityManager em;
 
 	private Employee prepareEmployee1() {
 		Employee employee1 = new Employee();
@@ -73,7 +80,7 @@ public class EmployeeTest {
 		assertEquals(employees.size(), 2);
 	}
 
-	@Test(expected = Exception.class)
+	@Test(expectedExceptions = DataAccessException.class)
 	public void createNullEmployeeTest() {
 		employeeDao.create(null);
 	}
@@ -139,7 +146,7 @@ public class EmployeeTest {
 		assertEquals(emp2, employee2);
 	}
 
-	@Test(expected = Exception.class)
+	@Test(expectedExceptions = DataAccessException.class)
 	public void getEmployeeNullIdTest() {
 		employeeDao.get(null);
 	}
@@ -163,12 +170,12 @@ public class EmployeeTest {
 		assertEquals(result.getPhoneNumber(), updatedPhoneNumber);
 	}
 
-	@Test(expected = Exception.class)
+	@Test(expectedExceptions = DataAccessException.class)
 	public void updateNullEmployeeTest() {
 		employeeDao.update(null);
 	}
 
-	@Test(expected = Exception.class)
+	@Test(expectedExceptions = DataAccessException.class)
 	public void updateDeletedEmployeeTest() {
 		Employee employee1 = prepareEmployee1();
 
@@ -202,12 +209,12 @@ public class EmployeeTest {
 		assertEquals(employees2.get(0), employee2);
 	}
 
-	@Test(expected = Exception.class)
+	@Test(expectedExceptions = DataAccessException.class)
 	public void deleteNullEmployeeTest() {
 		employeeDao.delete(null);
 	}
 
-	@Test(expected = Exception.class)
+	@Test(expectedExceptions = DataAccessException.class)
 	public void deleteTwiceEmployeeTest() {
 		Employee employee1 = prepareEmployee1();
 

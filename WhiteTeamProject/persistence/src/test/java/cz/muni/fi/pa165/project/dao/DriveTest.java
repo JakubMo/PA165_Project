@@ -1,22 +1,21 @@
-package cz.muni.fi.pa165.project;
+package cz.muni.fi.pa165.project.dao;
 
-import cz.muni.fi.pa165.project.dao.DriveDao;
-import cz.muni.fi.pa165.project.dao.EmployeeDao;
-import cz.muni.fi.pa165.project.dao.VehicleDao;
+import cz.muni.fi.pa165.project.PersistenceLayerContext;
+
 import cz.muni.fi.pa165.project.entity.Drive;
 import cz.muni.fi.pa165.project.entity.Employee;
-import cz.muni.fi.pa165.project.entity.ServiceCheck;
 import cz.muni.fi.pa165.project.entity.Vehicle;
 import cz.muni.fi.pa165.project.enums.Category;
 import cz.muni.fi.pa165.project.enums.DriveStatus;
 import cz.muni.fi.pa165.project.util.DataAccessExceptionImpl;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.dao.DataAccessException;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -25,31 +24,35 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import static org.junit.Assert.*;
-import org.springframework.dao.DataAccessException;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+import org.testng.annotations.Test;
 
 /**
  * Unit tests for Drive entity
  *
  * @author Tomas Borcin | tborcin@redhat.com | created: 10/30/15.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:testContext.xml"})
+@ContextConfiguration(classes =PersistenceLayerContext.class)
+@TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
-public class DriveTest {
+public class DriveTest extends AbstractTestNGSpringContextTests{
 
 	@Autowired
-	@Qualifier(value = "driveDao")
 	private DriveDao driveDao;
 
 	@Autowired
-	@Qualifier(value = "employeeDao")
 	private EmployeeDao employeeDao;
 
 	@Autowired
-	@Qualifier(value = "vehicleDao")
 	private VehicleDao vehicleDao;
 
+        @PersistenceContext
+        private EntityManager em;
+        
 	private final String vin1 = "KDJG454SD4DS";
 	private final String vin2 = "REWGF69849SADF";
         private final String vin3 = "HJUS28FHS13KK2";
@@ -58,20 +61,31 @@ public class DriveTest {
 
 	@Test
 	public void createDrive() throws DataAccessExceptionImpl {
-
+            try{    
+            System.out.println("1");
+            if(driveDao == null){
+                System.out.println("DriveDao is null!!!");
+            }
+            if(em == null){
+                System.out.println("Entity Manager is null!!!");
+            }
 		List<Drive> drives = driveDao.getAll();
-
+                System.out.println("2");
 		assertEquals(0, drives.size());
-
+                System.out.println("3");
 		Drive drive1 = prepareDrive1();
 		Drive drive2 = prepareDrive2();
-
+                System.out.println("4");
 		driveDao.create(drive1);
 		driveDao.create(drive2);
-
+                System.out.println("5");
 		drives = driveDao.getAll();
-
+                System.out.println("6");
 		assertEquals(2, drives.size());
+                System.out.println("7");
+            }catch(Exception e) {
+                e.printStackTrace();
+            }
 	}
 
 	@Test
@@ -118,32 +132,32 @@ public class DriveTest {
 		assertTrue(drive2.equals(driveDao.get(drive2.getId())));
 	}
 
-        @Test(expected=DataAccessException.class)
+        @Test(expectedExceptions=IllegalArgumentException.class)
         public void getByIdError() throws DataAccessExceptionImpl {
             driveDao.get(null);
         }
         
-        @Test(expected=DataAccessException.class)
+        @Test(expectedExceptions=IllegalArgumentException.class)
         public void getByEmployeeError() throws DataAccessExceptionImpl {
             driveDao.getAllByEmployee(null);
         }
         
-        @Test(expected=DataAccessException.class)
+        @Test(expectedExceptions=IllegalArgumentException.class)
         public void getByVehicleError() throws DataAccessExceptionImpl {
             driveDao.getAllByVehicle(null);
         }
         
-        @Test(expected=DataAccessException.class)
+        @Test(expectedExceptions=IllegalArgumentException.class)
         public void updateError() throws DataAccessExceptionImpl {
             driveDao.update(null);
         }
         
-        @Test(expected=DataAccessException.class)
+        @Test(expectedExceptions=IllegalArgumentException.class)
         public void createError() throws DataAccessExceptionImpl {
             driveDao.create(null);
         }
         
-        @Test(expected=DataAccessException.class)
+        @Test(expectedExceptions=IllegalArgumentException.class)
         public void deleteError() throws DataAccessExceptionImpl {
             driveDao.delete(null);
         }

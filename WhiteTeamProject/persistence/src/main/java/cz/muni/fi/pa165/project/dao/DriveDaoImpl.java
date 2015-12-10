@@ -21,7 +21,7 @@ import javax.persistence.TemporalType;
  * 
  * @author Jakub Mozucha | j.mozucha@gmail.com | created: 10/27/2015
  */
-@Repository(value = "driveDao")
+@Repository
 public class DriveDaoImpl implements DriveDao {
     
     @PersistenceContext

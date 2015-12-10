@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * @author Mario Kudolani | mariok@mail.muni.cz | created: 27.10.2015
  */
-@Repository(value = "vehicleDao")
+@Repository
 public class VehicleDaoImpl implements VehicleDao {
 
     @PersistenceContext

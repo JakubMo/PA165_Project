@@ -6,7 +6,6 @@ import cz.muni.fi.pa165.project.service.config.ServiceConfiguration;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
-import static junit.framework.Assert.assertFalse;
 
 import org.hibernate.service.spi.ServiceException;
 
@@ -17,9 +16,10 @@ import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.assertEquals;
-import org.testng.annotations.BeforeClass;
+import static org.testng.Assert.assertFalse;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -28,16 +28,16 @@ import org.testng.annotations.Test;
  * @author jakub
  */
 @ContextConfiguration(classes=ServiceConfiguration.class)
-public class EmployeeServiceTest {
+public class EmployeeServiceTest extends AbstractTestNGSpringContextTests{
     
     @Mock
     private EmployeeDao employeeDao;
     
     @Inject
     @InjectMocks
-    private EmployeeServiceImpl employeeService;
+    private EmployeeService employeeService;
     
-    @BeforeClass
+    @BeforeMethod
     public void prepare() throws ServiceException {
         MockitoAnnotations.initMocks(this);
     }

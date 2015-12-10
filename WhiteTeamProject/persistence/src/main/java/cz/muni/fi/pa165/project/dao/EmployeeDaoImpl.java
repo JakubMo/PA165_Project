@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.project.dao;
 
 import cz.muni.fi.pa165.project.entity.Employee;
-import cz.muni.fi.pa165.project.entity.ServiceCheck;
 import cz.muni.fi.pa165.project.util.DataAccessExceptionImpl;
 import org.springframework.stereotype.Repository;
 
@@ -18,7 +17,7 @@ import java.util.List;
  *
  * @author Tomas Borcin | tborcin@redhat.com | created: 10/25/15.
  */
-@Repository(value = "employeeDao")
+@Repository
 public class EmployeeDaoImpl implements EmployeeDao {
 
 	@PersistenceContext
