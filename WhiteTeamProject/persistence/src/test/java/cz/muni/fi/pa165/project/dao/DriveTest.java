@@ -62,27 +62,19 @@ public class DriveTest extends AbstractTestNGSpringContextTests{
 	@Test
 	public void createDrive() throws DataAccessExceptionImpl {
             try{    
-            System.out.println("1");
-            if(driveDao == null){
-                System.out.println("DriveDao is null!!!");
-            }
-            if(em == null){
-                System.out.println("Entity Manager is null!!!");
-            }
 		List<Drive> drives = driveDao.getAll();
-                System.out.println("2");
 		assertEquals(0, drives.size());
-                System.out.println("3");
+
 		Drive drive1 = prepareDrive1();
 		Drive drive2 = prepareDrive2();
-                System.out.println("4");
+
 		driveDao.create(drive1);
 		driveDao.create(drive2);
-                System.out.println("5");
+
 		drives = driveDao.getAll();
-                System.out.println("6");
+
 		assertEquals(2, drives.size());
-                System.out.println("7");
+
             }catch(Exception e) {
                 e.printStackTrace();
             }

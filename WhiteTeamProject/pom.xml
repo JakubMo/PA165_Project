@@ -79,5 +79,6 @@
 		<module>persistence</module>
 		<module>service</module>
 		<module>api</module>
+	 <module>data</module>
 	</modules>
 </project>
