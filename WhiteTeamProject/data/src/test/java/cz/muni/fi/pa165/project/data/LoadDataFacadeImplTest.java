@@ -1,12 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.project.data;
 
+import cz.muni.fi.pa165.project.dao.DriveDao;
 import cz.muni.fi.pa165.project.dao.EmployeeDao;
+import cz.muni.fi.pa165.project.dao.ServiceCheckDao;
+import cz.muni.fi.pa165.project.dao.VehicleDao;
+import cz.muni.fi.pa165.project.service.EmployeeService;
 import java.io.IOException;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.transaction.annotation.Transactional;
 import org.testng.Assert;
-import static org.testng.Assert.*;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -33,18 +33,58 @@ public class LoadDataFacadeImplTest extends AbstractTestNGSpringContextTests{
     public EmployeeDao employeeDao;
     
     @Autowired
+    public VehicleDao vehicleDao;
+    
+    @Autowired
+    public ServiceCheckDao serviceCheckDao;
+    
+    @Autowired
+    public DriveDao driveDao;
+    
+    @Autowired
     public LoadDataFacade loadDataFacade;
+    
+    @Autowired
+    public EmployeeService employeeService;
 
+    @PersistenceContext
+    private EntityManager em;
+    
     @BeforeClass
     public void initialLoad() throws IOException {
-        log.info("Start of test. Loading data.");
+        log.info("Test: Start of test. Loading data.");
         loadDataFacade.load();
-        log.info("Data loaded");
+        log.info("Test: Data loaded");
     }
     
     @Test
-    public void employeeLoadedTest() {
-        Assert.assertEquals(employeeDao.getAll().size(), 4, "number of employees is wrong");
+    public void employeesLoadedTest() {
+        Assert.assertEquals(employeeDao.getAll().size(), 7, "number of employees is wrong");
+        Assert.assertEquals(employeeDao.getAllByLastName("Mozucha").get(0).getFirstname(), "Jakub", "wrong first name");
+        Assert.assertTrue(employeeService.authenticate(employeeDao.getByEmail("tomas@mail.com"), "pwd4"), "cannot authenticate");
+        log.info("Test: All employees loaded succesfully");
+    }
+    
+    @Test
+    public void vehiclesLoadedTest() {
+        Assert.assertEquals(vehicleDao.getAll().size(), 26, "number of vehicles is wrong");
+        Assert.assertEquals(vehicleDao.getAllByBrand("Skoda").size(), 8, "number of skoda vehicles is wrong");
+        Assert.assertEquals(vehicleDao.getAllByBrand("Honda").size(), 6, "number of honda vehicles is wrong");
+        Assert.assertEquals(vehicleDao.getAllByBrand("Ford").size(), 7, "number of ford vehicles is wrong");
+        Assert.assertEquals(vehicleDao.getAllByBrand("Volkswagen").size(), 5, "number of vw vehicles is wrong");
+        log.info("Test: All vehicles loaded succesfully");
+    }
+    
+    @Test
+    public void serviceChecksLoadedTest() {
+        Assert.assertEquals(serviceCheckDao.getAll().size(), 0, "number of service checks is wrong");
+        log.info("Test: All service checks loaded succesfully");
+    }
+    
+    @Test
+    public void drivesLoadedTest() {
+        Assert.assertEquals(driveDao.getAll().size(), 0, "number of drives is wrong");
+        log.info("Test: All drives loaded succesfully");
     }
     
 }
