@@ -7,7 +7,9 @@ import cz.muni.fi.pa165.project.entity.Vehicle;
 import cz.muni.fi.pa165.project.enums.Category;
 import cz.muni.fi.pa165.project.enums.DriveStatus;
 import cz.muni.fi.pa165.project.enums.ServiceCheckStatus;
+import cz.muni.fi.pa165.project.service.DriveService;
 import cz.muni.fi.pa165.project.service.EmployeeService;
+import cz.muni.fi.pa165.project.service.ServiceCheckService;
 import cz.muni.fi.pa165.project.service.VehicleService;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -37,6 +39,12 @@ public class LoadDataFacadeImpl implements LoadDataFacade {
     
     @Autowired
     private VehicleService vehicleService;
+    
+    @Autowired
+    private ServiceCheckService serviceCheckService;
+    
+    @Autowired
+    private DriveService driveService;
     
     @Override
     public void load() throws IOException {
@@ -77,7 +85,39 @@ public class LoadDataFacadeImpl implements LoadDataFacade {
         Vehicle vwPassat = vehicle("WVWZZZEBZYPA4J254", "Volkswagen", "Passat", "combi", 2004, "diesel", 289400L, 8, 300000L);
         log.info("Loaded all vehicles.");
         
+        ServiceCheck checkAccord = serviceCheck(null, ServiceCheckStatus.DONE_OK, getDate(2015,7,15), hondaAccord, "Jan Suchy", "good condition");
+        ServiceCheck checkAccord2 = serviceCheck(null, ServiceCheckStatus.DONE_OK, getDate(2015,5,27), hondaAccord2, "Peter Dan", "poor lights");
+        ServiceCheck checkCivic = serviceCheck(null, ServiceCheckStatus.DONE_NOT_OK, getDate(2015,6,8), hondaCivic, "Martin Coupek", "holes in exhaust system");
+        ServiceCheck checkCivic2 = serviceCheck(null, ServiceCheckStatus.DONE_OK, getDate(2015,9,10), hondaCivic2, "Jan Suchy", "will need new tires soon");
+        ServiceCheck checkJazz = serviceCheck(null, ServiceCheckStatus.DONE_OK, getDate(2014,11,29), hondaJazz, "Martin Coupek", "overall good");
+        ServiceCheck checkJazz2 = serviceCheck(null, ServiceCheckStatus.DONE_OK, getDate(2015,6,13), hondaJazz2, "Richard Janik", "weird noise from trunk");
+        ServiceCheck checkFocus = serviceCheck(null, ServiceCheckStatus.DONE_OK, getDate(2015,10,19), fordFocus, "Martin Coupek", "overall good");
+        ServiceCheck checkFocus2 = serviceCheck(null, ServiceCheckStatus.DONE_OK, getDate(2015,7,22), fordFocus2, "Peter Dan", "overall good");
+        ServiceCheck checkFocus3 = serviceCheck(null, ServiceCheckStatus.DONE_OK, getDate(2015,6,29), fordFocus3, "Jan Suchy", "overall good");
+        ServiceCheck checkFocus4 = serviceCheck(null, ServiceCheckStatus.DONE_OK, getDate(2014,11,5), fordFocus4, "Martin Coupek", "overall good");
+        ServiceCheck checkMondeo = serviceCheck(null, ServiceCheckStatus.DONE_OK, getDate(2015,1,30), fordMondeo, "Jan Suchy", "passed last time, next time propably won't");
+        ServiceCheck checkCMax = serviceCheck(null, ServiceCheckStatus.DONE_OK, getDate(2015,8,7), fordCMax, "Martin Coupek", "very good!");
+        ServiceCheck checkCMax2 = serviceCheck(null, ServiceCheckStatus.DONE_OK, getDate(2015,9,8), fordCMax2, "Martin Coupek", "small flaws, but good overall");
+        ServiceCheck checkFavorit = serviceCheck(null, ServiceCheckStatus.DONE_OK, getDate(2013,12,30), skodaFavorit, "Peter Dan", "undestructable communist machine - good!");
+        ServiceCheck checkFelicia = serviceCheck(null, ServiceCheckStatus.DONE_OK, getDate(2015,11,30), skodaFelicia, "Jan Suchy", "rusty but steady");
+        ServiceCheck checkFabia = serviceCheck(null, ServiceCheckStatus.DONE_OK, getDate(2015,2,16), skodaFabia, "Richard Janik", "ok");
+        ServiceCheck checkFabia2 = serviceCheck(null, ServiceCheckStatus.DONE_OK, getDate(2015,5,3), skodaFabia2, "Richard Janik", "good");
+        ServiceCheck checkOctavia = serviceCheck(null, ServiceCheckStatus.DONE_OK, getDate(2015,4,18), skodaOctavia, "Peter Dan", "turbo will be dead soon");
+        ServiceCheck checkOctavia2 = serviceCheck(null, ServiceCheckStatus.DONE_OK, getDate(2015,7,1), skodaOctavia2, "Martin Coupek", "very good");
+        ServiceCheck checkOctavia3 = serviceCheck(null, ServiceCheckStatus.DONE_OK, getDate(2015,10,25), skodaOctavia3, "Peter Dan", "ok");
+        ServiceCheck checkOctavia4 = serviceCheck(null, ServiceCheckStatus.DONE_NOT_OK, getDate(2015,4,18), skodaOctavia4, "Richard Janik", "rusty breaks");
+        ServiceCheck checkPolo = serviceCheck(null, ServiceCheckStatus.DONE_OK, getDate(2015,3,2), vwPolo, "Jan Suchy", "starter will be dead soon");
+        ServiceCheck checkPolo2 = serviceCheck(null, ServiceCheckStatus.DONE_OK, getDate(2015,8,29), vwPolo2, "Martin Coupek", "ok");
+        ServiceCheck checkGolf = serviceCheck(null, ServiceCheckStatus.DONE_OK, getDate(2015,8,29), vwGolf, "Martin Coupek", "rusty exhaust system");
+        ServiceCheck checkGolf2 = serviceCheck(null, ServiceCheckStatus.DONE_OK, getDate(2015,5,6), vwGolf2, "Richard Janik", "ok");
+        ServiceCheck checkPassat = serviceCheck(null, ServiceCheckStatus.DONE_OK, getDate(2015,8,29), vwPassat, "Peter Dan", "ok");
+        log.info("Loaded all service checks.");
         
+        Drive driveAccord = drive(null, hondaAccord, jakub, getDate(2015,11,10), getDate(2015,11,11), BigDecimal.valueOf(256L), DriveStatus.COMPLETED);
+        Drive driveFocus = drive(null, fordFocus, tomas, getDate(2015,11,22), getDate(2015,11,30), BigDecimal.valueOf(256L), DriveStatus.CANCELLED);
+        Drive driveFabia = drive(null, skodaFabia, martin, getDate(2015,12,15), getDate(2015,12,20), BigDecimal.valueOf(256L), DriveStatus.REQUESTED);
+        Drive driveFabia_2 = drive(null, skodaFabia, lukas, getDate(2015,12,21), getDate(2015,12,23), BigDecimal.valueOf(256L), DriveStatus.APPROVED);
+        log.info("Loaded all drives.");
     }
     
     private Employee employee(String firstname, String lastname, String email, 
@@ -110,13 +150,17 @@ public class LoadDataFacadeImpl implements LoadDataFacade {
     private ServiceCheck serviceCheck(Long id, ServiceCheckStatus status, Date serviceCheckDate, 
             Vehicle vehicle, String serviceEmployee, String report) {
         
-        return new ServiceCheck(id, status, serviceCheckDate, vehicle, serviceEmployee, report);
+        ServiceCheck check = new ServiceCheck(id, status, serviceCheckDate, vehicle, serviceEmployee, report);
+        serviceCheckService.createServiceCheck(check);
+        return check; 
     }
 
     private Drive drive(Long id, Vehicle vehicle, Employee employee, Date startDate, 
             Date endDate, BigDecimal km, DriveStatus driveStatus) {
         
-        return new Drive(id, vehicle, employee, startDate, endDate, km, driveStatus);
+        Drive drive = new Drive(id, vehicle, employee, startDate, endDate, km, driveStatus);
+        driveService.createDrive(drive);
+        return drive;
     }
     
     private Date getDate(int year, int month, int day){

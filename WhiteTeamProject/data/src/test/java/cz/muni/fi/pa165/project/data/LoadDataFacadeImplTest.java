@@ -4,8 +4,12 @@ import cz.muni.fi.pa165.project.dao.DriveDao;
 import cz.muni.fi.pa165.project.dao.EmployeeDao;
 import cz.muni.fi.pa165.project.dao.ServiceCheckDao;
 import cz.muni.fi.pa165.project.dao.VehicleDao;
+import cz.muni.fi.pa165.project.entity.Vehicle;
+import cz.muni.fi.pa165.project.enums.ServiceCheckStatus;
 import cz.muni.fi.pa165.project.service.EmployeeService;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.slf4j.Logger;
@@ -77,14 +81,27 @@ public class LoadDataFacadeImplTest extends AbstractTestNGSpringContextTests{
     
     @Test
     public void serviceChecksLoadedTest() {
-        Assert.assertEquals(serviceCheckDao.getAll().size(), 0, "number of service checks is wrong");
+        Assert.assertEquals(serviceCheckDao.getAll().size(), 26, "number of service checks is wrong");
+        Assert.assertEquals(serviceCheckDao.getAllByStatus(ServiceCheckStatus.DONE_OK).size(), 24, "number of succesfull service checks is wrong");
+        Assert.assertEquals(serviceCheckDao.getAllByStatus(ServiceCheckStatus.DONE_NOT_OK).size(), 2, "number of unsuccesfull service checks is wrong");
+        Assert.assertEquals(serviceCheckDao.getAllByStatus(ServiceCheckStatus.NOT_DONE).size(), 0, "number of not yet done service checks is wrong");
         log.info("Test: All service checks loaded succesfully");
     }
     
     @Test
     public void drivesLoadedTest() {
-        Assert.assertEquals(driveDao.getAll().size(), 0, "number of drives is wrong");
+        Assert.assertEquals(driveDao.getAll().size(), 4, "number of drives is wrong");
+        Assert.assertEquals(driveDao.getAllByVehicle(vehicleDao.getByVin("TMBPA16YX235Z9T6P")).size(), 2, "wrong number of fabia drives");
         log.info("Test: All drives loaded succesfully");
     }
     
+    @Test
+    public void vehiclesServiceChecksTest() {
+        List<Vehicle> vehicles = new ArrayList<>();
+        vehicles = vehicleDao.getAll();
+        
+        for(Vehicle veh : vehicles){
+            Assert.assertEquals(serviceCheckDao.getAllByVehicle(veh).size(), 1, "vehicle " + veh.getVin() + " has wrong number of service checks.");
+        }
+    }
 }
