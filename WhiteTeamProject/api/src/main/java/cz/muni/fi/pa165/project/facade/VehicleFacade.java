@@ -83,4 +83,13 @@ public interface VehicleFacade {
      * @throws DataAccessExceptionImpl 
      */
     public List<VehicleDTO> getAllFreeInDate(Date startDate, Date endDate) throws DataAccessExceptionImpl;
+    
+    /**
+     * Finds vehicle by given ID.
+     * 
+     * @param id vehicle ID
+     * @return vehicle with given ID.
+     * @throws DataAccessExceptionImpl 
+     */
+    public VehicleDTO getById(Long id) throws DataAccessExceptionImpl;
 }

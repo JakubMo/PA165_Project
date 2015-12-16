@@ -89,6 +89,7 @@
 
             <!-- footer -->
             <footer class="footer">
+                <br /><br />
                 <p>&copy;&nbsp;<%=java.time.Year.now().toString()%>&nbsp;White Team</p>
             </footer>
         </div>

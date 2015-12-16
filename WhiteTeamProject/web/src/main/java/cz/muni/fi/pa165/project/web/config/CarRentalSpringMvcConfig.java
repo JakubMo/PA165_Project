@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.project.web.config;
 
 import cz.muni.fi.pa165.project.data.CarRentalDataConfiguration;
+import cz.muni.fi.pa165.project.web.controllers.VehicleController;
 import javax.validation.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +28,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @Configuration
 @Import(CarRentalDataConfiguration.class)
 //@ComponentScan(basePackages = "cz.muni.fi.pa165.web.controllers")
+@ComponentScan(basePackages = {"cz.muni.fi.pa165.project.web.controllers"})
 public class CarRentalSpringMvcConfig extends WebMvcConfigurerAdapter {
     
     final static Logger log = LoggerFactory.getLogger(CarRentalSpringMvcConfig.class);
