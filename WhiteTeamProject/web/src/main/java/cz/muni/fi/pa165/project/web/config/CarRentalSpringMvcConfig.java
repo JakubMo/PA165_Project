@@ -26,7 +26,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @EnableWebMvc
 @Configuration
 @Import(CarRentalDataConfiguration.class)
-@ComponentScan(basePackages = "cz.muni.fi.pa165.web.controllers")
+@ComponentScan(basePackages = {"cz.muni.fi.pa165.project.web.controllers"})
 public class CarRentalSpringMvcConfig extends WebMvcConfigurerAdapter {
     
     final static Logger log = LoggerFactory.getLogger(CarRentalSpringMvcConfig.class);

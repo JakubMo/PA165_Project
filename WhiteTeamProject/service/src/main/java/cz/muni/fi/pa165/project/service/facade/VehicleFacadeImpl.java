@@ -109,5 +109,14 @@ public class VehicleFacadeImpl implements VehicleFacade {
     public List<VehicleDTO> getAllFreeInDate(Date startDate, Date endDate) throws DataAccessExceptionImpl {
         return beanMappingService.mapTo(vehicleService.getAllFreeInDate(startDate, endDate), VehicleDTO.class);
     }
+
+    @Override
+    public VehicleDTO getById(Long id) throws DataAccessExceptionImpl {
+        if(id == null) {
+            throw new IllegalArgumentException("id is null");
+        }
+        
+        return beanMappingService.mapTo(vehicleService.getById(id), VehicleDTO.class);
+    }
     
 }
