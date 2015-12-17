@@ -25,17 +25,16 @@
             <tbody>
                 <c:forEach items="${vehicles}" var="vehicle">
                     <tr>
-                        <td>${vehicle.vin}</td>
-                        <td>${vehicle.mileage}</td>
-                        <td>${vehicle.yearOfProduction}</td>
-                        <td>${vehicle.brand}</td>
-                        <td>${vehicle.model}</td>
+                        <td><c:out value="${vehicle.vin}" /></td>
+                        <td><c:out value="${vehicle.mileage}" /></td>
+                        <td><c:out value="${vehicle.yearOfProduction}" /></td>
+                        <td><c:out value="${vehicle.brand}" /></td>
+                        <td><c:out value="${vehicle.model}" /></td>
                         <td>
-                            <a href="/vehicle/detail/${vehicle.id}" class="btn btn-primary">Details</a>
-                        </td>
-                        <td>
-                            <form method="post" action="${pageContext.request.contextPath}/vehicle/delete/${vehicle.id}">
-                                <button type="submit" class="btn btn-primary">Delete</button>
+                            <form method="post" action="${pageContext.request.contextPath}/vehicle/delete/${vehicle.id}" 
+                                  onsubmit="return confirm('Do you really want to delete this vehicle?');">
+                                <a href="${pageContext.request.contextPath}/vehicle/detail/${vehicle.id}" class="btn btn-primary">Details</a>
+                                <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
                         </td>
                     </tr>

@@ -15,7 +15,7 @@
                 <my:imagelink src="http://www.crossfitpulse.com/wp-content/uploads/2012/12/question-mark.jpg" />
             </div>
             
-            <div class="col-md-5"
+            <div class="col-md-5">
                 <table class="table">
                     <tr>
                         <th>ID:</th>
@@ -49,7 +49,13 @@
                         <th>Mileage:</th>
                         <td><c:out value="${vehicle.mileage}" /></td>
                     </tr>
-                </table>
+                </table>                
+                
+                <form method="post" action="${pageContext.request.contextPath}/vehicle/delete/${vehicle.id}" 
+                      onsubmit="return confirm('Do you really want to delete this vehicle?');">
+                    <a href="${pageContext.request.contextPath}/vehicle/list" class="btn btn-primary">Back</a>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
             </div>
         </div>
     </jsp:attribute>
