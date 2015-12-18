@@ -4,6 +4,9 @@ import cz.muni.fi.pa165.project.dao.DriveDao;
 import cz.muni.fi.pa165.project.dao.EmployeeDao;
 import cz.muni.fi.pa165.project.dao.ServiceCheckDao;
 import cz.muni.fi.pa165.project.dao.VehicleDao;
+import cz.muni.fi.pa165.project.entity.Drive;
+import cz.muni.fi.pa165.project.entity.Employee;
+import cz.muni.fi.pa165.project.entity.ServiceCheck;
 import cz.muni.fi.pa165.project.entity.Vehicle;
 import cz.muni.fi.pa165.project.enums.ServiceCheckStatus;
 import cz.muni.fi.pa165.project.service.EmployeeService;
@@ -11,7 +14,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +25,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.transaction.annotation.Transactional;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -57,7 +64,7 @@ public class LoadDataFacadeImplTest extends AbstractTestNGSpringContextTests{
     @BeforeClass
     public void initialLoad() throws IOException {
         log.info("Test: Start of test. Loading data.");
-        loadDataFacade.load();
+//        loadDataFacade.load();
         log.info("Test: Data loaded");
     }
     

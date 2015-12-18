@@ -150,4 +150,14 @@ public class ServiceCheckFacadeImpl implements ServiceCheckFacade {
 		Collection<ServiceCheck> serviceChecks = this.serviceCheckService.getAllByTimeInterval(startDate, endDate);
 		return this.beanMappingService.mapTo(serviceChecks, ServiceCheckDTO.class);
 	}
+
+	@Override
+	public ServiceCheckDTO get(Long id) throws DataAccessException {
+		if(id == null){
+			throw new IllegalArgumentException("id is null!");
+		}
+
+		ServiceCheck serviceCheck = this.serviceCheckService.getById(id);
+		return this.beanMappingService.mapTo(serviceCheck, ServiceCheckDTO.class);
+	}
 }

@@ -67,6 +67,15 @@ public interface ServiceCheckFacade {
 	 */
 	void updateServiceCheckStatus(Long checkId, ServiceCheckStatus status) throws DataAccessException;
 
+	/**
+	 * Gets service check by id
+	 *
+	 * @param id service check id
+	 * @return service check with given id
+	 * @throws DataAccessExceptionImpl
+	 */
+	ServiceCheckDTO get(Long id) throws DataAccessException;
+
     /**
      * Gets all service checks
      * 
