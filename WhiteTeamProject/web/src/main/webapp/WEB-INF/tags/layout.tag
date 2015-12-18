@@ -88,8 +88,7 @@
             <jsp:invoke fragment="body"/>
 
             <!-- footer -->
-            <footer class="footer">
-                <br /><br />
+            <footer class="footer" style="margin-top: 75px">                
                 <p>&copy;&nbsp;<%=java.time.Year.now().toString()%>&nbsp;White Team</p>
             </footer>
         </div>

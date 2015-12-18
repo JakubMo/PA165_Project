@@ -11,6 +11,9 @@
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<c:url value='${src}' var="srcUrl" />
+<c:url value="${src}" var="srcUrl" />
 <c:url value="${not empty href ? href : src}" var="hrefUrl" />
-<a href="${hrefUrl}" class="thumbnail"><img src="${srcUrl}" class="img-responsive" class="col-md-3" /></a>
+<a href="${hrefUrl}" class="thumbnail">
+    <img src="${srcUrl}" class="img-responsive" class="col-md-3" 
+         onerror="this.onerror = null; if (this.src != '${pageContext.request.contextPath}/image/error.png') this.src = '${pageContext.request.contextPath}/image/error.png';" />
+</a>
