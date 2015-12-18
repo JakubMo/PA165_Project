@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.project.web.controllers;
 import cz.muni.fi.pa165.project.dto.ServiceCheckCreateDTO;
 import cz.muni.fi.pa165.project.dto.VehicleCreateDTO;
 import cz.muni.fi.pa165.project.dto.VehicleDTO;
+import cz.muni.fi.pa165.project.entity.ServiceCheck;
 import cz.muni.fi.pa165.project.enums.DriveStatus;
 import cz.muni.fi.pa165.project.enums.ServiceCheckStatus;
 import cz.muni.fi.pa165.project.facade.ServiceCheckFacade;
@@ -58,7 +59,7 @@ public class ServiceCheckController {
 
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String newVehicle(Model model) {
-		model.addAttribute("statuses", DriveStatus.values());
+		model.addAttribute("statuses", ServiceCheckStatus.values());
 		model.addAttribute("vehicles", vehicleFacade.getAll());
 		model.addAttribute("servicecheckCreate", new ServiceCheckCreateDTO());
 		return "servicecheck/new";

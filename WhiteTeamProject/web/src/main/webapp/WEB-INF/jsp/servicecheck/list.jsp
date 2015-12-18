@@ -16,22 +16,11 @@
 	Check</a>
 	<div class="row" style="margin-top: 25px">
 
-			<%--<table class="table">--%>
-			<%--<thead>--%>
-			<%--<tr>--%>
-			<%--<th>Vehicle VIN</th>--%>
-			<%--<th>Status</th>--%>
-			<%--<th>Date</th>--%>
-			<%--<th>Service employee</th>--%>
-			<%--<th>Report</th>--%>
-			<%--</tr>--%>
-			<%--</thead>--%>
-			<%--<tbody>--%>
 		<c:forEach items="${services}" var="serviceCheck">
-			<%--<tr>--%>
 			<div class="col-lg-4 col-md-5 col-sm-8 col-xs-14">
 				<div class="thumbnail">
-					<img src="${pageContext.request.contextPath}/image/vehicle/${vehicle.id}.jpg" style="height: 150px"
+					<img src="${pageContext.request.contextPath}/image/vehicle/${serviceCheck.vehicle.id}.jpg"
+							 style="height: 150px"
 							 onerror="this.onerror = null; if (this.src != '${pageContext.request.contextPath}/image/error.png') this.src = '${pageContext.request.contextPath}/image/error.png';"/>
 
 					<div class="caption">
@@ -83,22 +72,7 @@
 					</div>
 				</div>
 			</div>
-			<%--<td>${serviceCheck.status}</td>--%>
-			<%--<td>${serviceCheck.serviceCheckDate}</td>--%>
-			<%--<td>${serviceCheck.serviceEmployee}</td>--%>
-			<%--<td>${serviceCheck.report}</td>--%>
-			<%--<td>--%>
-			<%--<a href="${pageContext.request.contextPath}/servicecheck/detail/${serviceCheck.id}" class="btn btn-primary">Details</a>--%>
-			<%--</td>--%>
-			<%--<td>--%>
-			<%--<form method="post" action="${pageContext.request.contextPath}/servicecheck/delete/${serviceCheck.id}">--%>
-			<%--<button type="submit" class="btn btn-primary">Delete</button>--%>
-			<%--</form>--%>
-			<%--</td>--%>
-			<%--</tr>--%>
 		</c:forEach>
-			<%--</tbody>--%>
-			<%--</table>--%>
 	</div>
 </jsp:attribute>
 </my:layout>

@@ -84,7 +84,7 @@ public class ServiceCheckCreateDTO {
         return "ServiceCheck{" + 
                 ", status=" + status + 
                 ", date=" + serviceCheckDate + 
-                ", vehicle=" + vehicle + 
+                ", vehicle=" + vehicle +
                 ", serviceEmployeeId=" + serviceEmployee + 
                 ", report=" + report + 
                 '}';
@@ -116,7 +116,7 @@ public class ServiceCheckCreateDTO {
         final ServiceCheckCreateDTO other = (ServiceCheckCreateDTO) obj;
         return (this.getStatus() == other.getStatus()) && 
                 ( ((this.getServiceCheckDate() == null) && (other.getServiceCheckDate() == null)) || this.getServiceCheckDate().equals(other.getServiceCheckDate()) ) &&    // both are null or they are equal
-                this.getVehicle().equals(other.getVehicle()) && 
+                this.getVehicle().equals(other.getVehicle()) &&
                 this.getServiceEmployee().equals(other.getServiceEmployee()) && 
                 this.getReport().equals(other.getReport());
     }

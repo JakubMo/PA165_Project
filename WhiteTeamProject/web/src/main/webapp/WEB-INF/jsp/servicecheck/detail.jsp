@@ -13,7 +13,7 @@
     <jsp:attribute name="body">
         <div class="row">
 					<div style="float: right" class="col-md-3">
-						<my:imagelink src="http://www.crossfitpulse.com/wp-content/uploads/2012/12/question-mark.jpg"/>
+						<my:imagelink src="http://igorzuevich.com/wp-content/uploads/2015/08/WrenchIcon.png"/>
 					</div>
 
 					<div class="col-md-5">
