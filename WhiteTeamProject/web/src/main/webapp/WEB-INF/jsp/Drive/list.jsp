@@ -1,5 +1,5 @@
 <%--
-  User: Mário
+  User: Mário Kudolani
   Date: 16.12.2015
 --%>
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
@@ -9,9 +9,11 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib tagdir="/WEB-INF/tags" prefix="my"%>
 
-<my:layout title="Drive">
+<my:layout title="Drives">
     <jsp:attribute name="body">
-        <h1>This is index JSP page of White Team!</h1>
-        <h2>We will see more soon...</h2>
+        <a href="${pageContext.request.contextPath}/drive/new" role="button" class="btn btn-primary">New Drive</a>
+
+        <div class="row" style="margin-top: 25px">
+        </div>
     </jsp:attribute>
 </my:layout>
