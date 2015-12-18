@@ -6,13 +6,14 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib tagdir="/WEB-INF/tags" prefix="my"%>
 
 <my:layout title="Vehicle #${vehicle.id}">
     <jsp:attribute name="body">
-        <div class="row">
-            <div style="float: right" class="col-md-3">
-                <my:imagelink src="http://www.crossfitpulse.com/wp-content/uploads/2012/12/question-mark.jpg" />
+        <div class="row" style="margin-bottom: 50px">
+            <div style="float: right" class="col-md-4">
+                <my:imagelink src="/image/vehicle/${vehicle.id}.jpg" />
             </div>
             
             <div class="col-md-5">
@@ -49,13 +50,71 @@
                         <th>Mileage:</th>
                         <td><c:out value="${vehicle.mileage}" /></td>
                     </tr>
+                    <tr>
+                        <th>Max mileage:</th>
+                        <td><c:out value="${vehicle.maxMileage}" /></td>
+                    </tr>
+                    <tr>
+                        <th>Service check interval:</th>
+                        <td><c:out value="${vehicle.serviceCheckInterval}" /></td>
+                    </tr>
                 </table>                
                 
                 <form method="post" action="${pageContext.request.contextPath}/vehicle/delete/${vehicle.id}" 
                       onsubmit="return confirm('Do you really want to delete this vehicle?');">
-                    <a href="${pageContext.request.contextPath}/vehicle/list" class="btn btn-primary">Back</a>
+                    <a href="${pageContext.request.contextPath}/vehicle/list" class="btn btn-default">Back</a>
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
+            </div>
+        </div>
+        
+        <h3>History of drives</h3>
+        <div class="row" style="margin-bottom: 50px">
+            <div class="col-md-6">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Start date</th>
+                            <th>End date</th>
+                            <th>Length</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${drives}" var="drive">
+                            <tr>
+                                <td><fmt:formatDate value="${drive.startDate}" pattern="yyyy-MM-dd" /></td>
+                                <td><fmt:formatDate value="${drive.endDate}" pattern="yyyy-MM-dd" /></td>
+                                <td><c:out value="${drive.km}" /></td>
+                                <td><c:out value="${drive.driveStatus}" /></td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+                
+        <h3>List of service checks</h3>
+        <div class="row" style="margin-bottom: 50px">
+            <div class="col-md-6">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Report</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${serviceChecks}" var="sc">
+                            <tr>
+                                <td><fmt:formatDate value="${sc.serviceCheckDate}" pattern="yyyy-MM-dd" /></td>
+                                <td><c:out value="${sc.status}" /></td>
+                                <td><c:out value="${sc.report}" /></td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
             </div>
         </div>
     </jsp:attribute>

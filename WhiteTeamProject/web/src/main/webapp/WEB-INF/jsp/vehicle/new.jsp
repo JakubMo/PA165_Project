@@ -103,7 +103,8 @@
                     </c:if>
                 </div>
 
-                <button type="submit" class="btn btn-default">Submit</button>
+                <a href="${pageContext.request.contextPath}/vehicle/list" class="btn btn-default">Back</a>
+                <button type="submit" class="btn btn-primary">Create</button>
             </form:form>
         </div>
     </jsp:attribute>

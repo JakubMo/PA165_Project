@@ -1,6 +1,9 @@
 package cz.muni.fi.pa165.project.web.controllers;
 
 import cz.muni.fi.pa165.project.dto.VehicleCreateDTO;
+import cz.muni.fi.pa165.project.dto.VehicleDTO;
+import cz.muni.fi.pa165.project.facade.DriveFacade;
+import cz.muni.fi.pa165.project.facade.ServiceCheckFacade;
 import cz.muni.fi.pa165.project.facade.VehicleFacade;
 import javax.validation.Valid;
 import org.slf4j.Logger;
@@ -31,6 +34,12 @@ public class VehicleController {
     @Autowired
     private VehicleFacade vehicleFacade;
     
+    @Autowired
+    private ServiceCheckFacade serviceCheckFacade;
+    
+    @Autowired
+    private DriveFacade driveFacade;
+    
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list(Model model, RedirectAttributes redirectAttributes) {
         try {
@@ -48,7 +57,10 @@ public class VehicleController {
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
     public String detail(@PathVariable long id, Model model, RedirectAttributes redirectAttributes) {
         try {
-            model.addAttribute("vehicle", vehicleFacade.getById(id));
+            VehicleDTO vehicle = vehicleFacade.getById(id);
+            model.addAttribute("vehicle", vehicle);
+            model.addAttribute("serviceChecks", serviceCheckFacade.getAllByVehicle(vehicle));
+            model.addAttribute("drives", driveFacade.findAllByVehicle(vehicle));
         }
         catch(Exception ex) {
             log.trace(ex.getMessage());
