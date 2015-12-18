@@ -39,7 +39,8 @@
                     <ul class="nav navbar-nav">
                         <li><a href="${pageContext.request.contextPath}/vehicle/list">Vehicles</a></li>
                         <li><a href="${pageContext.request.contextPath}/employee/list">Employees</a></li>
-                        <li><a href="${pageContext.request.contextPath}/drive/list">Drives</a></li>
+                        <li><a href="${pageContext.request.contextPath}/drive/list">Drives</a></li>                        
+                        <li><a href="${pageContext.request.contextPath}/servicecheck/list">Service Checks</a></li>
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
