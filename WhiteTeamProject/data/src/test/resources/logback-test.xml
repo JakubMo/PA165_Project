@@ -1,0 +1,16 @@
+<!-- configuration for logback http://logback.qos.ch/ -->
+<configuration debug="false">
+    <appender name="APP" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date %-5level %logger - %message%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="warn">
+        <appender-ref ref="APP"/>
+    </root>
+
+    <logger name="org.hibernate.tool.hbm2ddl.SchemaExport" level="off" />
+    <logger name="org.hibernate.engine.jdbc.spi.SqlExceptionHelper" level="off" />
+    <logger name="cz.muni.fi.pa165.project.data" level="info"/>
+</configuration>

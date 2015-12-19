@@ -110,7 +110,7 @@ public class EmployeeFacadeImpl implements EmployeeFacade {
 	@Override
 	public boolean authenticate(EmployeeAuthenticateDTO employeeAuthenticateDTO) {
 		return employeeService.authenticate(
-				employeeService.get(employeeAuthenticateDTO.getId()), employeeAuthenticateDTO.getPassword());
+				employeeService.getByEmail(employeeAuthenticateDTO.getEmail()), employeeAuthenticateDTO.getPassword());
 	}
 
 	private void validateEmployee(EmployeeDTO employeeDTO) {

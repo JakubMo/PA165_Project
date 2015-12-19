@@ -6,22 +6,23 @@ package cz.muni.fi.pa165.project.dto;
  * @author Tomas Borcin | tborcin@redhat.com | created: 11/22/15.
  */
 public class EmployeeAuthenticateDTO {
-	private Long id;
-	private String password;
 
-	public Long getId() {
-		return id;
-	}
+    private String email;
+    private String password;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

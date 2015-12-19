@@ -56,7 +56,7 @@
                                 <li><a href="#">Profile</a></li>
                                 <li><a href="#">N/A</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a href="#">Log out</a></li>
+                                <li><a href="${pageContext.request.contextPath}/login?logout">Log out</a></li>
                             </ul>
                         </li>
                     </ul>

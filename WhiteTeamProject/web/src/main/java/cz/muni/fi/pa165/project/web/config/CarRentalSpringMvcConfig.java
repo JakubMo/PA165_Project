@@ -1,6 +1,8 @@
 package cz.muni.fi.pa165.project.web.config;
 
 import cz.muni.fi.pa165.project.data.CarRentalDataConfiguration;
+import cz.muni.fi.pa165.project.web.controllers.LoginController;
+import cz.muni.fi.pa165.project.web.security.CarRentalSecurityConfig;
 import javax.validation.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,8 +27,8 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
  */
 @EnableWebMvc
 @Configuration
-@Import(CarRentalDataConfiguration.class)
-@ComponentScan(basePackages = {"cz.muni.fi.pa165.project.web.controllers"})
+@Import(value={CarRentalDataConfiguration.class, CarRentalSecurityConfig.class})
+@ComponentScan(basePackageClasses={LoginController.class,CarRentalSecurityConfig.class})
 public class CarRentalSpringMvcConfig extends WebMvcConfigurerAdapter {
     
     final static Logger log = LoggerFactory.getLogger(CarRentalSpringMvcConfig.class);

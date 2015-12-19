@@ -1,3 +1,4 @@
+<!-- configuration for logback http://logback.qos.ch/ -->
 <configuration>
     <appender name="APP" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -12,7 +13,7 @@
     <logger name="org" level="info"/>
     <logger name="cz.muni.fi.pa165.project" level="warn"/>
     <logger name="cz.muni.fi.pa165.project.data" level="info"/>
-    <logger name="cz.muni.fi.pa165.web" level="debug"/>
+    <logger name="cz.muni.fi.pa165.project.web" level="debug"/>
     <logger name="org.hibernate.tool.hbm2ddl.SchemaExport" level="off"/>
     <logger name="org.hibernate.engine.jdbc.spi.SqlExceptionHelper" level="off" />
     <logger name="org.hibernate" level="error"/>

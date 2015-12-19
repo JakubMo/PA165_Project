@@ -71,7 +71,7 @@ public class EmployeeCreateDTO {
 	/**
 	 * List of the employee's drives
 	 */
-	private List<Long> drives;
+	private List<DriveDTO> drives;
 
 	/**
 	 * Constructor without parameters. Creates new object without preset attributes values.
@@ -91,7 +91,7 @@ public class EmployeeCreateDTO {
 	 * @param category    Category in which employee belongs to.
 	 * @param drives      List of employee's drives.
 	 */
-	public EmployeeCreateDTO(String firstname, String lastname, String email, String phoneNumber, String role, BigDecimal credit, Category category, List<Long> drives) {
+	public EmployeeCreateDTO(String firstname, String lastname, String email, String phoneNumber, String role, BigDecimal credit, Category category, List<DriveDTO> drives) {
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.email = email;
@@ -251,7 +251,7 @@ public class EmployeeCreateDTO {
 	 *
 	 * @return {@link #drives} of employee.
 	 */
-	public List<Long> getDrives() {
+	public List<DriveDTO> getDrives() {
 		return drives;
 	}
 
@@ -260,7 +260,7 @@ public class EmployeeCreateDTO {
 	 *
 	 * @param drives to be set.
 	 */
-	public void setDrives(List<Long> drives) {
+	public void setDrives(List<DriveDTO> drives) {
 		this.drives = drives;
 	}
 
