@@ -31,6 +31,14 @@ public interface EmployeeFacade {
 	 */
 	Collection<EmployeeDTO> getAll() throws DataAccessExceptionImpl;
 
+        /**
+         * Get employee by given id
+         * @param id id of employee to be found
+         * @return found employee
+         * @throws DataAccessExceptionImpl 
+         */
+        EmployeeDTO getById(Long id) throws DataAccessExceptionImpl;
+        
 	/**
 	 * Get employee with given email.
 	 *

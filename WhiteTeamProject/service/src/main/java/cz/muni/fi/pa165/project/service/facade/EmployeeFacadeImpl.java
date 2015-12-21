@@ -56,6 +56,15 @@ public class EmployeeFacadeImpl implements EmployeeFacade {
 		return beanMappingService.mapTo(employeeService.getAll(), EmployeeDTO.class);
 	}
 
+        @Override
+        public EmployeeDTO getById(Long id) throws DataAccessExceptionImpl {
+            if(id == null) {
+                throw new IllegalArgumentException("Given id is null.");
+            }
+            Employee employee = employeeService.get(id);
+            return (employee == null) ? null : beanMappingService.mapTo(employee, EmployeeDTO.class);
+        }
+        
 	@Override
 	public EmployeeDTO getByEmail(String email) throws DataAccessExceptionImpl {
 		if (email == null) {

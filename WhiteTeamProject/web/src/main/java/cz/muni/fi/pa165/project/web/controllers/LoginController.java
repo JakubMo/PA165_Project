@@ -40,9 +40,7 @@ public class LoginController {
             String principal = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             EmployeeDTO employeeDTO = employeeFacade.getByEmail(principal);
             if(employeeDTO != null) {
-                model.addAttribute("firstname", employeeDTO.getFirstname());
-                model.addAttribute("lastname", employeeDTO.getLastname());
-                model.addAttribute("role", employeeDTO.getRole());
+                model.addAttribute("principal", employeeDTO);
             }
         } catch (Exception ex) {
             log.trace(ex.getMessage());

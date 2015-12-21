@@ -67,7 +67,8 @@ public class Employee {
 	/**
 	 * List of the employee's drives
 	 */
-	@OneToMany(mappedBy = "employee")
+	@OneToMany(mappedBy = "employee",
+                orphanRemoval = true)
 	private List<Drive> drives;
 
 	private String passwordHash;

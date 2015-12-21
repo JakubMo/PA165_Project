@@ -7,7 +7,7 @@
 
 <my:layout title="Home">
     <jsp:attribute name="body">
-        <h1>Welcome ${firstname} ${lastname}!</h1>
-        <h4>You are logged with ${role} rights.</h4>
+        <h1>Welcome ${principal.firstname} ${principal.lastname}!</h1>
+        <h4>You are logged with ${principal.role} rights.</h4>
     </jsp:attribute>
 </my:layout>

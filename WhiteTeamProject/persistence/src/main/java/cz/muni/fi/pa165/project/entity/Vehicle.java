@@ -72,13 +72,15 @@ public class Vehicle {
 	/**
 	 * List of the vehicle's service checks
 	 */
-	@OneToMany(mappedBy = "vehicle")
+	@OneToMany(mappedBy = "vehicle",
+                cascade = CascadeType.ALL)
 	private List<ServiceCheck> serviceChecks;
 
 	/**
 	 * List of the vehicle's drives
 	 */
-	@OneToMany(mappedBy="vehicle")
+	@OneToMany(mappedBy="vehicle",
+                orphanRemoval = true)
 	private List<Drive> drives;
 
 	public long getId() {

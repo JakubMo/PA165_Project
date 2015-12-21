@@ -48,15 +48,15 @@
                     </tr>
                     <tr>
                         <th>Mileage:</th>
-                        <td><c:out value="${vehicle.mileage}" /></td>
+                        <td><c:out value="${vehicle.mileage} km" /></td>
                     </tr>
                     <tr>
                         <th>Max mileage:</th>
-                        <td><c:out value="${vehicle.maxMileage}" /></td>
+                        <td><c:out value="${vehicle.maxMileage} km" /></td>
                     </tr>
                     <tr>
                         <th>Service check interval:</th>
-                        <td><c:out value="${vehicle.serviceCheckInterval}" /></td>
+                        <td><c:out value="${vehicle.serviceCheckInterval} months" /></td>
                     </tr>
                 </table>                
                 

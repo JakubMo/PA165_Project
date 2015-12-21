@@ -53,7 +53,7 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Profile</a></li>
+                                <li><a href=<c:out value="${pageContext.request.contextPath}/employee/detail/principal"/>>Profile</a></li>
                                 <li><a href="#">N/A</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li><a href="${pageContext.request.contextPath}/login?logout">Log out</a></li>
