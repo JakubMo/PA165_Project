@@ -21,8 +21,10 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import javax.inject.Inject;
 import org.hibernate.service.spi.ServiceException;
@@ -50,6 +52,8 @@ public class DriveServiceTest extends AbstractTestNGSpringContextTests{
 	private List<Drive> allDrives;
 	private Drive drive1;
 	private Drive drive2;
+        private Date drive2StartDate;
+        private Date drive2EndDate;
 
         @BeforeMethod
         public void prepare() throws ServiceException {
@@ -339,7 +343,8 @@ public class DriveServiceTest extends AbstractTestNGSpringContextTests{
 		driveService.changeEndDate(drive1, simpleDateFormat.parse("05-05-2015"));
 		assertEquals(simpleDateFormat.parse("05-05-2015"), drive1.getEndDate());
 
-		assertEquals(simpleDateFormat.parse("20-12-2015"), drive2.getEndDate());
+		//assertEquals(simpleDateFormat.parse("20-12-2015"), drive2.getEndDate());
+                assertEquals(drive2EndDate, drive2.getEndDate());
 
 		try {
 			driveService.changeEndDate(null, simpleDateFormat.parse("12-05-2014"));
@@ -382,7 +387,8 @@ public class DriveServiceTest extends AbstractTestNGSpringContextTests{
 		driveService.changeStartDate(drive1, simpleDateFormat.parse("05-05-2014"));
 		assertEquals(simpleDateFormat.parse("05-05-2014"), drive1.getStartDate());
 
-		assertEquals(simpleDateFormat.parse("05-12-2015"), drive2.getStartDate());
+		//assertEquals(simpleDateFormat.parse("05-12-2015"), drive2.getStartDate());
+                assertEquals(drive2StartDate, drive2.getStartDate());
 
 		try {
 			driveService.changeEndDate(null, simpleDateFormat.parse("12-12-2015"));
@@ -429,10 +435,18 @@ public class DriveServiceTest extends AbstractTestNGSpringContextTests{
 
 	private Drive createDrive2() throws ParseException {
 		Drive drive = new Drive();
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		//SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		drive.setDriveStatus(DriveStatus.REQUESTED);
-		drive.setStartDate(simpleDateFormat.parse("05-12-2015"));
-		drive.setEndDate(simpleDateFormat.parse("20-12-2015"));
+                Calendar startDate = new GregorianCalendar();
+                startDate.add(Calendar.MONTH, -1);
+                drive2StartDate = startDate.getTime();
+		//drive.setStartDate(simpleDateFormat.parse("05-12-2015"));
+                drive.setStartDate(drive2StartDate);
+                Calendar endDate = new GregorianCalendar();
+                endDate.add(Calendar.DAY_OF_MONTH, 1);
+                drive2EndDate = endDate.getTime();
+		//drive.setEndDate(simpleDateFormat.parse("20-12-2015"));
+                drive.setEndDate(drive2EndDate);
 		drive.setKm(new BigDecimal(120000));
 		drive.setEmployee(new Employee());
 		drive.setVehicle(new Vehicle());
