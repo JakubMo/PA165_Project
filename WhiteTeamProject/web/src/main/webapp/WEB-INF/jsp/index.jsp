@@ -7,7 +7,7 @@
 
 <my:layout title="Home">
     <jsp:attribute name="body">
-        <h1>This is index JSP page of White Team!</h1>
-        <h2>We will see more soon...</h2>
+        <h1>Welcome ${firstname} ${lastname}!</h1>
+        <h4>You are logged with ${role} rights.</h4>
     </jsp:attribute>
 </my:layout>

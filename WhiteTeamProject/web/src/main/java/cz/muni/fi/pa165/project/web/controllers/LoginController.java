@@ -1,15 +1,20 @@
 package cz.muni.fi.pa165.project.web.controllers;
 
+import cz.muni.fi.pa165.project.dto.EmployeeDTO;
+import cz.muni.fi.pa165.project.facade.EmployeeFacade;
+import static cz.muni.fi.pa165.project.web.controllers.VehicleController.log;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,27 +31,25 @@ public class LoginController {
     
     final static Logger log = LoggerFactory.getLogger(LoginController.class);
     
-    /*@RequestMapping(value = {"/"}, method = RequestMethod.GET)
-    public String defaultPage() {
-        String principal = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(principal == null || principal.equals("")){
-            return "login";
-        }
-        
-        return "index";
-    }*/
+    @Autowired
+    EmployeeFacade employeeFacade;
     
-    /*@RequestMapping(value = "/admin**", method = RequestMethod.GET)
-    public ModelAndView adminPage() {
-        log.debug("admin page mapping");
-        
-        ModelAndView model = new ModelAndView();
-        model.addObject("title", "Spring Security Login Form - Database Authentication");
-        model.addObject("message", "This page is for ROLE_ADMIN only!");
-        model.setViewName("admin");
-        return model;
-
-    }*/
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String defaultPage(Model model, RedirectAttributes redirectAttributes) {
+        try{
+            String principal = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            EmployeeDTO employeeDTO = employeeFacade.getByEmail(principal);
+            if(employeeDTO != null) {
+                model.addAttribute("firstname", employeeDTO.getFirstname());
+                model.addAttribute("lastname", employeeDTO.getLastname());
+                model.addAttribute("role", employeeDTO.getRole());
+            }
+        } catch (Exception ex) {
+            log.trace(ex.getMessage());
+            redirectAttributes.addFlashAttribute("alert_danger", ex.getLocalizedMessage());
+        }
+        return "index";
+    }
     
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login(@RequestParam(value = "error", required = false) String error,

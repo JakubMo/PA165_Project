@@ -43,7 +43,9 @@
 									onsubmit="return confirm('Do you want to delete this service check?');">
 							<a href="${pageContext.request.contextPath}/servicecheck/list" class="btn btn-default">Back</a>
 							<button type="submit" class="btn btn-danger">Delete</button>
-						</form>
+						
+                                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" >
+                                                </form>
 					</div>
 				</div>
     </jsp:attribute>
