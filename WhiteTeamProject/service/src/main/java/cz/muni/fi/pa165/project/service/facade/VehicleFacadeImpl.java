@@ -118,5 +118,17 @@ public class VehicleFacadeImpl implements VehicleFacade {
         
         return beanMappingService.mapTo(vehicleService.getById(id), VehicleDTO.class);
     }
+
+    @Override
+    public VehicleDTO getByVin(String vin) throws DataAccessExceptionImpl {
+        if(vin == null) {
+            throw new IllegalArgumentException("vin is null");
+        }
+        if(vin.isEmpty()) {
+            throw new IllegalArgumentException("vin is empty string");
+        }
+        
+        return beanMappingService.mapTo(vehicleService.getByVin(vin), VehicleDTO.class);
+    }
     
 }

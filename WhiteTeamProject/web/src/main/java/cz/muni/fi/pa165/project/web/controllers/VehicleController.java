@@ -5,6 +5,7 @@ import cz.muni.fi.pa165.project.dto.VehicleDTO;
 import cz.muni.fi.pa165.project.facade.DriveFacade;
 import cz.muni.fi.pa165.project.facade.ServiceCheckFacade;
 import cz.muni.fi.pa165.project.facade.VehicleFacade;
+import cz.muni.fi.pa165.project.util.DataAccessExceptionImpl;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -90,6 +91,18 @@ public class VehicleController {
                             Model model, RedirectAttributes redirectAttributes) {
         try {
             if(!bindingResult.hasErrors()) {
+                VehicleDTO vehicle = null;
+                try {
+                    vehicle = vehicleFacade.getByVin(vehicleCreateDTO.getVin());
+                }
+                catch(DataAccessExceptionImpl ex) {
+                    // OK
+                }
+                if(vehicle != null) {
+                    model.addAttribute("vin_error", "Vehicle with such VIN already exists (ID " + vehicle.getId() + ").");
+                    return "vehicle/new";
+                }
+                
                 vehicleFacade.createVehicle(vehicleCreateDTO);
                 redirectAttributes.addFlashAttribute("alert_success", "Vehicle was created.");
             }

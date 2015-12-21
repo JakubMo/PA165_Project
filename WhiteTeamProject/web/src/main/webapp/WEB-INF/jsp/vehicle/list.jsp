@@ -14,8 +14,8 @@
         
         <div class="row" style="margin-top: 25px">
             <c:forEach items="${vehicles}" var="vehicle">
-                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                    <div class="thumbnail">
+                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" style="height: 419px">
+                    <div class="thumbnail" style="height: 399px">
                         <img src="${pageContext.request.contextPath}/image/vehicle/${vehicle.id}.jpg" style="height: 150px" 
                              onerror="this.onerror = null; if (this.src != '${pageContext.request.contextPath}/image/error.png') this.src = '${pageContext.request.contextPath}/image/error.png';" />
                         <div class="caption">
