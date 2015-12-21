@@ -58,7 +58,7 @@
                                 <li role="separator" class="divider"></li>
                                 <li><a href="${pageContext.request.contextPath}/login?logout">Log out</a></li>
                             </ul>
-                        </li>
+                        </li>   
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->

@@ -1,16 +1,20 @@
 package cz.muni.fi.pa165.project.web.controllers;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  * Provides the interface for home page
@@ -46,7 +50,9 @@ public class LoginController {
     
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login(@RequestParam(value = "error", required = false) String error,
-            @RequestParam(value = "logout", required = false) String logout) {
+            @RequestParam(value = "logout", required = false) String logout,
+            HttpServletRequest request, HttpServletResponse response,
+            RedirectAttributes redirectAttributes) {
 
         log.debug("login page mapping");
         
@@ -56,7 +62,16 @@ public class LoginController {
         }
 
         if (logout != null) {
-            model.addObject("msg", "You've been logged out successfully.");
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            if(auth != null){
+                new SecurityContextLogoutHandler().logout(request, response, auth);
+                model.addObject("msg", "You've been logged out successfully.");
+            } else {
+                redirectAttributes.addAttribute("alert_warning", "Logout failed!");
+                model.setViewName("redirect:/");
+                return model;
+            }
+            
         }
         model.setViewName("login");
 
