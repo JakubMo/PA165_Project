@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * Controller for administering vehicle.
@@ -140,11 +142,25 @@ public class VehicleController {
         return "redirect:/vehicle/list";
     }
     
-    /*@RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
-    public String edit(@PathVariable long id, @Valid @ModelAttribute("vehicleEdit") VehicleDTO vehicleDTO, BindingResult bindingResult,
-                        Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriComponentsBuilder) {
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+    public String edit(@PathVariable long id, @RequestParam(value = "maxMileage", required = false) Long maxMileage, 
+                        @RequestParam(value = "serviceCheckInterval", required = false) Integer serviceCheckInterval,
+                        RedirectAttributes redirectAttributes, UriComponentsBuilder uriComponentsBuilder) {
+        try {
+            if(maxMileage != null) {
+                vehicleFacade.updateMaxMileage(id, maxMileage);
+            }
+            if(serviceCheckInterval != null) {
+                vehicleFacade.updateServiceCheckInterval(id, serviceCheckInterval);
+            }
+        }
+        catch(Exception ex) {
+            log.trace(ex.getMessage());
+            redirectAttributes.addFlashAttribute("alert_danger", ex.getLocalizedMessage());
+        }
         
-    }*/
+        return "redirect:" + uriComponentsBuilder.path("/vehicle/detail/{id}").buildAndExpand(id).encode().toUriString();
+    }
     
     @RequestMapping(value = "/*")
     public String notFound(RedirectAttributes redirectAttributes) {

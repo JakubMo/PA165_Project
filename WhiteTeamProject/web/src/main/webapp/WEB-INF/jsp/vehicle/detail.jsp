@@ -11,6 +11,25 @@
 
 <my:layout title="Vehicle #${vehicle.id}">
     <jsp:attribute name="body">
+        <script type="text/javascript">
+            var viewModel = {
+                maxMileageText: ko.observable(true),
+                maxMileageInput: ko.observable(false),
+                serviceCheckIntervalText: ko.observable(true),
+                serviceCheckIntervalInput: ko.observable(false)
+            };
+            
+            function showMaxMileage(value) {
+                viewModel.maxMileageText(value);
+                viewModel.maxMileageInput(!value);
+            }
+            
+            function showServiceCheckInterval(value) {
+                viewModel.serviceCheckIntervalText(value);
+                viewModel.serviceCheckIntervalInput(!value);
+            }
+        </script>
+        
         <div class="row" style="margin-bottom: 50px">
             <div style="float: right" class="col-md-4">
                 <my:imagelink src="/image/vehicle/${vehicle.id}.jpg" />
@@ -52,11 +71,39 @@
                     </tr>
                     <tr>
                         <th>Max mileage:</th>
-                        <td><c:out value="${vehicle.maxMileage} km" /></td>
+                        <td>
+                            <span data-bind="visible: maxMileageText">
+                                <c:out value="${vehicle.maxMileage} km" />
+                                <button class="btn-default" style="float: right" onclick="showMaxMileage(false); showServiceCheckInterval(true);">Edit</button>
+                            </span>
+                            <span data-bind="visible: maxMileageInput">
+                                <form method="post" action="${pageContext.request.contextPath}/vehicle/update/${vehicle.id}">
+                                    <input name="maxMileage" value="${vehicle.maxMileage}" type="number" min="100000" required style="width: 80px" />
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                    
+                                    <button type="button" class="btn-default" style="float: right" onclick="showMaxMileage(true);">Cancel</button>
+                                    <button type="submit" class="btn-primary" style="float: right" onsubmit="showMaxMileage(true);">Update</button>
+                                </form>
+                            </span>
+                        </td>
                     </tr>
                     <tr>
                         <th>Service check interval:</th>
-                        <td><c:out value="${vehicle.serviceCheckInterval} months" /></td>
+                        <td>
+                            <span data-bind="visible: serviceCheckIntervalText">
+                                <c:out value="${vehicle.serviceCheckInterval} months" />
+                                <button class="btn-default" style="float: right" onclick="showServiceCheckInterval(false); showMaxMileage(true);">Edit</button>
+                            </span>
+                            <span data-bind="visible: serviceCheckIntervalInput">
+                                <form method="post" action="${pageContext.request.contextPath}/vehicle/update/${vehicle.id}">
+                                    <input name="serviceCheckInterval" value="${vehicle.serviceCheckInterval}" type="number" min="1" max="12" required style="width: 80px" />
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                    
+                                    <button type="button" class="btn-default" style="float: right" onclick="showServiceCheckInterval(true);">Cancel</button>
+                                    <button type="submit" class="btn-primary" style="float: right" onsubmit="showServiceCheckInterval(true);">Update</button>
+                                </form>
+                            </span>
+                        </td>
                     </tr>
                 </table>                
                 

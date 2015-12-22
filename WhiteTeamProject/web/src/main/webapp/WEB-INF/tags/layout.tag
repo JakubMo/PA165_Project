@@ -20,6 +20,11 @@
         <title><c:out value="${title}"/></title>
         <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="${pageContext.request.contextPath}/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
+        
+        <script src="${pageContext.request.contextPath}/js/knockout-3.4.0.js" type="text/javascript"></script>
+        <script>
+            var viewModel;
+        </script>
     </head>
     <body>
         <!-- navigation -->
@@ -97,5 +102,9 @@
         <!-- javascript -->
         <script src="${pageContext.request.contextPath}/js/jquery.min.js" type="text/javascript"></script>
         <script src="${pageContext.request.contextPath}/js/bootstrap.min.js" type="text/javascript"></script>
+        
+        <script type="text/javascript">
+            ko.applyBindings(viewModel);
+        </script>
     </body>
 </html>
