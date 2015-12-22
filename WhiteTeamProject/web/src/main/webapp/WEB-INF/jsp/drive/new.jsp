@@ -16,14 +16,7 @@
                     <div class="form-group">
                         <form:label path="vehicle">Vehicle</form:label>
                         <div>
-                            <form:select path="vehicle" cssClass="form-control">
-                                <form:option value="${null}">Select a vehicle</form:option>
-                                <c:forEach items="${vehicles}" var="v">
-                                    <form:option value="${v}">
-                                        ${v.toShortString()}
-                                    </form:option>
-                                </c:forEach>
-                            </form:select>
+                            <form:select path="vehicle" cssClass="form-control" items="${vehicles}"/>
                         </div>
                         <c:if test="${not empty vehicle_error}">
                             <p style="color:red"><c:out value="${vehicle_error}" /></p>

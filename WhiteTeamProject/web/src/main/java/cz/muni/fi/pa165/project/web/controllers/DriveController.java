@@ -1,9 +1,6 @@
 package cz.muni.fi.pa165.project.web.controllers;
 
-import cz.muni.fi.pa165.project.dto.DriveCreateDTO;
-import cz.muni.fi.pa165.project.dto.EmployeeDTO;
-import cz.muni.fi.pa165.project.dto.VehicleCreateDTO;
-import cz.muni.fi.pa165.project.dto.VehicleDTO;
+import cz.muni.fi.pa165.project.dto.*;
 import cz.muni.fi.pa165.project.entity.Drive;
 import cz.muni.fi.pa165.project.enums.DriveStatus;
 import cz.muni.fi.pa165.project.facade.DriveFacade;
@@ -17,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -73,6 +71,35 @@ public class DriveController {
 		}
 
 		return "drive/new";
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public String detail(@PathVariable long id, Model model)
+	{
+		model.addAttribute("drive", this.driveFacade.findById(id));
+		return "drive/detail";
+	}
+
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	public String edit(@PathVariable long id, Model model) {
+		model.addAttribute("drive", this.driveFacade.findById(id));
+		return "drive/detail";
+	}
+
+	@RequestMapping(value = "/complete/{id}", method = RequestMethod.POST)
+	public String complete(@PathVariable long id, RedirectAttributes redirectAttributes, Model model) {
+
+		model.addAttribute("drive", this.driveFacade.findById(id));
+		redirectAttributes.addFlashAttribute("alert_success", "The drive was completed");
+		return "drive/detail";
+	}
+
+	@RequestMapping(value = "/cancel/{id}", method = RequestMethod.POST)
+	public String cancel(@PathVariable long id, RedirectAttributes redirectAttributes, Model model) {
+		this.driveFacade.cancelDrive(id);
+		redirectAttributes.addFlashAttribute("alert_success", "The drive was canceled");
+		model.addAttribute("drive", this.driveFacade.findById(id));
+		return "drive/detail";
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
