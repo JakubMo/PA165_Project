@@ -42,6 +42,7 @@ public class CarRentalSpringMvcConfig extends WebMvcConfigurerAdapter {
     public void addViewControllers(ViewControllerRegistry registry) {
         log.debug("mapping URL / to index view");
         registry.addViewController("/").setViewName("index");
+        registry.addViewController("/employee/new/password").setViewName("/employee/password");
     }
     
     /**

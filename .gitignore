@@ -22,3 +22,7 @@ hs_err_pid*
 
 # log files
 *.log
+/WhiteTeamProject/api/target/
+/WhiteTeamProject/service/target/
+/WhiteTeamProject/data/target/
+/WhiteTeamProject/web/target/
