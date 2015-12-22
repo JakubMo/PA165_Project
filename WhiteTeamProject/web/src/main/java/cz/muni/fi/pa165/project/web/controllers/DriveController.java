@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -46,9 +47,15 @@ public class DriveController {
 	private EmployeeFacade employeeFacade;
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list(Model model)
+	public String list(Model model, RedirectAttributes redirectAttributes)
 	{
-		model.addAttribute("drives", this.driveFacade.findAll());
+		try {
+			model.addAttribute("drives", this.driveFacade.findAll());
+		} catch (Exception ex){
+			log.trace(ex.getMessage());
+			redirectAttributes.addFlashAttribute("alert_danger", ex.getLocalizedMessage());
+			return "redirect:/";
+		}
 		return "drive/list";
 	}
 
@@ -68,38 +75,49 @@ public class DriveController {
 		} catch (Exception e) {
 			log.trace(e.getMessage());
 			redirectAttributes.addFlashAttribute("alert_danger", e.getLocalizedMessage());
+			return "redirect:/drive/list";
 		}
 
 		return "drive/new";
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public String detail(@PathVariable long id, Model model)
+	public String detail(@PathVariable long id, Model model, RedirectAttributes redirectAttributes)
 	{
-		model.addAttribute("drive", this.driveFacade.findById(id));
+		try {
+			model.addAttribute("drive", this.driveFacade.findById(id));
+		} catch (Exception ex){
+			log.trace(ex.getMessage());
+			redirectAttributes.addFlashAttribute("alert_danger", ex.getLocalizedMessage());
+			return "redirect:/drive/list";
+		}
 		return "drive/detail";
 	}
 
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-	public String edit(@PathVariable long id, Model model) {
-		model.addAttribute("drive", this.driveFacade.findById(id));
+	public String edit(@PathVariable long id, Model model, RedirectAttributes redirectAttributes) {
+		try {
+			model.addAttribute("drive", this.driveFacade.findById(id));
+		} catch (Exception ex){
+			log.trace(ex.getMessage());
+			redirectAttributes.addFlashAttribute("alert_danger", ex.getLocalizedMessage());
+			return "redirect:/drive/list";
+		}
 		return "drive/detail";
 	}
 
 	@RequestMapping(value = "/complete/{id}", method = RequestMethod.POST)
-	public String complete(@PathVariable long id, RedirectAttributes redirectAttributes, Model model) {
-
-		model.addAttribute("drive", this.driveFacade.findById(id));
-		redirectAttributes.addFlashAttribute("alert_success", "The drive was completed");
-		return "drive/detail";
+	public String complete(@PathVariable long id, Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriComponentsBuilder) {
+		//TODO
+		redirectAttributes.addFlashAttribute("alert-warning", "Not implemented yet!");
+		return "redirect:" + uriComponentsBuilder.path("/drive/list").toUriString();
 	}
 
 	@RequestMapping(value = "/cancel/{id}", method = RequestMethod.POST)
-	public String cancel(@PathVariable long id, RedirectAttributes redirectAttributes, Model model) {
-		this.driveFacade.cancelDrive(id);
-		redirectAttributes.addFlashAttribute("alert_success", "The drive was canceled");
-		model.addAttribute("drive", this.driveFacade.findById(id));
-		return "drive/detail";
+	public String cancel(@PathVariable long id, Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriComponentsBuilder) {
+		//TODO
+		redirectAttributes.addFlashAttribute("alert-warning", "Not implemented yet!");
+		return "redirect:" + uriComponentsBuilder.path("/drive/list").toUriString();
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)

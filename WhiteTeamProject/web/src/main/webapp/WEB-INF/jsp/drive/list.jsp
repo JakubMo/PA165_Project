@@ -71,11 +71,13 @@
                             <c:if test="${drive.driveStatus.getValue() == 1}">
                                 <form method="post" action="${pageContext.request.contextPath}/drive/complete/${drive.id}" style="margin-left: 5px">
                                     <button type="submit" class="btn btn-success">Complete</button>
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" >
                                 </form>
                             </c:if>
                             <c:if test="${drive.driveStatus.getValue() < 2}">
                                 <form method="post" action="${pageContext.request.contextPath}/drive/cancel/${drive.id}" style="margin-left: 5px">
                                     <button type="submit" class="btn btn-danger">Cancel</button>
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" >
                                 </form>
                             </c:if>
                             </div>
