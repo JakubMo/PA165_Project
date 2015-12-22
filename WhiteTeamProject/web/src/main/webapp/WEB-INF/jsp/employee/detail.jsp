@@ -9,7 +9,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib tagdir="/WEB-INF/tags" prefix="my"%>
 
-<my:layout title="Employee #${employee.id}">
+<my:layout title="Employee: '${employee.email}'">
     <jsp:attribute name="body">
         <div class="row" style="margin-bottom: 50px">
             <div style="float: right" class="col-md-4">

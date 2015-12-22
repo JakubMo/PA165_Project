@@ -65,17 +65,12 @@ public class LoginController {
         if (logout != null) {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             if(auth != null){
-                new SecurityContextLogoutHandler().logout(request, response, auth);
-                model.addObject("msg", "You've been logged out successfully.");
-            } else {
-                redirectAttributes.addAttribute("alert_warning", "Logout failed!");
-                model.setViewName("redirect:/");
-                return model;
+              new SecurityContextLogoutHandler().logout(request, response, auth);
+            model.addObject("msg", "You've been logged out successfully.");
             }
-            
         }
-        model.setViewName("login");
 
+        model.setViewName("login");
         return model;
 
     }
