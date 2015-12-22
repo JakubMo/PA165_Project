@@ -66,7 +66,7 @@
                 <div class="form-group">
                     <form:label path="yearOfProduction">Year of production:</form:label>
                     <div>
-                        <form:input path="yearOfProduction" cssClass="form-control" type="number" value="2000" placeholder="Enter year of production" />
+                        <form:input path="yearOfProduction" cssClass="form-control" type="number" min="1900" value="2000" placeholder="Enter year of production" />
                     </div>
                     <c:if test="${not empty yearOfProduction_error}">
                         <p style="color: red"><c:out value="${yearOfProduction_error}" /></p>
@@ -76,7 +76,7 @@
                 <div class="form-group">
                     <form:label path="mileage">Mileage:</form:label>
                     <div>
-                        <form:input path="mileage" cssClass="form-control" type="number" value="0" placeholder="Enter mileage" />
+                        <form:input path="mileage" cssClass="form-control" type="number" min="0" value="0" placeholder="Enter mileage" />
                     </div>
                     <c:if test="${not empty mileage_error}">
                         <p style="color: red"><c:out value="${mileage_error}" /></p>
@@ -86,7 +86,7 @@
                 <div class="form-group">
                     <form:label path="maxMileage">Maximum mileage:</form:label>
                     <div>
-                        <form:input path="maxMileage" cssClass="form-control" type="number" value="100000" placeholder="Enter maximum mileage" />
+                        <form:input path="maxMileage" cssClass="form-control" type="number" min="0" value="100000" placeholder="Enter maximum mileage" />
                     </div>
                     <c:if test="${not empty maxMileage_error}">
                         <p style="color: red"><c:out value="${maxMileage_error}" /></p>
@@ -96,7 +96,7 @@
                 <div class="form-group">
                     <form:label path="serviceCheckInterval">Service check interval:</form:label>
                     <div>
-                        <form:input path="serviceCheckInterval" cssClass="form-control" type="number" value="1" placeholder="Enter service check interval" />
+                        <form:input path="serviceCheckInterval" cssClass="form-control" type="number" min="1" value="1" placeholder="Enter service check interval" />
                     </div>
                     <c:if test="${not empty serviceCheckInterval_error}">
                         <p style="color: red"><c:out value="${serviceCheckInterval_error}" /></p>

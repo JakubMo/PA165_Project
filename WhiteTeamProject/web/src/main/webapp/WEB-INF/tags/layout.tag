@@ -61,7 +61,7 @@
                                 <li><a href=<c:out value="${pageContext.request.contextPath}/employee/detail/principal"/>>Profile</a></li>
                                 <li><a href="#">N/A</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a href="${pageContext.request.contextPath}/login?logout">Log out</a></li>
+                                <li><a href="${pageContext.request.contextPath}/login?logout">Logout</a></li>
                             </ul>
                         </li>   
                     </ul>
