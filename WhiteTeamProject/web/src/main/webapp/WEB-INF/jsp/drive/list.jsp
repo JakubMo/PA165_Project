@@ -69,7 +69,7 @@
                             <div style="display: flex; ">
                             <a href="${pageContext.request.contextPath}/drive/${drive.id}" role="button" class="btn btn-primary">Details</a>
                             <c:if test="${drive.driveStatus.getValue() == 1}">
-                                <form method="post" action="${pageContext.request.contextPath}/drive/complete/${drive.id}" style="margin-left: 5px">
+                                <form method="get" action="${pageContext.request.contextPath}/drive/complete/${drive.id}" style="margin-left: 5px">
                                     <button type="submit" class="btn btn-success">Complete</button>
                                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" >
                                 </form>
