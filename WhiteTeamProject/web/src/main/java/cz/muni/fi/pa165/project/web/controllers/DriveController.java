@@ -8,6 +8,7 @@ import cz.muni.fi.pa165.project.facade.EmployeeFacade;
 import cz.muni.fi.pa165.project.facade.VehicleFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -49,8 +50,10 @@ public class DriveController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(Model model, RedirectAttributes redirectAttributes)
 	{
+
 		try {
-			model.addAttribute("drives", this.driveFacade.findAll());
+			EmployeeDTO employeeDTO = this.getLoggedInEmployee();
+			model.addAttribute("drives", this.driveFacade.findAllByEmployee(employeeDTO));
 		} catch (Exception ex){
 			log.trace(ex.getMessage());
 			redirectAttributes.addFlashAttribute("alert_danger", ex.getLocalizedMessage());
@@ -59,27 +62,28 @@ public class DriveController {
 		return "drive/list";
 	}
 
-	@RequestMapping(value = "/new", method = RequestMethod.GET)
-	public String newDrive(Model model, RedirectAttributes redirectAttributes)
-	{
-		try{
-			DriveCreateDTO driveCreateDTO = new DriveCreateDTO();
-			driveCreateDTO.setDriveStatus(DriveStatus.REQUESTED);
-			//TODO: set logged employee
-			Collection<EmployeeDTO> empl = this.employeeFacade.getAll();
-			if(empl.size() > 0) {
-				driveCreateDTO.setEmployee(empl.iterator().next());
-			}
-			model.addAttribute("driveCreate", driveCreateDTO);
-			model.addAttribute("vehicles", this.vehicleFacade.getAll());
-		} catch (Exception e) {
-			log.trace(e.getMessage());
-			redirectAttributes.addFlashAttribute("alert_danger", e.getLocalizedMessage());
-			return "redirect:/drive/list";
-		}
-
-		return "drive/new";
-	}
+//	@RequestMapping(value = "/{id}/list", method = RequestMethod.GET)
+//	public String listByEmployeeId(@PathVariable long id, Model model, RedirectAttributes redirectAttributes)
+//
+//	@RequestMapping(value = "/new", method = RequestMethod.GET)
+//	public String newDrive(Model model, RedirectAttributes redirectAttributes)
+//	{
+//		try{
+//			DriveCreateDTO driveCreateDTO = new DriveCreateDTO();
+//			driveCreateDTO.setDriveStatus(DriveStatus.REQUESTED);
+//
+//			EmployeeDTO employeeDTO = this.getLoggedInEmployee();
+//			driveCreateDTO.setEmployee(employeeDTO);
+//			model.addAttribute("driveCreate", driveCreateDTO);
+//			model.addAttribute("vehicles", this.vehicleFacade.getAll());
+//		} catch (Exception e) {
+//			log.trace(e.getMessage());
+//			redirectAttributes.addFlashAttribute("alert_danger", e.getLocalizedMessage());
+//			return "redirect:/drive/list";
+//		}
+//
+//		return "drive/new";
+//	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String detail(@PathVariable long id, Model model, RedirectAttributes redirectAttributes)
@@ -108,15 +112,25 @@ public class DriveController {
 
 	@RequestMapping(value = "/complete/{id}", method = RequestMethod.POST)
 	public String complete(@PathVariable long id, Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriComponentsBuilder) {
-		//TODO
-		redirectAttributes.addFlashAttribute("alert-warning", "Not implemented yet!");
+
+		//TODO: update mileage and complete drive
+
+
+		EmployeeDTO employeeDTO = this.getLoggedInEmployee();
+
 		return "redirect:" + uriComponentsBuilder.path("/drive/list").toUriString();
+	}
+
+	@RequestMapping(value = "/complete/{id}", method = RequestMethod.GET)
+	public String complete(@PathVariable long id, Model model, RedirectAttributes redirectAttributes)
+	{
+		model.addAttribute("drive", this.driveFacade.findById(id));
+		return "drive/complete";
 	}
 
 	@RequestMapping(value = "/cancel/{id}", method = RequestMethod.POST)
 	public String cancel(@PathVariable long id, Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriComponentsBuilder) {
-		//TODO
-		redirectAttributes.addFlashAttribute("alert-warning", "Not implemented yet!");
+		this.driveFacade.cancelDrive(id);
 		return "redirect:" + uriComponentsBuilder.path("/drive/list").toUriString();
 	}
 
@@ -144,6 +158,17 @@ public class DriveController {
 		}
 
 		return "redirect:drive/list";
+	}
+
+	/**
+	 * Returns logged employee dto
+	 * @return {@link EmployeeDTO} of logged user
+	 */
+	private EmployeeDTO getLoggedInEmployee()
+	{
+		String loggedUserPrincipal = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		EmployeeDTO employeeDTO = this.employeeFacade.getByEmail(loggedUserPrincipal);
+		return employeeDTO;
 	}
 
 }

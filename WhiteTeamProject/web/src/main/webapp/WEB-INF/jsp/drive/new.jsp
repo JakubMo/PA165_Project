@@ -43,6 +43,8 @@
                         </c:if>
                     </div>
 
+                    <form:hidden path="employee" />
+
                     <button type="submit" class="btn btn-primary">Create</button>
                 </form:form>
             </div>
