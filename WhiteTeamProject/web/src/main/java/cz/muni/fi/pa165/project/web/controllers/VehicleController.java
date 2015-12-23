@@ -1,11 +1,15 @@
 package cz.muni.fi.pa165.project.web.controllers;
 
+import cz.muni.fi.pa165.project.dto.ServiceCheckDTO;
 import cz.muni.fi.pa165.project.dto.VehicleCreateDTO;
 import cz.muni.fi.pa165.project.dto.VehicleDTO;
 import cz.muni.fi.pa165.project.facade.DriveFacade;
 import cz.muni.fi.pa165.project.facade.ServiceCheckFacade;
 import cz.muni.fi.pa165.project.facade.VehicleFacade;
 import cz.muni.fi.pa165.project.util.DataAccessExceptionImpl;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +50,14 @@ public class VehicleController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list(Model model, RedirectAttributes redirectAttributes) {
         try {
-            model.addAttribute("vehicles", vehicleFacade.getAll());
+            Collection<VehicleDTO> vehicles = vehicleFacade.getAll();
+            Map<Long, Collection<ServiceCheckDTO>> serviceChecks = new HashMap<>();            
+            for(VehicleDTO v : vehicles) {
+                serviceChecks.put(v.getId(), serviceCheckFacade.getAllByVehicle(v));
+            }
+            
+            model.addAttribute("vehicles", vehicles);
+            model.addAttribute("serviceChecks", serviceChecks);
         }
         catch(Exception ex) {
             log.trace(ex.getMessage());

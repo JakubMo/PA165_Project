@@ -24,6 +24,17 @@
         <script src="${pageContext.request.contextPath}/js/knockout-3.4.0.js" type="text/javascript"></script>
         <script>
             var viewModel;
+            
+            function needsServiceCheck(lastCheck, interval) {
+                var last = new Date(lastCheck);
+                var current = new Date();
+                if(last.getDate() > current.getDate()) {
+                    return false;
+                }
+
+                var diff = 12 * (current.getYear() - last.getYear()) + (current.getMonth() - last.getMonth());
+                return diff >= interval;
+            }
         </script>
     </head>
     <body>

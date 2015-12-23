@@ -34,8 +34,10 @@
             <div style="float: right" class="col-md-4">
                 <my:imagelink src="/image/vehicle/${vehicle.id}.jpg" />
             </div>
-            
+                        
             <div class="col-md-5">
+                <my:vehiclealert vehicle="${vehicle}" serviceChecks="${serviceChecks}" />
+                
                 <table class="table">
                     <tr>
                         <th>ID:</th>
