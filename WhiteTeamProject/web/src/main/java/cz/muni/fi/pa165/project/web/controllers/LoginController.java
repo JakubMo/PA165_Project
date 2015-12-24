@@ -63,11 +63,7 @@ public class LoginController {
         }
 
         if (logout != null) {
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            if(auth != null){
-              new SecurityContextLogoutHandler().logout(request, response, auth);
             model.addObject("msg", "You've been logged out successfully.");
-            }
         }
 
         model.setViewName("login");
@@ -84,13 +80,10 @@ public class LoginController {
         ModelAndView model = new ModelAndView();
 
         //check if user is login
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (!(auth instanceof AnonymousAuthenticationToken)) {
-            UserDetails userDetail = (UserDetails) auth.getPrincipal();
-            model.addObject("username", userDetail.getUsername());
-        }
+        String userName = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addObject("username", userName);
 
-        model.setViewName("403");
+        model.setViewName("/403");
         return model;
 
     }

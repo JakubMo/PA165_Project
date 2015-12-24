@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@taglib tagdir="/WEB-INF/tags" prefix="my"%>
 
 <my:layout title="Vehicle #${vehicle.id}">
@@ -76,7 +77,9 @@
                         <td>
                             <span data-bind="visible: maxMileageText">
                                 <c:out value="${vehicle.maxMileage} km" />
-                                <button class="btn-default" style="float: right" onclick="showMaxMileage(false); showServiceCheckInterval(true);">Edit</button>
+                                <sec:authorize access="hasAuthority('ADMIN')">
+                                    <button class="btn-default" style="float: right" onclick="showMaxMileage(false); showServiceCheckInterval(true);">Edit</button>
+                                </sec:authorize>
                             </span>
                             <span data-bind="visible: maxMileageInput">
                                 <form method="post" action="${pageContext.request.contextPath}/vehicle/update/${vehicle.id}">
@@ -94,7 +97,9 @@
                         <td>
                             <span data-bind="visible: serviceCheckIntervalText">
                                 <c:out value="${vehicle.serviceCheckInterval} months" />
-                                <button class="btn-default" style="float: right" onclick="showServiceCheckInterval(false); showMaxMileage(true);">Edit</button>
+                                <sec:authorize access="hasAuthority('ADMIN')">
+                                    <button class="btn-default" style="float: right" onclick="showServiceCheckInterval(false); showMaxMileage(true);">Edit</button>
+                                </sec:authorize>
                             </span>
                             <span data-bind="visible: serviceCheckIntervalInput">
                                 <form method="post" action="${pageContext.request.contextPath}/vehicle/update/${vehicle.id}">
@@ -112,9 +117,11 @@
                 <form method="post" action="${pageContext.request.contextPath}/vehicle/delete/${vehicle.id}" 
                       onsubmit="return confirm('Do you really want to delete this vehicle?');">
                     <a href="${pageContext.request.contextPath}/vehicle/list" class="btn btn-default">Back</a>
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <sec:authorize access="hasAuthority('ADMIN')">
+                        <button type="submit" class="btn btn-danger">Delete</button>
                     
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" >
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" >
+                    </sec:authorize>
                 </form>
             </div>
         </div>
@@ -144,7 +151,8 @@
                 </table>
             </div>
         </div>
-                
+
+        <sec:authorize access="hasAuthority('ADMIN')">
         <h3>List of service checks</h3>
         <div class="row" style="margin-bottom: 50px">
             <div class="col-md-6">
@@ -168,5 +176,6 @@
                 </table>
             </div>
         </div>
+        </sec:authorize>
     </jsp:attribute>
 </my:layout>

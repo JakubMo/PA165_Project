@@ -6,11 +6,14 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@taglib tagdir="/WEB-INF/tags" prefix="my"%>
 
 <my:layout title="Employees">
     <jsp:attribute name="body">
-        <a href="${pageContext.request.contextPath}/employee/new" role="button" class="btn btn-primary">Create new employee</a>
+        <sec:authorize access="hasAuthority('ADMIN')">
+            <a href="${pageContext.request.contextPath}/employee/new" role="button" class="btn btn-primary">Create new employee</a>
+        </sec:authorize>
 
         <div class="row" style="margin-top: 25px">
 
@@ -34,17 +37,20 @@
                             <td><c:out value="${employee.email}" /></td>
                             <td><c:out value="${employee.phoneNumber}" /></td>
                             <td><c:out value="${employee.role}" /></td>
-
+                            
+                            
                             <td>
                                 <form method="post" action="${pageContext.request.contextPath}/employee/delete/${employee.id}" 
                               onsubmit="return confirm('Do you really want to delete this employee?');">
                                     <a href="${pageContext.request.contextPath}/employee/detail/${employee.id}" class="btn btn-primary">Details</a>
-                                    <a href="${pageContext.request.contextPath}/employee/edit/${employee.id}" class="btn btn-primary">Edit</a>
-                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                    <sec:authorize access="hasAuthority('ADMIN')">
+                                        <button type="submit" class="btn btn-danger">Delete</button>
 
-                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" >
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" >
+                                    </sec:authorize>
                                 </form>
                             </td>
+                            
                         </tr>
 
                     </c:forEach>

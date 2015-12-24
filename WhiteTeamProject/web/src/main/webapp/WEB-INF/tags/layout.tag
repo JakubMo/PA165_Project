@@ -11,6 +11,8 @@
 <%@attribute name="body" fragment="true"%>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+
 
 <!DOCTYPE html>
 <html lang="${pageContext.request.locale}">
@@ -35,6 +37,10 @@
                 var diff = 12 * (current.getYear() - last.getYear()) + (current.getMonth() - last.getMonth());
                 return diff >= interval;
             }
+            
+            function logoutFormSubmit() {
+                document.getElementById("logoutForm").submit();
+            }
         </script>
     </head>
     <body>
@@ -53,10 +59,13 @@
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
+                        <li><a href="${pageContext.request.contextPath}/drive/list">My Drives</a></li>                                                
                         <li><a href="${pageContext.request.contextPath}/vehicle/list">Vehicles</a></li>
                         <li><a href="${pageContext.request.contextPath}/employee/list">Employees</a></li>
-                        <li><a href="${pageContext.request.contextPath}/drive/list">Drives</a></li>                        
-                        <li><a href="${pageContext.request.contextPath}/servicecheck/list">Service Checks</a></li>
+                        <sec:authorize access="hasAuthority('ADMIN')">
+                            <li><a href="${pageContext.request.contextPath}/servicecheck/list">Service Checks</a></li>
+                            <li style="font-weight: bold"><a href="${pageContext.request.contextPath}/drive/list?admin">ADMIN: All Drives</a></li>
+                        </sec:authorize>
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
@@ -70,9 +79,13 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href=<c:out value="${pageContext.request.contextPath}/employee/detail/principal"/>>Profile</a></li>
-                                <li><a href="#">N/A</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a href="${pageContext.request.contextPath}/login?logout">Logout</a></li>
+                                                                
+                                <form action="<c:url value="/j_spring_security_logout" />" method="post" id="logoutForm">
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                </form>
+                                
+                                <li><a href="javascript:logoutFormSubmit()">Logout</a></li>
                             </ul>
                         </li>   
                     </ul>

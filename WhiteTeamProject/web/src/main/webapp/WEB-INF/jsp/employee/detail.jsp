@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@taglib tagdir="/WEB-INF/tags" prefix="my"%>
 
 <my:layout title="Employee: '${employee.email}'">
@@ -55,9 +56,11 @@
                 <form method="post" action="${pageContext.request.contextPath}/employee/delete/${employee.id}" 
                       onsubmit="return confirm('Do you really want to delete this employee?');">
                     <a href="${pageContext.request.contextPath}/employee/list" class="btn btn-default">Back</a>
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <sec:authorize access="hasAuthority('ADMIN')">
+                        <button type="submit" class="btn btn-danger">Delete</button>
                     
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" >
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" >
+                    </sec:authorize>
                 </form>
             </div>
         </div>

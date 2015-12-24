@@ -6,11 +6,14 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@taglib tagdir="/WEB-INF/tags" prefix="my"%>
 
 <my:layout title="Vehicles">
     <jsp:attribute name="body">
-        <a href="${pageContext.request.contextPath}/vehicle/new" role="button" class="btn btn-primary">New vehicle</a>
+        <sec:authorize access="hasAuthority('ADMIN')">
+            <a href="${pageContext.request.contextPath}/vehicle/new" role="button" class="btn btn-primary">New vehicle</a>
+        </sec:authorize>
         
         <div class="row" style="margin-top: 25px">
             <c:forEach items="${vehicles}" var="vehicle">
@@ -40,9 +43,11 @@
                             <form method="post" action="${pageContext.request.contextPath}/vehicle/delete/${vehicle.id}" 
                                   onsubmit="return confirm('Do you really want to delete this vehicle?');">
                                 <a href="${pageContext.request.contextPath}/vehicle/detail/${vehicle.id}" class="btn btn-primary">Details</a>
-                                <button type="submit" class="btn btn-danger">Delete</button>
+                                <sec:authorize access="hasAuthority('ADMIN')">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
                                 
-                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" >
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" >
+                                </sec:authorize>
                             </form>
                             <br/>
                             <my:vehiclealert vehicle="${vehicle}" serviceChecks="${serviceChecks.get(vehicle.id)}" />
