@@ -21,7 +21,7 @@
                     <div class="thumbnail" style="height: 459px">
                         <img src="${pageContext.request.contextPath}/image/vehicle/${vehicle.id}.jpg" style="height: 150px" 
                              onerror="this.onerror = null; if (this.src != '${pageContext.request.contextPath}/image/error.png') this.src = '${pageContext.request.contextPath}/image/error.png';" />
-                        <div class="caption">                            
+                        <div class="caption">
                             <table class="table">
                                 <tr>
                                     <th>Brand:</th>
@@ -39,7 +39,7 @@
                                     <th>Mileage:</th>
                                     <td><c:out value="${vehicle.mileage}" /></td>
                                 </tr>
-                            </table>                                
+                            </table>
                             <form method="post" action="${pageContext.request.contextPath}/vehicle/delete/${vehicle.id}" 
                                   onsubmit="return confirm('Do you really want to delete this vehicle?');">
                                 <a href="${pageContext.request.contextPath}/vehicle/detail/${vehicle.id}" class="btn btn-primary">Details</a>

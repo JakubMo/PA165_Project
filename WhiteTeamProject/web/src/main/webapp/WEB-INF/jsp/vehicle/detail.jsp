@@ -35,7 +35,7 @@
             <div style="float: right" class="col-md-4">
                 <my:imagelink src="/image/vehicle/${vehicle.id}.jpg" />
             </div>
-                        
+            
             <div class="col-md-5">
                 <my:vehiclealert vehicle="${vehicle}" serviceChecks="${serviceChecks}" />
                 
@@ -82,13 +82,15 @@
                                 </sec:authorize>
                             </span>
                             <span data-bind="visible: maxMileageInput">
-                                <form method="post" action="${pageContext.request.contextPath}/vehicle/update/${vehicle.id}">
-                                    <input name="maxMileage" value="${vehicle.maxMileage}" type="number" min="100000" required style="width: 80px" />
-                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                                    
-                                    <button type="button" class="btn-default" style="float: right" onclick="showMaxMileage(true);">Cancel</button>
-                                    <button type="submit" class="btn-primary" style="float: right" onsubmit="showMaxMileage(true);">Update</button>
-                                </form>
+                                <sec:authorize access="hasAuthority('ADMIN')">
+                                    <form method="post" action="${pageContext.request.contextPath}/vehicle/update/${vehicle.id}">
+                                        <input name="maxMileage" value="${vehicle.maxMileage}" type="number" min="100000" required style="width: 80px" />
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+
+                                        <button type="button" class="btn-default" style="float: right" onclick="showMaxMileage(true);">Cancel</button>
+                                        <button type="submit" class="btn-primary" style="float: right" onsubmit="showMaxMileage(true);">Update</button>
+                                    </form>
+                                </sec:authorize>
                             </span>
                         </td>
                     </tr>
@@ -102,13 +104,15 @@
                                 </sec:authorize>
                             </span>
                             <span data-bind="visible: serviceCheckIntervalInput">
-                                <form method="post" action="${pageContext.request.contextPath}/vehicle/update/${vehicle.id}">
-                                    <input name="serviceCheckInterval" value="${vehicle.serviceCheckInterval}" type="number" min="1" max="12" required style="width: 80px" />
-                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                                    
-                                    <button type="button" class="btn-default" style="float: right" onclick="showServiceCheckInterval(true);">Cancel</button>
-                                    <button type="submit" class="btn-primary" style="float: right" onsubmit="showServiceCheckInterval(true);">Update</button>
-                                </form>
+                                <sec:authorize access="hasAuthority('ADMIN')">
+                                    <form method="post" action="${pageContext.request.contextPath}/vehicle/update/${vehicle.id}">
+                                        <input name="serviceCheckInterval" value="${vehicle.serviceCheckInterval}" type="number" min="1" max="12" required style="width: 80px" />
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+
+                                        <button type="button" class="btn-default" style="float: right" onclick="showServiceCheckInterval(true);">Cancel</button>
+                                        <button type="submit" class="btn-primary" style="float: right" onsubmit="showServiceCheckInterval(true);">Update</button>
+                                    </form>
+                                </sec:authorize>
                             </span>
                         </td>
                     </tr>
@@ -153,29 +157,29 @@
         </div>
 
         <sec:authorize access="hasAuthority('ADMIN')">
-        <h3>List of service checks</h3>
-        <div class="row" style="margin-bottom: 50px">
-            <div class="col-md-6">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>Report</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach items="${serviceChecks}" var="sc">
+            <h3>List of service checks</h3>
+            <div class="row" style="margin-bottom: 50px">
+                <div class="col-md-6">
+                    <table class="table">
+                        <thead>
                             <tr>
-                                <td><fmt:formatDate value="${sc.serviceCheckDate}" pattern="yyyy-MM-dd" /></td>
-                                <td><c:out value="${sc.status}" /></td>
-                                <td><c:out value="${sc.report}" /></td>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Report</th>
                             </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${serviceChecks}" var="sc">
+                                <tr>
+                                    <td><fmt:formatDate value="${sc.serviceCheckDate}" pattern="yyyy-MM-dd" /></td>
+                                    <td><c:out value="${sc.status}" /></td>
+                                    <td><c:out value="${sc.report}" /></td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
         </sec:authorize>
     </jsp:attribute>
 </my:layout>
