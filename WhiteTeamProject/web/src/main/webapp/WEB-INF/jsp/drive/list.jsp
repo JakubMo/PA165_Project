@@ -68,24 +68,30 @@
                             </table>
                             <div style="display: flex; ">
                             <a href="${pageContext.request.contextPath}/drive/${drive.id}" role="button" class="btn btn-primary">Details</a>
-                            <c:if test="${drive.driveStatus.getValue() == 1}">
-                                <form method="get" action="${pageContext.request.contextPath}/drive/complete/${drive.id}" style="margin-left: 5px">
-                                    <button type="submit" class="btn btn-success">Complete</button>
-                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" >
-                                </form>
+                            <c:if test="${drive.driveStatus.getValue() == 1 && !showAdminButtons && drive.startDate.before(actualDate)}">
+                                <a href="${pageContext.request.contextPath}/drive/complete/${drive.id}" role="button" class="btn btn-success">Complete</a>
                             </c:if>
-                            <c:if test="${drive.driveStatus.getValue() < 2}">
+                            <c:if test="${drive.driveStatus.getValue() < 2 && !showAdminButtons}">
                                 <form method="post" action="${pageContext.request.contextPath}/drive/cancel/${drive.id}" style="margin-left: 5px">
                                     <button type="submit" class="btn btn-danger">Cancel</button>
                                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" >
                                 </form>
                             </c:if>
+                                <c:if test="${drive.driveStatus.getValue() == 0 && showAdminButtons}">
+                                    <form method="post" action="${pageContext.request.contextPath}/drive/approve/${drive.id}" style="margin-left: 5px">
+                                        <button type="submit" class="btn btn-success">Approve</button>
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" >
+                                    </form>
+                                    <form method="post" action="${pageContext.request.contextPath}/drive/reject/${drive.id}" style="margin-left: 5px">
+                                        <button type="submit" class="btn btn-danger">Reject</button>
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" >
+                                    </form>
+                                </c:if>
                             </div>
                         </div>
                     </div>
                 </div>
             </c:forEach>
         </div>
-
     </jsp:attribute>
 </my:layout>

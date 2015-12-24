@@ -64,8 +64,8 @@
                         <li><a href="${pageContext.request.contextPath}/employee/list">Employees</a></li>
                         <sec:authorize access="hasAuthority('ADMIN')">
                             <li><a href="${pageContext.request.contextPath}/servicecheck/list">Service Checks</a></li>
-                            <li ><a href="${pageContext.request.contextPath}/drive/list?admin">All Drives</a></li>
-                            <li ><a href="${pageContext.request.contextPath}/drive/list?requested">Requested Drives</a></li>
+                            <li ><a href="${pageContext.request.contextPath}/drive/list/all">All Drives</a></li>
+                            <li ><a href="${pageContext.request.contextPath}/drive/list/all?requested">Requested Drives</a></li>
                         </sec:authorize>
                     </ul>
 
