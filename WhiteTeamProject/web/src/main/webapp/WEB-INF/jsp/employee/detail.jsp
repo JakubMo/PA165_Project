@@ -12,6 +12,7 @@
 
 <my:layout title="Employee: '${employee.email}'">
     <jsp:attribute name="body">
+        
         <div class="row" style="margin-bottom: 50px">
             <div style="float: right" class="col-md-4">
                 <my:imagelink src="http://www.bigbangyayinlari.com/img/yazar/unknown_man.jpg" />
@@ -45,7 +46,15 @@
                     </tr>
                     <tr>
                         <th>Current credit:</th>
-                        <td><c:out value="${employee.credit}" /></td>
+                        <td>
+                            <c:out value="${employee.credit}" />
+                            <form method="post" action="${pageContext.request.contextPath}/employee/update/${employee.id}">
+                                <button type="submit" class="btn-default">Add credit:</button>
+                                
+                                <input name="newCredit" value="1" type="number" required="required" min="1" />
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                            </form>
+                        </td>
                     </tr>
                     <tr>
                         <th>Category:</th>

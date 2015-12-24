@@ -44,7 +44,7 @@
                               onsubmit="return confirm('Do you really want to delete this employee?');">
                                     <a href="${pageContext.request.contextPath}/employee/detail/${employee.id}" class="btn btn-primary">Details</a>
                                     <sec:authorize access="hasAuthority('ADMIN')">
-                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                        <button style="float: right" type="submit" class="btn btn-danger">Delete</button>
 
                                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" >
                                     </sec:authorize>

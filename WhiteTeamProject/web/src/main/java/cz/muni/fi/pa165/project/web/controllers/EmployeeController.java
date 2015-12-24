@@ -4,6 +4,7 @@ import cz.muni.fi.pa165.project.dto.EmployeeDTO;
 import cz.muni.fi.pa165.project.enums.Category;
 import cz.muni.fi.pa165.project.facade.EmployeeFacade;
 import static cz.muni.fi.pa165.project.web.controllers.VehicleController.log;
+import java.math.BigDecimal;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * Controller for employee pages administration
@@ -129,9 +131,42 @@ public class EmployeeController {
         } catch (Exception ex) {
             log.trace(ex.getMessage());
             redirectAttributes.addFlashAttribute("alert_danger", ex.getLocalizedMessage());
-            return "redirect:/";
+            return "redirect:/employee/list";
         }
         
         return "employee/detail";
-    } 
+    }
+    
+    @RequestMapping(value="/delete/{id}", method = RequestMethod.POST)
+    public String delete(@PathVariable long id, Model model, RedirectAttributes redirectAttributes) {
+        try{
+            EmployeeDTO emp = employeeFacade.getById(id);
+            String email = emp.getEmail();
+            employeeFacade.delete(emp);
+            redirectAttributes.addFlashAttribute("alert_success", "Employee '" + email + "' was deleted." );
+        } catch (Exception ex) {
+            log.trace(ex.getMessage());
+            redirectAttributes.addFlashAttribute("alert_danger", ex.getLocalizedMessage());
+        } 
+        
+        return "redirect:/employee/list";
+    }
+    
+    @RequestMapping(value="/update/{id}", method = RequestMethod.POST)
+    public String edit(@PathVariable long id, @RequestParam(value = "newCredit", required = false) Long newCredit,
+        RedirectAttributes redirectAttributes, UriComponentsBuilder uriComponentsBuilder) {
+        
+        try {
+            if(newCredit != null) {
+                EmployeeDTO emp = employeeFacade.getById(id);
+                emp.setCredit(emp.getCredit().add(BigDecimal.valueOf(newCredit.longValue())));
+                employeeFacade.update(emp);
+            }
+        } catch(Exception ex) {
+            log.trace(ex.getMessage());
+            redirectAttributes.addFlashAttribute("alert_danger", ex.getLocalizedMessage());
+        }
+        
+        return "redirect:" + uriComponentsBuilder.path("/employee/detail/{id}").buildAndExpand(id).encode().toUriString();
+    }
 }
