@@ -11,43 +11,74 @@
 
 <my:layout title="New Drive">
     <jsp:attribute name="body">
-            <div class="row">
-                <form:form method="post" action="${pageContext.request.contextPath}/drive/create" modelAttribute="driveCreate" cssClass="col-md-5">
+        <div class="row">
+            <c:if test="${showFirstStep == true}">
+                <form:form method="post" action="${pageContext.request.contextPath}/drive/new/step2" modelAttribute="driveCreate" cssClass="col-md-5">
                     <div class="form-group">
-                        <form:label path="vehicle">Vehicle</form:label>
+                        <form:label cssClass="control-label" path="startDate">Start Date</form:label>
                         <div>
-                            <form:select path="vehicle" cssClass="form-control" items="${vehicles}"/>
-                        </div>
-                        <c:if test="${not empty vehicle_error}">
-                            <p style="color:red"><c:out value="${vehicle_error}" /></p>
-                        </c:if>
-                    </div>
-
-                    <div class="form-group">
-                        <form:label path="startDate">Start date</form:label>
-                        <div>
-                            <form:input path="startDate" cssClass="form-control" type="date" placeholder="Select start date"/>
+                            <form:input path="startDate" type="date" cssClass="form-control" placeholder="Start date"/>
                         </div>
                         <c:if test="${not empty startDate_error}">
-                            <p style="color:red"><c:out value="${startDate_error}" /></p>
+                            <p style="color: red"><c:out value="${startDate_error}"/></p>
                         </c:if>
                     </div>
-
                     <div class="form-group">
-                        <form:label path="endDate">End date</form:label>
+                        <form:label cssClass="control-label" path="endDate">End Date</form:label>
                         <div>
-                            <form:input path="endDate" cssClass="form-control" type="date" placeholder="Select end date"/>
+                            <form:input path="endDate" type="date" cssClass="form-control" placeholder="End date"/>
                         </div>
                         <c:if test="${not empty endDate_error}">
-                            <p style="color:red"><c:out value="${endDate_error}" /></p>
+                            <p style="color: red"><c:out value="${endDate_error}"/></p>
                         </c:if>
                     </div>
 
-                    <form:hidden path="employee" />
-
+                    <a href="${pageContext.request.contextPath}/drive/list" class="btn btn-default">Back</a>
+                    <button type="submit" class="btn btn-primary">Next Step</button>
+                </form:form>
+            </c:if>
+            <c:if test="${showSecondStep}">
+                <form:form method="post" action="${pageContext.request.contextPath}/drive/create" modelAttribute="driveCreate" cssClass="col-md-5">
+                    <div class="form-group">
+                        <form:label cssClass="control-label" path="startDate">Start Date</form:label>
+                        <div>
+                            <form:hidden path="startDate"/>
+                            <fmt:formatDate value="${driveCreate.startDate}" pattern="yyyy-MM-dd" />
+                        </div>
+                        <c:if test="${not empty startDate_error}">
+                            <p style="color: red"><c:out value="${startDate_error}"/></p>
+                        </c:if>
+                    </div>
+                    <div class="form-group">
+                        <form:label cssClass="control-label" path="endDate">End Date</form:label>
+                        <div>
+                            <form:hidden path="endDate"/>
+                            <fmt:formatDate value="${driveCreate.endDate}" pattern="yyyy-MM-dd" />
+                        </div>
+                        <c:if test="${not empty endDate_error}">
+                            <p style="color: red"><c:out value="${endDate_error}"/></p>
+                        </c:if>
+                    </div>
+                    <div class="form-group">
+                        <form:label path="vehicle" cssClass="control-label">Vehicle</form:label>
+                        <div>
+                            <form:select path="vehicle">
+                                <form:option value="${null}">Select a vehicle</form:option>
+                                <c:forEach items="${vehicles}" var="vehicle">
+                                    <form:option value="${vehicle.id}">${vehicle.brand} ${vehicle.model} ${vehicle.yearOfProduction}, vin: ${vehicle.vin},
+                                        mileage: ${vehicle.mileage}</form:option>
+                                </c:forEach>
+                            </form:select>
+                        </div>
+                    </div>
+                    <form:hidden path="employee.id" />
+                    <form:hidden path="km" value="0"/>
+                    <form:hidden path="driveStatus" />
+                    <a href="${pageContext.request.contextPath}/drive/new/step1" class="btn btn-default">Back</a>
                     <button type="submit" class="btn btn-primary">Create</button>
                 </form:form>
-            </div>
+            </c:if>
+        </div>
     </jsp:attribute>
 </my:layout>
 

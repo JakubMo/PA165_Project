@@ -160,12 +160,12 @@ public class DriveCreateDTO {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 67 * hash + vehicle.hashCode();
-        hash = 67 * hash + employee.hashCode();
-        hash = 67 * hash + startDate.hashCode();
-        hash = 67 * hash + endDate.hashCode();
-        hash = 67 * hash + km.hashCode();
-        hash = 67 * hash + driveStatus.getValue();
+        hash = 67 * hash + ((vehicle != null) ? vehicle.hashCode() : 0);
+        hash = 67 * hash + ((employee != null) ? employee.hashCode() : 0);
+        hash = 67 * hash + ((startDate != null) ? startDate.hashCode() : 0);
+        hash = 67 * hash + ((endDate != null) ? endDate.hashCode() : 0);
+        hash = 67 * hash + ((km != null) ? km.hashCode() : 0);
+        hash = 67 * hash + ((driveStatus != null) ? driveStatus.getValue() : 0);
         return hash;
     }
 

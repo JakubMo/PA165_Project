@@ -11,9 +11,11 @@
 
 <my:layout title="Drives">
     <jsp:attribute name="body">
+        <c:if test="${showNewButton}">
         <div class="row" style="margin: 5px">
-            <a href="${pageContext.request.contextPath}/drive/new" role="button" class="col-lg-1 col-md-2 col-sm-2 col-xs-3 btn btn-primary">New Drive</a>
+            <a href="${pageContext.request.contextPath}/drive/new/step1" role="button" class="col-lg-1 col-md-2 col-sm-2 col-xs-3 btn btn-primary">New Drive</a>
         </div>
+        </c:if>
         <div class="row" style="margin-top: 25px">
             <c:forEach items="${drives}" var="drive">
                 <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
