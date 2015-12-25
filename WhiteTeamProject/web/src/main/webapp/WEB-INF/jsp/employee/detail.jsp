@@ -48,12 +48,14 @@
                         <th>Current credit:</th>
                         <td>
                             <c:out value="${employee.credit}" />
+                            <sec:authorize access="hasAuthority('ADMIN')">
                             <form method="post" action="${pageContext.request.contextPath}/employee/update/${employee.id}">
                                 <button type="submit" class="btn-default">Add credit:</button>
                                 
                                 <input name="newCredit" value="1" type="number" required="required" min="1" />
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                             </form>
+                            </sec:authorize>
                         </td>
                     </tr>
                     <tr>
