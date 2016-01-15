@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.project.service;
 
 import cz.muni.fi.pa165.project.dao.DriveDao;
+import cz.muni.fi.pa165.project.dao.EmployeeDao;
 import cz.muni.fi.pa165.project.entity.Drive;
 import cz.muni.fi.pa165.project.entity.Employee;
 import cz.muni.fi.pa165.project.entity.Vehicle;
@@ -26,6 +27,9 @@ public class DriveServiceImpl implements DriveService {
     
     @Autowired
     private DriveDao driveDao;
+    
+    @Autowired
+    private EmployeeDao employeeDao;
     
     private final Set<Transition> allowedTransitions = new HashSet<>();
     {
@@ -132,6 +136,14 @@ public class DriveServiceImpl implements DriveService {
         
         checkTransitions(drive.getDriveStatus(), DriveStatus.COMPLETED);
         drive.setDriveStatus(DriveStatus.COMPLETED);
+        
+        BigDecimal credit = drive.getEmployee().getCredit();
+        if(credit.compareTo(BigDecimal.ONE) < 0){
+            throw new IllegalStateException("You do not have enough credit to complete this drive!");
+        } else {
+            drive.getEmployee().setCredit(credit.subtract(BigDecimal.ONE));
+        }
+        
         driveDao.update(drive);
     }
 

@@ -449,6 +449,7 @@ public class DriveServiceTest extends AbstractTestNGSpringContextTests{
                 drive.setEndDate(drive2EndDate);
 		drive.setKm(new BigDecimal(120000));
 		drive.setEmployee(new Employee());
+                drive.getEmployee().setCredit(BigDecimal.TEN);
 		drive.setVehicle(new Vehicle());
 		return drive;
 	}

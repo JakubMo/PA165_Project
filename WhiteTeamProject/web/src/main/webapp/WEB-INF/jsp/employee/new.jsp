@@ -37,7 +37,7 @@
                 <div class="form-group">
                     <form:label path="email">Email:</form:label>
                     <div>
-                        <form:input path="email" cssClass="form-control" required="required" placeholder="Enter email of employee" />
+                        <form:input path="email" cssClass="form-control" required="required" placeholder="Enter email of employee" pattern="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"/>
                     </div>
                     <c:if test="${not empty email_error}">
                         <p style="color: red"><c:out value="${email_error}" /></p>

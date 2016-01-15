@@ -198,9 +198,14 @@ public class DriveController {
 	@RequestMapping(value = "/complete/{id}", method = RequestMethod.POST)
 	public String complete(@PathVariable long id, @ModelAttribute("km")BigDecimal km, Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriComponentsBuilder) {
 		log.trace("complete()");
-		this.driveFacade.changeEndDate(id, Date.from(Instant.now()));
-		this.driveFacade.changeDrivenKilometers(id, km);
-		this.driveFacade.completeDrive(id);
+		try{
+                    //this.driveFacade.changeEndDate(id, Date.from(Instant.now()));
+                    this.driveFacade.changeDrivenKilometers(id, km);
+                    this.driveFacade.completeDrive(id);
+                } catch (Exception ex) {
+                    log.trace(ex.getMessage());
+                    redirectAttributes.addFlashAttribute("alert_danger", ex.getLocalizedMessage());
+                }
 		return "redirect:" + uriComponentsBuilder.path("/drive/list").toUriString();
 	}
 
