@@ -48,7 +48,7 @@ public class LoadDataFacadeImpl implements LoadDataFacade {
     @Override
     public void load() throws IOException {
         try {
-            Employee jakub = employee("Jakub", "Mozucha", "jakub@mail.com", "7654321", "ADMIN", BigDecimal.TEN, Category.PLATINUM, "pwd1");
+            Employee jakub = employee("Jakub", "Mozucha", "jakub@mail.com", "7654321", "ADMIN", BigDecimal.ONE, Category.PLATINUM, "pwd1");
             Employee marek = employee("Marek", "Jonis", "marek@mail.com", "1234567", "ADMIN", BigDecimal.TEN, Category.PLATINUM, "pwd2");
             Employee mario = employee("Mario", "Kudolani", "mario@mail.com", "1237654", "ADMIN", BigDecimal.TEN, Category.PLATINUM, "pwd3");
             Employee tomas = employee("Tomas", "Borcin", "tomas@mail.com", "7651234", "ADMIN", BigDecimal.TEN, Category.PLATINUM, "pwd4");
@@ -113,10 +113,11 @@ public class LoadDataFacadeImpl implements LoadDataFacade {
             ServiceCheck checkPassat = serviceCheck(null, ServiceCheckStatus.DONE_OK, getDate(2015, 8, 29), vwPassat, "Peter Dan", "ok");
             log.info("Loaded all service checks.");
 
-            Drive driveAccord = drive(null, hondaAccord, jakub, getDate(2015, 11, 10), getDate(2015, 11, 11), BigDecimal.valueOf(256L), DriveStatus.COMPLETED);
-            Drive driveFocus = drive(null, fordFocus, tomas, getDate(2015, 11, 22), getDate(2015, 11, 30), BigDecimal.valueOf(256L), DriveStatus.CANCELLED);
-            Drive driveFabia = drive(null, skodaFabia, martin, getDate(2015, 12, 15), getDate(2015, 12, 20), BigDecimal.valueOf(256L), DriveStatus.REQUESTED);
-            Drive driveFabia_2 = drive(null, skodaFabia, lukas, getDate(2015, 12, 21), getDate(2015, 12, 23), BigDecimal.valueOf(256L), DriveStatus.APPROVED);
+            Drive driveAccord = drive(null, hondaAccord, jakub, getDate(2016, 1, 10), getDate(2016, 1, 15), BigDecimal.valueOf(256L), DriveStatus.APPROVED);
+            Drive driveCivic = drive(null, hondaCivic, jakub, getDate(2016, 1, 17), getDate(2016, 1, 22), BigDecimal.valueOf(256L), DriveStatus.APPROVED);
+            //Drive driveFocus = drive(null, fordFocus, tomas, getDate(2015, 11, 22), getDate(2015, 11, 30), BigDecimal.valueOf(256L), DriveStatus.CANCELLED);
+            Drive driveFabia = drive(null, skodaFabia, martin, getDate(2016, 1, 5), getDate(2016, 1, 10), BigDecimal.valueOf(256L), DriveStatus.APPROVED);
+            Drive driveFabia_2 = drive(null, skodaFabia, lukas, getDate(2016, 1, 2), getDate(2016, 1, 4), BigDecimal.valueOf(256L), DriveStatus.APPROVED);
             log.info("Loaded all drives.");
         } catch (DataAccessException daex) {
             throw new IOException("Data Access Exception occured: " + daex.getMessage());
@@ -172,7 +173,7 @@ public class LoadDataFacadeImpl implements LoadDataFacade {
 
     private Date getDate(int year, int month, int day) {
         Calendar calendar = new GregorianCalendar();
-        calendar.set(year, month, day);
+        calendar.set(year, month - 1, day);
         return calendar.getTime();
     }
 }
